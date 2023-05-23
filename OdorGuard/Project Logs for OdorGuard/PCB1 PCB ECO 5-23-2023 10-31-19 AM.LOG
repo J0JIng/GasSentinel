@@ -1,0 +1,38 @@
+Added Component: Designator=Y1(FP-ABS06-MFG)
+Add component (AddParameter): Name = "Case/Package"; Value = "CSMD"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Depth"; Value = "1.2mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ESR (Equivalent Series Resistance)"; Value = "90kR"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Frequency"; Value = "32.768kHz"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Frequency Tolerance"; Value = "10ppm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Height"; Value = "0.6mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Length"; Value = "2mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Load Capacitance"; Value = "9pF"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Max Operating Temperature"; Value = "85°C"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Min Operating Temperature"; Value = "-40°C"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mount"; Value = "Surface Mount"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Number of Pins"; Value = "2"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Package Quantity"; Value = "3000"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Packaging"; Value = "Tape and Reel"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Radiation Hardening"; Value = "No"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "REACH SVHC"; Value = "No SVHC"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "RoHS Compliant"; Value = "Yes"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Series"; Value = "ABS06"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Series Resistance"; Value = "90kR"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Termination"; Value = "SMD/SMT"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Tolerance"; Value = "10ppm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Width"; Value = "1.2mm"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=SWDCLK Pin=U2-8
+Added Pin To Net: NetName=SWDIO Pin=U2-9
+Added Pin To Net: NetName=TX Pin=U2-13
+Added Pin To Net: NetName=RX Pin=U2-16
+Added Pin To Net: NetName=nRST Pin=U2-31
+Added Pin To Net: NetName=NetU2_20 Pin=U2-20
+Added Pin To Net: NetName=NetU2_20 Pin=Y1-1
+Added Net: Name=NetU2_20
+Added Pin To Net: NetName=NetU2_21 Pin=U2-21
+Added Pin To Net: NetName=NetU2_21 Pin=Y1-2
+Added Net: Name=NetU2_21
+Added Pin To Net: NetName=SWO Pin=J1-5
+Added Pin To Net: NetName=SWO Pin=U2-10
+Added Net: Name=SWO
+Added Member To Class: ClassName=mcu Member=Component Y1 ABS06-32.768KHZ-9-1-T
