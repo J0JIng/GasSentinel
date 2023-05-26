@@ -1,0 +1,11 @@
+Removed Member From Class: ClassName=mcu Member=R3
+Removed Member From Class: ClassName=supply Member=U1
+Added Component: Designator=U5(2479PCB_37P49X52P63_KEY)
+Add component (AddParameter): Name = "Mfr_Name"; Value = "Keystone Electronics"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "RefDes"; Value = "RefDes"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Type"; Value = "Type"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=NetC1_2 Pin=U5-1
+Added Pin To Net: NetName=GND Pin=U5-2
+Added Member To Class: ClassName=mcu Member=Component R1 10 kOhms
+Added Member To Class: ClassName=supply Member=Component U2 MAX17224ELT+T
+Added Member To Class: ClassName=supply Member=Component U5 2479

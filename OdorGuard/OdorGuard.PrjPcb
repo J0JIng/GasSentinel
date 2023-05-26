@@ -99,6 +99,27 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=SHPPKGGC
 
+[Document4]
+DocumentPath=sensor.SchDoc
+AnnotationEnabled=1
+AnnotateStartValue=1
+AnnotationIndexControlEnabled=0
+AnnotateSuffix=
+AnnotateScope=All
+AnnotateOrder=2
+DoLibraryUpdate=1
+DoDatabaseUpdate=1
+ClassGenCCAutoEnabled=1
+ClassGenCCAutoRoomEnabled=0
+ClassGenNCAutoScope=None
+DItemRevisionGUID=
+GenerateClassCluster=0
+DocumentUniqueId=NBFNJTWO
+
+[GeneratedDocument1]
+DocumentPath=Project Outputs for OdorGuard\Design Rule Check - PCB1.html
+DItemRevisionGUID=
+
 [Configuration1]
 Name=Sources
 ParameterCount=0
