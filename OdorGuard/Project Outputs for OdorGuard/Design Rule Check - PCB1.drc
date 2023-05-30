@@ -1,12 +1,12 @@
 Protel Design System Design Rule Check
 PCB File : C:\Users\Workstation\Documents\GitHub\OdorGuard\OdorGuard\PCB1.PcbDoc
-Date     : 5/26/2023
-Time     : 1:56:46 PM
+Date     : 5/29/2023
+Time     : 11:34:27 AM
 
-Processing Rule : Clearance Constraint (Gap=3.5mil) (All),(All)
+Processing Rule : Clearance Constraint (Gap=0.089mm) (All),(All)
 Rule Violations :0
 
-Processing Rule : Clearance Constraint (Gap=0mil) (IsKeepOut),(All)
+Processing Rule : Clearance Constraint (Gap=0mm) (IsKeepOut),(All)
 Rule Violations :0
 
 Processing Rule : Short-Circuit Constraint (Allowed=No) (All),(All)
@@ -18,50 +18,56 @@ Rule Violations :0
 Processing Rule : Modified Polygon (Allow modified: No), (Allow shelved: No)
 Rule Violations :0
 
-Processing Rule : Width Constraint (Min=3.5mil) (Max=71497.938mil) (Preferred=3.5mil) (All)
+Processing Rule : Width Constraint (Min=0.089mm) (Max=1816.048mm) (Preferred=0.089mm) (All)
 Rule Violations :0
 
-Processing Rule : Power Plane Connect Rule(Direct Connect )(Expansion=11.811mil) (Conductor Width=3.5mil) (Air Gap=3.5mil) (Entries=4) (All)
+Processing Rule : Power Plane Connect Rule(Direct Connect )(Expansion=0.3mm) (Conductor Width=0.089mm) (Air Gap=0.089mm) (Entries=4) (All)
 Rule Violations :0
 
-Processing Rule : Power Plane Connect Rule(Direct Connect )(Expansion=20mil) (Conductor Width=10mil) (Air Gap=10mil) (Entries=4) (InPadClass('PowerPads'))
+Processing Rule : Power Plane Connect Rule(Direct Connect )(Expansion=0.508mm) (Conductor Width=0.254mm) (Air Gap=0.254mm) (Entries=4) (InPadClass('PowerPads'))
 Rule Violations :0
 
-Processing Rule : Minimum Annular Ring (Minimum=3mil) (All)
+Processing Rule : Minimum Annular Ring (Minimum=0.076mm) (All)
 Rule Violations :0
 
-Processing Rule : Hole Size Constraint (Min=7.874mil) (Max=248.031mil) (All)
+Processing Rule : Hole Size Constraint (Min=0.2mm) (Max=6.3mm) (All)
 Rule Violations :0
 
-Processing Rule : Hole To Hole Clearance (Gap=9.842mil) (All),(All)
+Processing Rule : Hole To Hole Clearance (Gap=0.25mm) (All),(All)
 Rule Violations :0
 
-Processing Rule : Minimum Solder Mask Sliver (Gap=0mil) (All),(All)
+Processing Rule : Minimum Solder Mask Sliver (Gap=0mm) (All),(All)
 Rule Violations :0
 
-Processing Rule : Silk To Solder Mask (Clearance=3.5mil) (IsPad),(All)
+Processing Rule : Silk To Solder Mask (Clearance=0.089mm) (IsPad),(All)
 Rule Violations :0
 
-Processing Rule : Silk to Silk (Clearance=0mil) (All),(All)
+Processing Rule : Silk to Silk (Clearance=0mm) (All),(All)
 Rule Violations :0
 
-Processing Rule : Net Antennae (Tolerance=0mil) (All)
+Processing Rule : Net Antennae (Tolerance=0mm) (All)
 Rule Violations :0
 
-Processing Rule : Board Clearance Constraint (Gap=0mil) (All)
-   Violation between Board Outline Clearance(Outline Edge): (Collision < 7.874mil) Between Arc (1121mil,989.5mil) on Bottom Overlay And Board Edge 
-   Violation between Board Outline Clearance(Outline Edge): (Collision < 7.874mil) Between Arc (1121mil,989.5mil) on Top Overlay And Board Edge 
-   Violation between Board Outline Clearance(Outline Edge): (Collision < 7.874mil) Between Board Edge And Text "" (1006mil,2529mil) on Bottom Overlay 
-   Violation between Board Outline Clearance(Outline Edge): (6.5mil < 7.874mil) Between Board Edge And Track (1014mil,1014.5mil)(1014mil,2500.5mil) on Bottom Overlay 
-   Violation between Board Outline Clearance(Outline Edge): (6mil < 7.874mil) Between Board Edge And Track (1014mil,1014.5mil)(3096mil,1014.5mil) on Bottom Overlay 
-   Violation between Board Outline Clearance(Outline Edge): (6mil < 7.874mil) Between Board Edge And Track (1014mil,2500.5mil)(3096mil,2500.5mil) on Bottom Overlay 
-   Violation between Board Outline Clearance(Outline Edge): (6mil < 7.874mil) Between Board Edge And Track (3096mil,1014.5mil)(3096mil,2500.5mil) on Bottom Overlay 
-Rule Violations :7
-
-Processing Rule : Height Constraint (Min=0mil) (Max=71497.938mil) (Prefered=500mil) (All)
+Processing Rule : Board Clearance Constraint (Gap=0mm) (All)
 Rule Violations :0
 
+Processing Rule : Height Constraint (Min=0mm) (Max=1816.048mm) (Prefered=12.7mm) (All)
+Rule Violations :0
 
-Violations Detected : 7
-Waived Violations : 0
+Waived Violations Of Rule : Board Clearance Constraint (Gap=0mm) (All)
+   Waived Violation between Board Outline Clearance(Outline Edge): (Collision < 0.2mm) Between Arc (28.473mm,25.133mm) on Bottom Overlay And Board Edge Waived by Edward Tan at 5/26/2023 1:56:54 PM
+   Waived Violation between Board Outline Clearance(Outline Edge): (Collision < 0.2mm) Between Arc (28.473mm,25.133mm) on Top Overlay And Board Edge Waived by Edward Tan at 5/26/2023 1:56:54 PM
+   Waived Violation between Board Outline Clearance(Outline Edge): (Collision < 0.2mm) Between Board Edge And Text "" (78.842mm,64.237mm) on Bottom Overlay Waived by Edward Tan at 5/28/2023 12:06:57 PM
+   Waived Violation between Board Outline Clearance(Outline Edge): (Collision < 0.2mm) Between Board Edge And Track (25.756mm,25.768mm)(25.756mm,63.513mm) on Bottom Overlay Waived by Edward Tan at 5/26/2023 1:56:54 PM
+   Waived Violation between Board Outline Clearance(Outline Edge): (Collision < 0.2mm) Between Board Edge And Track (25.756mm,25.768mm)(78.638mm,25.768mm) on Bottom Overlay Waived by Edward Tan at 5/26/2023 1:56:54 PM
+   Waived Violation between Board Outline Clearance(Outline Edge): (Collision < 0.2mm) Between Board Edge And Track (25.756mm,63.513mm)(78.638mm,63.513mm) on Bottom Overlay Waived by Edward Tan at 5/26/2023 1:56:54 PM
+   Waived Violation between Board Outline Clearance(Outline Edge): (0.044mm < 0.2mm) Between Board Edge And Track (78.172mm,38mm)(78.366mm,38mm) on Top Overlay Waived by Edward Tan at 5/28/2023 12:06:57 PM
+   Waived Violation between Board Outline Clearance(Outline Edge): (0.044mm < 0.2mm) Between Board Edge And Track (78.172mm,51.154mm)(78.366mm,51.154mm) on Top Overlay Waived by Edward Tan at 5/28/2023 12:06:57 PM
+   Waived Violation between Board Outline Clearance(Outline Edge): (0.044mm < 0.2mm) Between Board Edge And Track (78.366mm,38mm)(78.366mm,51.154mm) on Top Overlay Waived by Edward Tan at 5/28/2023 12:06:57 PM
+   Waived Violation between Board Outline Clearance(Outline Edge): (Collision < 0.2mm) Between Board Edge And Track (78.638mm,25.768mm)(78.638mm,63.513mm) on Bottom Overlay Waived by Edward Tan at 5/26/2023 1:56:54 PM
+Waived Violations :10
+
+
+Violations Detected : 0
+Waived Violations : 10
 Time Elapsed        : 00:00:01
