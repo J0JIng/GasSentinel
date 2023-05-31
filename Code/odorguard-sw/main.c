@@ -25,6 +25,21 @@
 #else // !SL_CATALOG_KERNEL_PRESENT
 #include "sl_system_process_action.h"
 #endif // SL_CATALOG_KERNEL_PRESENT
+#include "em_burtc.h"
+#include "em_cmu.h"
+
+void initBURTC(void)
+{
+  CMU_ClockSelectSet(cmuClock_EM4GRPACLK, cmuSelect_ULFRCO);
+  CMU_ClockEnable(cmuClock_BURTC, true);
+  CMU_ClockEnable(cmuClock_BURAM, true);
+
+  BURTC_Init_TypeDef burtcInit = BURTC_INIT_DEFAULT;
+  burtcInit.compare0Top = true; // reset counter when counter reaches compare value
+  burtcInit.em4comp = true;     // BURTC compare interrupt wakes from EM4 (causes reset)
+  BURTC_Init(&burtcInit);
+}
+
 
 int main(void)
 {
@@ -32,7 +47,7 @@ int main(void)
   // Note that if the kernel is present, processing task(s) will be created by
   // this call.
   sl_system_init();
-
+  initBURTC();
   // Initialize the application. For example, create periodic timer(s) or
   // task(s) if the kernel is present.
   app_init();
