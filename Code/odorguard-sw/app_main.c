@@ -9,22 +9,31 @@
 #include <openthread/thread.h>
 
 #include "openthread-system.h"
-
+#include "em_system.h"
 #include "sl_component_catalog.h"
 
 #include "bme68x.h"
 #include "bsec_interface.h"
 #include "sl_i2cspm.h"
 #include "sl_sleeptimer.h"
+#include "sl_udelay.h"
 
 void sleepyInit(void);
 void setNetworkConfiguration(void);
 void initUdp(void);
+void app_init_bme(void);
 
 
 struct bme68x_dev bme;
 static const uint8_t bme_addr = BME68X_I2C_ADDR_LOW;
 
+static __IO union {
+    uint64_t _64b;
+    struct {
+        uint32_t l;
+        uint32_t h;
+    } _32b;
+} eui;
 
 extern void otAppCliInit(otInstance *aInstance);
 
@@ -111,13 +120,23 @@ BME68X_INTF_RET_TYPE app_i2c_plat_write(uint8_t reg_addr, const uint8_t *reg_dat
 
 }
 
-void app_init(void)
+void app_init(void) {
+	app_init_bme();
+	sleepyInit();
+	setNetworkConfiguration();
+	initUdp();
+	assert(otIp6SetEnabled(sInstance, true) == OT_ERROR_NONE);
+	assert(otThreadSetEnabled(sInstance, true) == OT_ERROR_NONE);
+	eui._64b = SYSTEM_GetUnique();
+}
+
+void app_init_bme(void)
 {
-	memset(&bme,0,sizeof(bme));
+	memset(&bme, 0, sizeof(bme));
 	bme.intf = BME68X_SPI_INTF;
 	bme.read = app_i2c_plat_read;
 	bme.write = app_i2c_plat_write;
-	bme.delay_us = NULL; //TODO usec stimer
+	bme.delay_us = sl_udelay_wait;
 	bme.intf_ptr = NULL;
 	bme.amb_temp = 25; // TODO ref. sht22 bl calib
 	assert(bme68x_init(&bme) == BME68X_OK);
@@ -127,23 +146,16 @@ void app_init(void)
 	bsec_sensor_configuration_t requested_virtual_sensors[1];
 	uint8_t n_requested_virtual_sensors = 1;
 
-	bsec_sensor_configuration_t required_sensor_settings[BSEC_MAX_PHYSICAL_SENSOR];
-	uint8_t n_required_sensor_settings = BSEC_MAX_PHYSICAL_SENSOR;
+	bsec_sensor_configuration_t required_sensor_settings[1];
+	uint8_t n_required_sensor_settings = 1;
 
-
-    requested_virtual_sensors[0].sensor_id = BSEC_OUTPUT_IAQ;
-    requested_virtual_sensors[0].sample_rate = 0.33f;
+	requested_virtual_sensors[0].sensor_id = BSEC_OUTPUT_IAQ;
+	requested_virtual_sensors[0].sample_rate = 0.33f;
 
 	assert(
 			bsec_update_subscription(requested_virtual_sensors,
 					n_requested_virtual_sensors, required_sensor_settings,
 					&n_required_sensor_settings) == BSEC_OK);
-
-    sleepyInit();
-    setNetworkConfiguration();
-    initUdp();
-    assert(otIp6SetEnabled(sInstance, true) == OT_ERROR_NONE);
-    assert(otThreadSetEnabled(sInstance, true) == OT_ERROR_NONE);
 }
 
 
