@@ -18,7 +18,7 @@
 #include "sl_sleeptimer.h"
 #include "sl_udelay.h"
 #include "app_dns.h"
-
+#include "app_thread.h"
 #include <cstring>
 
 void sleepyInit(void);
@@ -26,6 +26,7 @@ void setNetworkConfiguration(void);
 void initUdp(void);
 void app_init_bme(void);
 
+dns DNS(8);
 
 struct bme68x_dev bme;
 static const uint8_t bme_addr = BME68X_I2C_ADDR_LOW;
@@ -124,13 +125,15 @@ BME68X_INTF_RET_TYPE app_i2c_plat_write(uint8_t reg_addr, const uint8_t *reg_dat
 }
 
 void app_init(void) {
-	app_init_bme();
+	//app_init_bme();
 	sleepyInit();
 	setNetworkConfiguration();
 	initUdp();
 	assert(otIp6SetEnabled(sInstance, true) == OT_ERROR_NONE);
 	assert(otThreadSetEnabled(sInstance, true) == OT_ERROR_NONE);
+	appSrpInit();
 	eui._64b = SYSTEM_GetUnique();
+
 }
 
 void app_init_bme(void)
@@ -159,17 +162,19 @@ void app_init_bme(void)
 			bsec_update_subscription(requested_virtual_sensors,
 					n_requested_virtual_sensors, required_sensor_settings,
 					&n_required_sensor_settings) == BSEC_OK);
-
-
-	dns::resolveHost(NULL);
 }
 
-
+int i = 0;
 void app_process_action(void)
 {
     otTaskletsProcess(sInstance);
     otSysProcessDrivers(sInstance);
     applicationTick();
+    if(i++ == 100000)
+    {
+    	DNS.browse("_ot._udp.default.service.arpa.");
+    	i = 0;
+    }
 }
 
 

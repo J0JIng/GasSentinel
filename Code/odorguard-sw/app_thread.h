@@ -10,6 +10,7 @@ void applicationTick(void);
 void sleepyInit(void);
 void setNetworkConfiguration(void);
 
+void appSrpInit(void);
 
 #ifdef __cplusplus
 }

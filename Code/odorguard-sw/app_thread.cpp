@@ -12,6 +12,8 @@
 #include <openthread/platform/logging.h>
 #include <common/code_utils.hpp>
 #include <common/logging.hpp>
+#include <openthread/srp_client.h>
+#include <openthread/srp_client_buffers.h>
 
 
 #include "sl_component_catalog.h"
@@ -43,7 +45,7 @@ void sleepyInit(void)
     otLinkModeConfig config;
     SuccessOrExit(error = otLinkSetPollPeriod(otGetInstance(), SLEEPY_POLL_PERIOD_MS));
 
-    config.mRxOnWhenIdle = true;
+    config.mRxOnWhenIdle = false;
     config.mDeviceType   = 0;
     config.mNetworkData  = 0;
     SuccessOrExit(error = otThreadSetLinkMode(otGetInstance(), config));
@@ -69,7 +71,7 @@ bool efr32AllowSleepCallback(void)
  */
 void setNetworkConfiguration(void)
 {
-    static char          aNetworkName[] = "SleepyEFR32";
+    static char          aNetworkName[] = "";
     otError              error;
     otOperationalDataset aDataset;
 
@@ -80,25 +82,24 @@ void setNetworkConfiguration(void)
      *     Network Name, Mesh Local Prefix, Extended PAN ID, PAN ID, Delay Timer,
      *     Channel, Channel Mask Page 0, Network Key, PSKc, Security Policy
      */
-    aDataset.mActiveTimestamp.mSeconds             = 1;
+    //aDataset.mActiveTimestamp.mSeconds             = 1;
     aDataset.mComponents.mIsActiveTimestampPresent = true;
 
     /* Set Channel to 15 */
-    aDataset.mChannel                      = 15;
+    aDataset.mChannel                      = ;
     aDataset.mComponents.mIsChannelPresent = true;
 
     /* Set Pan ID to 2222 */
-    aDataset.mPanId                      = (otPanId)0x2222;
+    aDataset.mPanId                      = (otPanId);
     aDataset.mComponents.mIsPanIdPresent = true;
 
     /* Set Extended Pan ID to C0DE1AB5C0DE1AB5 */
-    uint8_t extPanId[OT_EXT_PAN_ID_SIZE] = {0xC0, 0xDE, 0x1A, 0xB5, 0xC0, 0xDE, 0x1A, 0xB5};
+    uint8_t extPanId[OT_EXT_PAN_ID_SIZE] = { };
     memcpy(aDataset.mExtendedPanId.m8, extPanId, sizeof(aDataset.mExtendedPanId));
     aDataset.mComponents.mIsExtendedPanIdPresent = true;
 
     /* Set network key to 1234C0DE1AB51234C0DE1AB51234C0DE */
-    uint8_t key[OT_NETWORK_KEY_SIZE] = {0x12, 0x34, 0xC0, 0xDE, 0x1A, 0xB5, 0x12, 0x34,
-                                        0xC0, 0xDE, 0x1A, 0xB5, 0x12, 0x34, 0xC0, 0xDE};
+    uint8_t key[OT_NETWORK_KEY_SIZE] = { };
     memcpy(aDataset.mNetworkKey.m8, key, sizeof(aDataset.mNetworkKey));
     aDataset.mComponents.mIsNetworkKeyPresent = true;
 
@@ -117,11 +118,54 @@ void setNetworkConfiguration(void)
     }
 }
 
+
+
 void initUdp(void)
 {
 
 }
 
+
+
+void appSrpInit(void)
+{
+    otError error = OT_ERROR_NONE;
+/*
+    char *hostName;
+    const char *HOST_NAME = "OT-CO2SN-0";
+    uint16_t size;
+    hostName = otSrpClientBuffersGetHostNameString(sInstance, &size);
+    error = otSrpClientSetHostName(sInstance, HOST_NAME);
+    memcpy(hostName, HOST_NAME, sizeof(HOST_NAME) + 1);
+
+
+    otSrpClientEnableAutoHostAddress(sInstance);
+
+
+    otSrpClientBuffersServiceEntry *entry = NULL;
+    char *string;
+
+    entry = otSrpClientBuffersAllocateService(sInstance);
+
+    entry->mService.mPort = 33434;
+    char INST_NAME[32];
+    snprintf(INST_NAME, 32, "ipv6bc%d", (uint8_t)(eui._64b & 0xFF));
+    const char *SERV_NAME = "_ot._udp";
+    string = otSrpClientBuffersGetServiceEntryInstanceNameString(entry, &size);
+    memcpy(string, INST_NAME, size);
+
+
+    string = otSrpClientBuffersGetServiceEntryServiceNameString(entry, &size);
+    memcpy(string, SERV_NAME, size);
+
+    error = otSrpClientAddService(sInstance, &entry->mService);
+
+    assert(OT_ERROR_NONE == error);
+
+    entry = NULL;
+*/
+    otSrpClientEnableAutoStartMode(otGetInstance(), /* aCallback */ NULL, /* aContext */ NULL);
+}
 
 
 #ifdef SL_CATALOG_KERNEL_PRESENT
