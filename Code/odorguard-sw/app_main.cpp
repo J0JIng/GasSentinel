@@ -26,7 +26,7 @@ void setNetworkConfiguration(void);
 void initUdp(void);
 void app_init_bme(void);
 
-dns DNS(8);
+dns DNS(otGetInstance, 4, 4);
 
 struct bme68x_dev bme;
 static const uint8_t bme_addr = BME68X_I2C_ADDR_LOW;
