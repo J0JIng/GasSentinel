@@ -86,13 +86,21 @@
 // [TIMER4]$
 
 // $[USART0]
-// USART0 RX on PA06
+// USART0 RX on PA07
+#ifndef USART0_RX_PORT                          
 #define USART0_RX_PORT                           gpioPortA
-#define USART0_RX_PIN                            6
+#endif
+#ifndef USART0_RX_PIN                           
+#define USART0_RX_PIN                            7
+#endif
 
-// USART0 TX on PA07
+// USART0 TX on PA06
+#ifndef USART0_TX_PORT                          
 #define USART0_TX_PORT                           gpioPortA
-#define USART0_TX_PIN                            7
+#endif
+#ifndef USART0_TX_PIN                           
+#define USART0_TX_PIN                            6
+#endif
 
 // [USART0]$
 
@@ -127,13 +135,21 @@
 // [HFXO0]$
 
 // $[I2C0]
-// I2C0 SCL on PB00
+// I2C0 SCL on PB01
+#ifndef I2C0_SCL_PORT                           
 #define I2C0_SCL_PORT                            gpioPortB
-#define I2C0_SCL_PIN                             0
+#endif
+#ifndef I2C0_SCL_PIN                            
+#define I2C0_SCL_PIN                             1
+#endif
 
-// I2C0 SDA on PB01
+// I2C0 SDA on PB00
+#ifndef I2C0_SDA_PORT                           
 #define I2C0_SDA_PORT                            gpioPortB
-#define I2C0_SDA_PIN                             1
+#endif
+#ifndef I2C0_SDA_PIN                            
+#define I2C0_SDA_PIN                             0
+#endif
 
 // [I2C0]$
 
@@ -150,4 +166,7 @@
 // [CUSTOM_PIN_NAME]$
 
 #endif // PIN_CONFIG_H
+
+// $[IADC0]
+// [IADC0]$
 

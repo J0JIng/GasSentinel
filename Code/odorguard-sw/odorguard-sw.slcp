@@ -24,10 +24,11 @@ include:
 - path: ''
   file_list:
   - {path: app.h}
-sdk: {id: gecko_sdk, version: 4.2.3}
+sdk: {id: gecko_sdk, version: 4.3.0}
 toolchain_settings: []
 component:
 - {id: power_manager}
+- {id: power_manager_deepsleep}
 - {id: MGM240PB32VNA}
 - {id: ot_stack_mtd}
 - {id: rail_util_pti}

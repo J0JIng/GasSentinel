@@ -35,7 +35,7 @@
 otInstance *otGetInstance(void);
 
 
-static bool                sAllowSleep                    = false;
+static bool                sAllowSleep                    = true;
 
 void sleepyInit(void)
 {
@@ -117,6 +117,7 @@ void setNetworkConfiguration(void)
         return;
     }
 }
+
 
 
 

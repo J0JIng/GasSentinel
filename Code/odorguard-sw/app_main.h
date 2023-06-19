@@ -18,6 +18,7 @@ void app_process_action(void);
 void applicationTick(void);
 
 otInstance *otGetInstance(void);
+extern struct bme68x_dev bme;
 
 void sleepyInit(void);
 void setNetworkConfiguration(void);

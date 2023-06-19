@@ -11,7 +11,7 @@
 #include "openthread-system.h"
 #include "em_system.h"
 #include "sl_component_catalog.h"
-
+#include "em_burtc.h"
 #include "bme68x.h"
 #include "bsec_interface.h"
 #include "sl_i2cspm.h"
@@ -19,7 +19,10 @@
 #include "sl_udelay.h"
 #include "app_dns.h"
 #include "app_thread.h"
+#include "app_sensor.h"
 #include <cstring>
+
+#include "bme680_iaq_33v_3s_28d/bsec_iaq.h"
 
 void sleepyInit(void);
 void setNetworkConfiguration(void);
@@ -29,7 +32,11 @@ void app_init_bme(void);
 dns DNS(otGetInstance, 4, 4);
 
 struct bme68x_dev bme;
-static const uint8_t bme_addr = BME68X_I2C_ADDR_LOW;
+
+static uint8_t bme_addr = BME68X_I2C_ADDR_LOW;
+
+static volatile bool bsec_run = true;
+
 
 static __IO union {
     uint64_t _64b;
@@ -42,6 +49,17 @@ static __IO union {
 extern "C" void otAppCliInit(otInstance *aInstance);
 
 static otInstance* sInstance = NULL;
+
+
+void BURTC_IRQHandler(void)
+{
+    BURTC_IntClear(BURTC_IF_COMP); // compare match
+	BURTC_CounterReset();
+	BURTC_Stop();
+	bsec_run = true;
+	BURTC_IntDisable(BURTC_IEN_COMP);
+}
+
 
 otInstance *otGetInstance(void)
 {
@@ -94,9 +112,9 @@ BME68X_INTF_RET_TYPE app_i2c_plat_read(uint8_t reg_addr, uint8_t *reg_data,
 		uint32_t length, void *intf_ptr) {
 
 	I2C_TransferSeq_TypeDef i2cTransfer;
-
+	uint8_t device_addr = *(uint8_t*)intf_ptr;
 	// Initialize I2C transfer
-	i2cTransfer.addr = bme_addr << 1;
+	i2cTransfer.addr = device_addr << 1;
 	i2cTransfer.flags = I2C_FLAG_WRITE_READ; // must write target address before reading
 	i2cTransfer.buf[0].data = &reg_addr;
 	i2cTransfer.buf[0].len = 1;
@@ -111,9 +129,9 @@ BME68X_INTF_RET_TYPE app_i2c_plat_write(uint8_t reg_addr, const uint8_t *reg_dat
 		uint32_t length, void *intf_ptr) {
 
 	I2C_TransferSeq_TypeDef i2cTransfer;
-
+	uint8_t device_addr = *(uint8_t*)intf_ptr;
 	// Initialize I2C transfer
-	i2cTransfer.addr = bme_addr << 1;
+	i2cTransfer.addr = device_addr << 1;
 	i2cTransfer.flags = I2C_FLAG_WRITE_WRITE;
 	i2cTransfer.buf[0].data = &reg_addr;
 	i2cTransfer.buf[0].len = 1;
@@ -123,59 +141,119 @@ BME68X_INTF_RET_TYPE app_i2c_plat_write(uint8_t reg_addr, const uint8_t *reg_dat
 	return I2CSPM_Transfer(I2C0, &i2cTransfer);
 
 }
+I2C_TransferReturn_TypeDef I2C_detect1(I2C_TypeDef *i2c, uint8_t addr) {
 
+	I2C_TransferSeq_TypeDef i2cTransfer;
+	I2C_TransferReturn_TypeDef result;
+
+	// Initialize I2C transfer
+	i2cTransfer.addr = addr << 1;
+	i2cTransfer.flags = I2C_FLAG_WRITE;
+	i2cTransfer.buf[0].data = NULL;
+	i2cTransfer.buf[0].len = 0;
+
+	return I2CSPM_Transfer(i2c, &i2cTransfer);
+
+}
+
+void bme68x_delay_us(uint32_t period, void *intf_ptr)
+{
+	sl_sleeptimer_delay_millisecond(period/1000);
+}
 void app_init(void) {
-	//app_init_bme();
+
+
+	 otCliOutputFormat("I2c0 scan: \n");
+	 for (uint8_t i = 0; i < 128; i++) {
+	 if (i2cTransferDone == I2C_detect1(I2C0, i))
+	 otCliOutputFormat("%d ", i);
+	 }
+
+
+	 sl_sleeptimer_init();
+	app_init_bme();
 	sleepyInit();
 	setNetworkConfiguration();
 	initUdp();
 	assert(otIp6SetEnabled(sInstance, true) == OT_ERROR_NONE);
 	assert(otThreadSetEnabled(sInstance, true) == OT_ERROR_NONE);
-	appSrpInit();
+	//appSrpInit();
 	eui._64b = SYSTEM_GetUnique();
 
 }
 
+uint8_t work_buffer[BSEC_MAX_WORKBUFFER_SIZE];
+
 void app_init_bme(void)
 {
+
 	memset(&bme, 0, sizeof(bme));
 	bme.intf = BME68X_I2C_INTF;
 	bme.read = app_i2c_plat_read;
 	bme.write = app_i2c_plat_write;
-	//bme.delay_us = sl_udelay_wait;
-	bme.intf_ptr = NULL;
+	bme.delay_us = bme68x_delay_us;
+	bme.intf_ptr = &bme_addr;
 	bme.amb_temp = 25; // TODO ref. sht22 bl calib
 	assert(bme68x_init(&bme) == BME68X_OK);
+	volatile int8_t ret = 0;
 
-	assert(bsec_init() == BSEC_OK);
+	 otCliOutputFormat("%d / ", ret);
 
-	bsec_sensor_configuration_t requested_virtual_sensors[1];
-	uint8_t n_requested_virtual_sensors = 1;
+	ret = bsec_init();
+	otCliOutputFormat("%d / ", ret);
 
-	bsec_sensor_configuration_t required_sensor_settings[1];
-	uint8_t n_required_sensor_settings = 1;
+	uint32_t bsec_config_len = sizeof(bsec_config_iaq);
 
-	requested_virtual_sensors[0].sensor_id = BSEC_OUTPUT_IAQ;
-	requested_virtual_sensors[0].sample_rate = 0.33f;
 
-	assert(
-			bsec_update_subscription(requested_virtual_sensors,
+	ret = bsec_set_configuration(bsec_config_iaq, bsec_config_len, work_buffer, sizeof(work_buffer));
+
+
+	otCliOutputFormat("%d / ", ret);
+
+	bsec_sensor_configuration_t requested_virtual_sensors[3];
+	uint8_t n_requested_virtual_sensors = 3;
+
+	bsec_sensor_configuration_t required_sensor_settings[BSEC_MAX_PHYSICAL_SENSOR];
+	uint8_t n_required_sensor_settings = BSEC_MAX_PHYSICAL_SENSOR;
+
+
+	  requested_virtual_sensors[0].sensor_id = BSEC_OUTPUT_IAQ;
+	  requested_virtual_sensors[0].sample_rate = BSEC_SAMPLE_RATE_CONT;
+	  requested_virtual_sensors[1].sensor_id = BSEC_OUTPUT_RAW_TEMPERATURE;
+	  requested_virtual_sensors[1].sample_rate = BSEC_SAMPLE_RATE_CONT;
+	  requested_virtual_sensors[2].sensor_id = BSEC_OUTPUT_RAW_GAS;
+	 	  requested_virtual_sensors[2].sample_rate = BSEC_SAMPLE_RATE_CONT;
+
+
+	ret = bsec_update_subscription(requested_virtual_sensors,
 					n_requested_virtual_sensors, required_sensor_settings,
-					&n_required_sensor_settings) == BSEC_OK);
+					&n_required_sensor_settings);
+	 otCliOutputFormat("%d / ", ret);
 }
 
-int i = 0;
+
+void app_burtc_callback(uint32_t dur)
+{
+	BURTC_CounterReset();
+	BURTC_CompareSet(0, dur);
+	BURTC_IntEnable(BURTC_IEN_COMP);
+}
+
+
 void app_process_action(void)
 {
-    otTaskletsProcess(sInstance);
-    otSysProcessDrivers(sInstance);
-    applicationTick();
-    if(i++ == 100000)
-    {
-    	DNS.browse("_ot._udp.default.service.arpa.");
-    	i = 0;
-    }
+	otTaskletsProcess(sInstance);
+	otSysProcessDrivers(sInstance);
+	applicationTick();
+
+	if (bsec_run) {
+		bsec_run = false;
+		sensor::proc(app_burtc_callback, sl_sleeptimer_get_time);
+	}
+
+
 }
+
 
 
 void app_exit(void)

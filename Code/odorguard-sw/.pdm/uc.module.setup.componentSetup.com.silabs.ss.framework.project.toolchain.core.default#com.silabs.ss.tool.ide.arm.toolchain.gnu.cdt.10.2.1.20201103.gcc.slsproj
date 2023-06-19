@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="uc.module.setup.componentSetup.com.silabs.ss.framework.project.toolchain.core.default#com.silabs.ss.tool.ide.arm.toolchain.gnu.cdt:10.2.1.20201103.gcc" propertyScope="project">
-  <folder name="gecko_sdk_4.2.3">
+  <folder name="gecko_sdk_4.3.0">
     <folder name="platform">
       <folder name="Device">
         <folder name="SiliconLabs">
           <folder name="MGM24">
             <folder name="Source">
-              <file name="system_mgm24.c" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/MGM24/Source/system_mgm24.c"/>
               <file name="startup_mgm24.c" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/MGM24/Source/startup_mgm24.c"/>
+              <file name="system_mgm24.c" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/MGM24/Source/system_mgm24.c"/>
             </folder>
             <folder name="Include">
               <file name="mgm240pb32vna.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/MGM24/Include/mgm240pb32vna.h"/>
@@ -209,6 +209,7 @@
           <folder name="inc">
             <file name="nvm3_default.h" linked="false" uri="studio:/sdk/platform/emdrv/nvm3/inc/nvm3_default.h"/>
             <file name="nvm3.h" linked="false" uri="studio:/sdk/platform/emdrv/nvm3/inc/nvm3.h"/>
+            <file name="nvm3_generic.h" linked="false" uri="studio:/sdk/platform/emdrv/nvm3/inc/nvm3_generic.h"/>
             <file name="nvm3_hal.h" linked="false" uri="studio:/sdk/platform/emdrv/nvm3/inc/nvm3_hal.h"/>
             <file name="nvm3_hal_flash.h" linked="false" uri="studio:/sdk/platform/emdrv/nvm3/inc/nvm3_hal_flash.h"/>
             <file name="nvm3_lock.h" linked="false" uri="studio:/sdk/platform/emdrv/nvm3/inc/nvm3_lock.h"/>
@@ -256,6 +257,7 @@
           <file name="em_ramfunc.h" linked="false" uri="studio:/sdk/platform/emlib/inc/em_ramfunc.h"/>
           <file name="em_version.h" linked="false" uri="studio:/sdk/platform/emlib/inc/em_version.h"/>
           <file name="em_core.h" linked="false" uri="studio:/sdk/platform/emlib/inc/em_core.h"/>
+          <file name="em_core_generic.h" linked="false" uri="studio:/sdk/platform/emlib/inc/em_core_generic.h"/>
           <file name="em_emu.h" linked="false" uri="studio:/sdk/platform/emlib/inc/em_emu.h"/>
           <file name="em_eusart.h" linked="false" uri="studio:/sdk/platform/emlib/inc/em_eusart.h"/>
           <file name="em_eusart_compat.h" linked="false" uri="studio:/sdk/platform/emlib/inc/em_eusart_compat.h"/>
@@ -269,6 +271,7 @@
           <file name="em_se.h" linked="false" uri="studio:/sdk/platform/emlib/inc/em_se.h"/>
           <file name="em_syscfg.h" linked="false" uri="studio:/sdk/platform/emlib/inc/em_syscfg.h"/>
           <file name="em_system.h" linked="false" uri="studio:/sdk/platform/emlib/inc/em_system.h"/>
+          <file name="em_system_generic.h" linked="false" uri="studio:/sdk/platform/emlib/inc/em_system_generic.h"/>
           <file name="em_timer.h" linked="false" uri="studio:/sdk/platform/emlib/inc/em_timer.h"/>
           <file name="em_usart.h" linked="false" uri="studio:/sdk/platform/emlib/inc/em_usart.h"/>
         </folder>
@@ -290,6 +293,10 @@
               <file name="pa_curve_types_efr32.h" linked="false" uri="studio:/sdk/platform/radio/rail_lib/plugin/pa-conversions/pa_curve_types_efr32.h"/>
               <file name="pa_curves_efr32.h" linked="false" uri="studio:/sdk/platform/radio/rail_lib/plugin/pa-conversions/pa_curves_efr32.h"/>
             </folder>
+            <folder name="rail_util_power_manager_init">
+              <file name="sl_rail_util_power_manager_init.c" linked="false" uri="studio:/sdk/platform/radio/rail_lib/plugin/rail_util_power_manager_init/sl_rail_util_power_manager_init.c"/>
+              <file name="sl_rail_util_power_manager_init.h" linked="false" uri="studio:/sdk/platform/radio/rail_lib/plugin/rail_util_power_manager_init/sl_rail_util_power_manager_init.h"/>
+            </folder>
             <folder name="rail_util_pti">
               <file name="sl_rail_util_pti.c" linked="false" uri="studio:/sdk/platform/radio/rail_lib/plugin/rail_util_pti/sl_rail_util_pti.c"/>
               <file name="sl_rail_util_pti.h" linked="false" uri="studio:/sdk/platform/radio/rail_lib/plugin/rail_util_pti/sl_rail_util_pti.h"/>
@@ -297,6 +304,9 @@
             <folder name="rail_util_rssi">
               <file name="sl_rail_util_rssi.c" linked="false" uri="studio:/sdk/platform/radio/rail_lib/plugin/rail_util_rssi/sl_rail_util_rssi.c"/>
               <file name="sl_rail_util_rssi.h" linked="false" uri="studio:/sdk/platform/radio/rail_lib/plugin/rail_util_rssi/sl_rail_util_rssi.h"/>
+            </folder>
+            <folder name="rail_util_sequencer">
+              <file name="sl_rail_util_sequencer.c" linked="false" uri="studio:/sdk/platform/radio/rail_lib/plugin/rail_util_sequencer/sl_rail_util_sequencer.c"/>
             </folder>
           </folder>
           <folder name="common">
@@ -312,6 +322,9 @@
             </folder>
             <folder name="ieee802154">
               <file name="rail_ieee802154.h" linked="false" uri="studio:/sdk/platform/radio/rail_lib/protocol/ieee802154/rail_ieee802154.h"/>
+            </folder>
+            <folder name="wmbus">
+              <file name="rail_wmbus.h" linked="false" uri="studio:/sdk/platform/radio/rail_lib/protocol/wmbus/rail_wmbus.h"/>
             </folder>
             <folder name="zwave">
               <file name="rail_zwave.h" linked="false" uri="studio:/sdk/platform/radio/rail_lib/protocol/zwave/rail_zwave.h"/>
@@ -346,7 +359,9 @@
         <folder name="sl_component">
           <folder name="sl_mbedtls_support">
             <folder name="config">
-              <file name="config-device-acceleration.h" linked="false" uri="studio:/sdk/platform/security/sl_component/sl_mbedtls_support/config/config-device-acceleration.h"/>
+              <file name="sli_mbedtls_acceleration.h" linked="false" uri="studio:/sdk/platform/security/sl_component/sl_mbedtls_support/config/sli_mbedtls_acceleration.h"/>
+              <file name="sli_mbedtls_omnipresent.h" linked="false" uri="studio:/sdk/platform/security/sl_component/sl_mbedtls_support/config/sli_mbedtls_omnipresent.h"/>
+              <file name="sli_psa_acceleration.h" linked="false" uri="studio:/sdk/platform/security/sl_component/sl_mbedtls_support/config/sli_psa_acceleration.h"/>
             </folder>
             <folder name="src">
               <file name="sl_entropy_hardware.c" linked="false" uri="studio:/sdk/platform/security/sl_component/sl_mbedtls_support/src/sl_entropy_hardware.c"/>
@@ -357,6 +372,7 @@
               <file name="mbedtls_ecdsa_ecdh.c" linked="false" uri="studio:/sdk/platform/security/sl_component/sl_mbedtls_support/src/mbedtls_ecdsa_ecdh.c"/>
               <file name="se_jpake.c" linked="false" uri="studio:/sdk/platform/security/sl_component/sl_mbedtls_support/src/se_jpake.c"/>
               <file name="mbedtls_sha.c" linked="false" uri="studio:/sdk/platform/security/sl_component/sl_mbedtls_support/src/mbedtls_sha.c"/>
+              <file name="sl_psa_crypto.c" linked="false" uri="studio:/sdk/platform/security/sl_component/sl_mbedtls_support/src/sl_psa_crypto.c"/>
               <file name="sli_psa_crypto.c" linked="false" uri="studio:/sdk/platform/security/sl_component/sl_mbedtls_support/src/sli_psa_crypto.c"/>
             </folder>
             <folder name="inc">
@@ -370,7 +386,9 @@
               <file name="sha512_alt.h" linked="false" uri="studio:/sdk/platform/security/sl_component/sl_mbedtls_support/inc/sha512_alt.h"/>
               <file name="gcm_alt.h" linked="false" uri="studio:/sdk/platform/security/sl_component/sl_mbedtls_support/inc/gcm_alt.h"/>
               <file name="ecjpake_alt.h" linked="false" uri="studio:/sdk/platform/security/sl_component/sl_mbedtls_support/inc/ecjpake_alt.h"/>
+              <file name="sl_psa_crypto.h" linked="false" uri="studio:/sdk/platform/security/sl_component/sl_mbedtls_support/inc/sl_psa_crypto.h"/>
               <file name="sli_psa_crypto.h" linked="false" uri="studio:/sdk/platform/security/sl_component/sl_mbedtls_support/inc/sli_psa_crypto.h"/>
+              <file name="sl_psa_values.h" linked="false" uri="studio:/sdk/platform/security/sl_component/sl_mbedtls_support/inc/sl_psa_values.h"/>
             </folder>
           </folder>
           <folder name="sl_psa_driver">
@@ -398,15 +416,13 @@
               <file name="sl_psa_its_nvm3.c" linked="false" uri="studio:/sdk/platform/security/sl_component/sl_psa_driver/src/sl_psa_its_nvm3.c"/>
             </folder>
             <folder name="inc">
-              <folder name="public">
-                <file name="sl_psa_values.h" linked="false" uri="studio:/sdk/platform/security/sl_component/sl_psa_driver/inc/public/sl_psa_values.h"/>
-              </folder>
               <folder name="psa">
                 <file name="internal_trusted_storage.h" linked="false" uri="studio:/sdk/platform/security/sl_component/sl_psa_driver/inc/psa/internal_trusted_storage.h"/>
                 <file name="sli_internal_trusted_storage.h" linked="false" uri="studio:/sdk/platform/security/sl_component/sl_psa_driver/inc/psa/sli_internal_trusted_storage.h"/>
                 <file name="error.h" linked="false" uri="studio:/sdk/platform/security/sl_component/sl_psa_driver/inc/psa/error.h"/>
               </folder>
               <file name="sli_psa_driver_common.h" linked="false" uri="studio:/sdk/platform/security/sl_component/sl_psa_driver/inc/sli_psa_driver_common.h"/>
+              <file name="sli_psa_driver_features.h" linked="false" uri="studio:/sdk/platform/security/sl_component/sl_psa_driver/inc/sli_psa_driver_features.h"/>
               <file name="sli_se_version_dependencies.h" linked="false" uri="studio:/sdk/platform/security/sl_component/sl_psa_driver/inc/sli_se_version_dependencies.h"/>
               <file name="sli_se_driver_aead.h" linked="false" uri="studio:/sdk/platform/security/sl_component/sl_psa_driver/inc/sli_se_driver_aead.h"/>
               <file name="sli_se_driver_cipher.h" linked="false" uri="studio:/sdk/platform/security/sl_component/sl_psa_driver/inc/sli_se_driver_cipher.h"/>
@@ -438,6 +454,7 @@
               <file name="sl_se_manager_defines.h" linked="false" uri="studio:/sdk/platform/security/sl_component/se_manager/inc/sl_se_manager_defines.h"/>
               <file name="sl_se_manager_types.h" linked="false" uri="studio:/sdk/platform/security/sl_component/se_manager/inc/sl_se_manager_types.h"/>
               <file name="sl_se_manager_util.h" linked="false" uri="studio:/sdk/platform/security/sl_component/se_manager/inc/sl_se_manager_util.h"/>
+              <file name="sli_se_manager_features.h" linked="false" uri="studio:/sdk/platform/security/sl_component/se_manager/inc/sli_se_manager_features.h"/>
               <file name="sl_se_manager_internal_keys.h" linked="false" uri="studio:/sdk/platform/security/sl_component/se_manager/inc/sl_se_manager_internal_keys.h"/>
               <file name="sli_se_manager_internal.h" linked="false" uri="studio:/sdk/platform/security/sl_component/se_manager/inc/sli_se_manager_internal.h"/>
               <file name="sl_se_manager_check_config.h" linked="false" uri="studio:/sdk/platform/security/sl_component/se_manager/inc/sl_se_manager_check_config.h"/>
@@ -674,11 +691,9 @@
                 <file name="logging_rtt.c" linked="false" uri="studio:/sdk/util/third_party/openthread/examples/platforms/utils/logging_rtt.c"/>
                 <file name="mac_frame.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/examples/platforms/utils/mac_frame.cpp"/>
                 <file name="settings_ram.c" linked="false" uri="studio:/sdk/util/third_party/openthread/examples/platforms/utils/settings_ram.c"/>
-                <file name="soft_source_match_table.c" linked="false" uri="studio:/sdk/util/third_party/openthread/examples/platforms/utils/soft_source_match_table.c"/>
                 <file name="link_metrics.h" linked="false" uri="studio:/sdk/util/third_party/openthread/examples/platforms/utils/link_metrics.h"/>
                 <file name="logging_rtt.h" linked="false" uri="studio:/sdk/util/third_party/openthread/examples/platforms/utils/logging_rtt.h"/>
                 <file name="mac_frame.h" linked="false" uri="studio:/sdk/util/third_party/openthread/examples/platforms/utils/mac_frame.h"/>
-                <file name="soft_source_match_table.h" linked="false" uri="studio:/sdk/util/third_party/openthread/examples/platforms/utils/soft_source_match_table.h"/>
                 <file name="settings.h" linked="false" uri="studio:/sdk/util/third_party/openthread/examples/platforms/utils/settings.h"/>
               </folder>
               <file name="openthread-system.h" linked="false" uri="studio:/sdk/util/third_party/openthread/examples/platforms/openthread-system.h"/>
@@ -687,6 +702,7 @@
           <folder name="src">
             <folder name="cli">
               <file name="cli.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/cli/cli.cpp"/>
+              <file name="cli_br.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/cli/cli_br.cpp"/>
               <file name="cli_coap.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/cli/cli_coap.cpp"/>
               <file name="cli_coap_secure.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/cli/cli_coap_secure.cpp"/>
               <file name="cli_commissioner.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/cli/cli_commissioner.cpp"/>
@@ -700,6 +716,7 @@
               <file name="cli_tcp.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/cli/cli_tcp.cpp"/>
               <file name="cli_udp.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/cli/cli_udp.cpp"/>
               <file name="cli.hpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/cli/cli.hpp"/>
+              <file name="cli_br.hpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/cli/cli_br.hpp"/>
               <file name="cli_coap.hpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/cli/cli_coap.hpp"/>
               <file name="cli_coap_secure.hpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/cli/cli_coap_secure.hpp"/>
               <file name="cli_commissioner.hpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/cli/cli_commissioner.hpp"/>
@@ -751,6 +768,7 @@
                 <file name="as_core_type.hpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/common/as_core_type.hpp"/>
                 <file name="binary_search.hpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/common/binary_search.hpp"/>
                 <file name="bit_vector.hpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/common/bit_vector.hpp"/>
+                <file name="callback.hpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/common/callback.hpp"/>
                 <file name="clearable.hpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/common/clearable.hpp"/>
                 <file name="code_utils.hpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/common/code_utils.hpp"/>
                 <file name="const_cast.hpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/common/const_cast.hpp"/>
@@ -784,6 +802,7 @@
                 <file name="owned_ptr.hpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/common/owned_ptr.hpp"/>
                 <file name="owning_list.hpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/common/owning_list.hpp"/>
                 <file name="pool.hpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/common/pool.hpp"/>
+                <file name="preference.hpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/common/preference.hpp"/>
                 <file name="ptr_wrapper.hpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/common/ptr_wrapper.hpp"/>
                 <file name="random.hpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/common/random.hpp"/>
                 <file name="retain_ptr.hpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/common/retain_ptr.hpp"/>
@@ -801,6 +820,7 @@
                 <file name="uptime.hpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/common/uptime.hpp"/>
                 <file name="binary_search.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/common/binary_search.cpp"/>
                 <file name="error.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/common/error.cpp"/>
+                <file name="frame_builder.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/common/frame_builder.cpp"/>
                 <file name="instance.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/common/instance.cpp"/>
                 <file name="log.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/common/log.cpp"/>
                 <file name="random.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/common/random.cpp"/>
@@ -811,13 +831,13 @@
                 <file name="appender.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/common/appender.cpp"/>
                 <file name="crc16.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/common/crc16.cpp"/>
                 <file name="data.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/common/data.cpp"/>
-                <file name="frame_builder.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/common/frame_builder.cpp"/>
                 <file name="frame_data.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/common/frame_data.cpp"/>
                 <file name="heap.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/common/heap.cpp"/>
                 <file name="heap_data.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/common/heap_data.cpp"/>
                 <file name="heap_string.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/common/heap_string.cpp"/>
                 <file name="message.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/common/message.cpp"/>
                 <file name="notifier.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/common/notifier.cpp"/>
+                <file name="preference.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/common/preference.cpp"/>
                 <file name="settings.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/common/settings.cpp"/>
                 <file name="time_ticker.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/common/time_ticker.cpp"/>
                 <file name="tlvs.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/common/tlvs.cpp"/>
@@ -834,7 +854,6 @@
                 <file name="child_supervision.h" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/config/child_supervision.h"/>
                 <file name="coap.h" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/config/coap.h"/>
                 <file name="commissioner.h" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/config/commissioner.h"/>
-                <file name="coprocessor_rpc.h" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/config/coprocessor_rpc.h"/>
                 <file name="crypto.h" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/config/crypto.h"/>
                 <file name="dataset_updater.h" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/config/dataset_updater.h"/>
                 <file name="dhcp6_client.h" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/config/dhcp6_client.h"/>
@@ -851,24 +870,23 @@
                 <file name="link_raw.h" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/config/link_raw.h"/>
                 <file name="logging.h" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/config/logging.h"/>
                 <file name="mac.h" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/config/mac.h"/>
+                <file name="mesh_diag.h" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/config/mesh_diag.h"/>
                 <file name="misc.h" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/config/misc.h"/>
                 <file name="mle.h" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/config/mle.h"/>
                 <file name="nat64.h" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/config/nat64.h"/>
                 <file name="netdata_publisher.h" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/config/netdata_publisher.h"/>
+                <file name="network_diagnostic.h" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/config/network_diagnostic.h"/>
                 <file name="openthread-core-config-check.h" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/config/openthread-core-config-check.h"/>
                 <file name="parent_search.h" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/config/parent_search.h"/>
                 <file name="ping_sender.h" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/config/ping_sender.h"/>
                 <file name="platform.h" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/config/platform.h"/>
+                <file name="power_calibration.h" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/config/power_calibration.h"/>
                 <file name="sntp_client.h" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/config/sntp_client.h"/>
                 <file name="srp_client.h" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/config/srp_client.h"/>
                 <file name="srp_server.h" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/config/srp_server.h"/>
                 <file name="radio_link.h" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/config/radio_link.h"/>
                 <file name="time_sync.h" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/config/time_sync.h"/>
                 <file name="tmf.h" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/config/tmf.h"/>
-              </folder>
-              <folder name="coprocessor">
-                <file name="rpc.hpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/coprocessor/rpc.hpp"/>
-                <file name="rpc.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/coprocessor/rpc.cpp"/>
               </folder>
               <folder name="crypto">
                 <file name="aes_ccm.hpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/crypto/aes_ccm.hpp"/>
@@ -878,18 +896,15 @@
                 <file name="hkdf_sha256.hpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/crypto/hkdf_sha256.hpp"/>
                 <file name="hmac_sha256.hpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/crypto/hmac_sha256.hpp"/>
                 <file name="mbedtls.hpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/crypto/mbedtls.hpp"/>
-                <file name="pbkdf2_cmac.hpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/crypto/pbkdf2_cmac.hpp"/>
                 <file name="sha256.hpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/crypto/sha256.hpp"/>
                 <file name="storage.hpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/crypto/storage.hpp"/>
                 <file name="aes_ccm.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/crypto/aes_ccm.cpp"/>
                 <file name="aes_ecb.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/crypto/aes_ecb.cpp"/>
                 <file name="crypto_platform.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/crypto/crypto_platform.cpp"/>
                 <file name="storage.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/crypto/storage.cpp"/>
-                <file name="ecdsa.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/crypto/ecdsa.cpp"/>
                 <file name="hkdf_sha256.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/crypto/hkdf_sha256.cpp"/>
                 <file name="hmac_sha256.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/crypto/hmac_sha256.cpp"/>
                 <file name="mbedtls.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/crypto/mbedtls.cpp"/>
-                <file name="pbkdf2_cmac.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/crypto/pbkdf2_cmac.cpp"/>
                 <file name="sha256.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/crypto/sha256.cpp"/>
               </folder>
               <folder name="diags">
@@ -991,6 +1006,7 @@
                 <file name="dhcp6_server.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/net/dhcp6_server.cpp"/>
                 <file name="dns_client.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/net/dns_client.cpp"/>
                 <file name="dns_dso.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/net/dns_dso.cpp"/>
+                <file name="dns_platform.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/net/dns_platform.cpp"/>
                 <file name="dns_types.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/net/dns_types.cpp"/>
                 <file name="dnssd_server.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/net/dnssd_server.cpp"/>
                 <file name="icmp6.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/net/icmp6.cpp"/>
@@ -1030,6 +1046,7 @@
                 <file name="announce_sender.hpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/thread/announce_sender.hpp"/>
                 <file name="anycast_locator.hpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/thread/anycast_locator.hpp"/>
                 <file name="child_mask.hpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/thread/child_mask.hpp"/>
+                <file name="child_supervision.hpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/thread/child_supervision.hpp"/>
                 <file name="child_table.hpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/thread/child_table.hpp"/>
                 <file name="csl_tx_scheduler.hpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/thread/csl_tx_scheduler.hpp"/>
                 <file name="discover_scanner.hpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/thread/discover_scanner.hpp"/>
@@ -1078,6 +1095,7 @@
                 <file name="announce_begin_server.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/thread/announce_begin_server.cpp"/>
                 <file name="announce_sender.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/thread/announce_sender.cpp"/>
                 <file name="anycast_locator.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/thread/anycast_locator.cpp"/>
+                <file name="child_supervision.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/thread/child_supervision.cpp"/>
                 <file name="child_table.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/thread/child_table.cpp"/>
                 <file name="csl_tx_scheduler.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/thread/csl_tx_scheduler.cpp"/>
                 <file name="discover_scanner.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/thread/discover_scanner.cpp"/>
@@ -1093,6 +1111,7 @@
                 <file name="mesh_forwarder_mtd.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/thread/mesh_forwarder_mtd.cpp"/>
                 <file name="mle.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/thread/mle.cpp"/>
                 <file name="mle_router.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/thread/mle_router.cpp"/>
+                <file name="mle_tlvs.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/thread/mle_tlvs.cpp"/>
                 <file name="mle_types.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/thread/mle_types.cpp"/>
                 <file name="mlr_manager.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/thread/mlr_manager.cpp"/>
                 <file name="neighbor_table.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/thread/neighbor_table.cpp"/>
@@ -1119,31 +1138,32 @@
               <folder name="utils">
                 <file name="channel_manager.hpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/utils/channel_manager.hpp"/>
                 <file name="channel_monitor.hpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/utils/channel_monitor.hpp"/>
-                <file name="child_supervision.hpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/utils/child_supervision.hpp"/>
                 <file name="flash.hpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/utils/flash.hpp"/>
                 <file name="heap.hpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/utils/heap.hpp"/>
                 <file name="history_tracker.hpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/utils/history_tracker.hpp"/>
                 <file name="jam_detector.hpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/utils/jam_detector.hpp"/>
+                <file name="mesh_diag.hpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/utils/mesh_diag.hpp"/>
                 <file name="otns.hpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/utils/otns.hpp"/>
                 <file name="parse_cmdline.hpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/utils/parse_cmdline.hpp"/>
                 <file name="ping_sender.hpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/utils/ping_sender.hpp"/>
+                <file name="power_calibration.hpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/utils/power_calibration.hpp"/>
                 <file name="slaac_address.hpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/utils/slaac_address.hpp"/>
                 <file name="srp_client_buffers.hpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/utils/srp_client_buffers.hpp"/>
                 <file name="parse_cmdline.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/utils/parse_cmdline.cpp"/>
+                <file name="power_calibration.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/utils/power_calibration.cpp"/>
                 <file name="channel_manager.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/utils/channel_manager.cpp"/>
                 <file name="channel_monitor.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/utils/channel_monitor.cpp"/>
-                <file name="child_supervision.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/utils/child_supervision.cpp"/>
                 <file name="flash.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/utils/flash.cpp"/>
                 <file name="heap.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/utils/heap.cpp"/>
                 <file name="history_tracker.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/utils/history_tracker.cpp"/>
                 <file name="jam_detector.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/utils/jam_detector.cpp"/>
+                <file name="mesh_diag.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/utils/mesh_diag.cpp"/>
                 <file name="otns.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/utils/otns.cpp"/>
                 <file name="ping_sender.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/utils/ping_sender.cpp"/>
                 <file name="slaac_address.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/utils/slaac_address.cpp"/>
                 <file name="srp_client_buffers.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/utils/srp_client_buffers.cpp"/>
               </folder>
               <folder name="api">
-                <file name="coprocessor_rpc_api.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/api/coprocessor_rpc_api.cpp"/>
                 <file name="diags_api.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/api/diags_api.cpp"/>
                 <file name="error_api.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/api/error_api.cpp"/>
                 <file name="instance_api.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/api/instance_api.cpp"/>
@@ -1176,6 +1196,7 @@
                 <file name="joiner_api.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/api/joiner_api.cpp"/>
                 <file name="link_api.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/api/link_api.cpp"/>
                 <file name="link_metrics_api.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/api/link_metrics_api.cpp"/>
+                <file name="mesh_diag_api.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/api/mesh_diag_api.cpp"/>
                 <file name="message_api.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/api/message_api.cpp"/>
                 <file name="multi_radio_api.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/api/multi_radio_api.cpp"/>
                 <file name="nat64_api.cpp" linked="false" uri="studio:/sdk/util/third_party/openthread/src/core/api/nat64_api.cpp"/>
@@ -1207,6 +1228,7 @@
                 <file name="alarm-milli.h" linked="false" uri="studio:/sdk/util/third_party/openthread/include/openthread/platform/alarm-milli.h"/>
                 <file name="crypto.h" linked="false" uri="studio:/sdk/util/third_party/openthread/include/openthread/platform/crypto.h"/>
                 <file name="diag.h" linked="false" uri="studio:/sdk/util/third_party/openthread/include/openthread/platform/diag.h"/>
+                <file name="dns.h" linked="false" uri="studio:/sdk/util/third_party/openthread/include/openthread/platform/dns.h"/>
                 <file name="dso_transport.h" linked="false" uri="studio:/sdk/util/third_party/openthread/include/openthread/platform/dso_transport.h"/>
                 <file name="entropy.h" linked="false" uri="studio:/sdk/util/third_party/openthread/include/openthread/platform/entropy.h"/>
                 <file name="flash.h" linked="false" uri="studio:/sdk/util/third_party/openthread/include/openthread/platform/flash.h"/>
@@ -1238,7 +1260,6 @@
               <file name="coap.h" linked="false" uri="studio:/sdk/util/third_party/openthread/include/openthread/coap.h"/>
               <file name="commissioner.h" linked="false" uri="studio:/sdk/util/third_party/openthread/include/openthread/commissioner.h"/>
               <file name="config.h" linked="false" uri="studio:/sdk/util/third_party/openthread/include/openthread/config.h"/>
-              <file name="coprocessor_rpc.h" linked="false" uri="studio:/sdk/util/third_party/openthread/include/openthread/coprocessor_rpc.h"/>
               <file name="crypto.h" linked="false" uri="studio:/sdk/util/third_party/openthread/include/openthread/crypto.h"/>
               <file name="dataset.h" linked="false" uri="studio:/sdk/util/third_party/openthread/include/openthread/dataset.h"/>
               <file name="dataset_ftd.h" linked="false" uri="studio:/sdk/util/third_party/openthread/include/openthread/dataset_ftd.h"/>
@@ -1259,6 +1280,7 @@
               <file name="link_metrics.h" linked="false" uri="studio:/sdk/util/third_party/openthread/include/openthread/link_metrics.h"/>
               <file name="link_raw.h" linked="false" uri="studio:/sdk/util/third_party/openthread/include/openthread/link_raw.h"/>
               <file name="logging.h" linked="false" uri="studio:/sdk/util/third_party/openthread/include/openthread/logging.h"/>
+              <file name="mesh_diag.h" linked="false" uri="studio:/sdk/util/third_party/openthread/include/openthread/mesh_diag.h"/>
               <file name="message.h" linked="false" uri="studio:/sdk/util/third_party/openthread/include/openthread/message.h"/>
               <file name="multi_radio.h" linked="false" uri="studio:/sdk/util/third_party/openthread/include/openthread/multi_radio.h"/>
               <file name="nat64.h" linked="false" uri="studio:/sdk/util/third_party/openthread/include/openthread/nat64.h"/>
@@ -1365,6 +1387,7 @@
             <file name="openthread-core-efr32-config-check.h" linked="false" uri="studio:/sdk/protocol/openthread/platform-abstraction/efr32/openthread-core-efr32-config-check.h"/>
             <file name="platform-efr32.h" linked="false" uri="studio:/sdk/protocol/openthread/platform-abstraction/efr32/platform-efr32.h"/>
             <file name="sleep.h" linked="false" uri="studio:/sdk/protocol/openthread/platform-abstraction/efr32/sleep.h"/>
+            <file name="soft_source_match_table.c" linked="false" uri="studio:/sdk/protocol/openthread/platform-abstraction/efr32/soft_source_match_table.c"/>
             <file name="alarm.c" linked="false" uri="studio:/sdk/protocol/openthread/platform-abstraction/efr32/alarm.c"/>
             <file name="diag.c" linked="false" uri="studio:/sdk/protocol/openthread/platform-abstraction/efr32/diag.c"/>
             <file name="entropy.c" linked="false" uri="studio:/sdk/protocol/openthread/platform-abstraction/efr32/entropy.c"/>
@@ -1375,6 +1398,7 @@
             <file name="crypto.c" linked="false" uri="studio:/sdk/protocol/openthread/platform-abstraction/efr32/crypto.c"/>
             <file name="ieee802154-packet-utils.cpp" linked="false" uri="studio:/sdk/protocol/openthread/platform-abstraction/efr32/ieee802154-packet-utils.cpp"/>
             <file name="radio.c" linked="false" uri="studio:/sdk/protocol/openthread/platform-abstraction/efr32/radio.c"/>
+            <file name="radio_vendor.c" linked="false" uri="studio:/sdk/protocol/openthread/platform-abstraction/efr32/radio_vendor.c"/>
             <file name="startup-gcc.c" linked="false" uri="studio:/sdk/protocol/openthread/platform-abstraction/efr32/startup-gcc.c"/>
             <file name="system.c" linked="false" uri="studio:/sdk/protocol/openthread/platform-abstraction/efr32/system.c"/>
             <file name="ieee802154mac.h" linked="false" uri="studio:/sdk/protocol/openthread/platform-abstraction/efr32/ieee802154mac.h"/>
@@ -1383,65 +1407,72 @@
             <file name="rail_config.h" linked="false" uri="studio:/sdk/protocol/openthread/platform-abstraction/efr32/rail_config.h"/>
             <file name="sl_packet_utils.h" linked="false" uri="studio:/sdk/protocol/openthread/platform-abstraction/efr32/sl_packet_utils.h"/>
             <file name="sl_openthread.h" linked="false" uri="studio:/sdk/protocol/openthread/platform-abstraction/efr32/sl_openthread.h"/>
+            <file name="diag.h" linked="false" uri="studio:/sdk/protocol/openthread/platform-abstraction/efr32/diag.h"/>
+            <file name="soft_source_match_table.h" linked="false" uri="studio:/sdk/protocol/openthread/platform-abstraction/efr32/soft_source_match_table.h"/>
+          </folder>
+          <folder name="include">
+            <file name="radio_vendor.h" linked="false" uri="studio:/sdk/protocol/openthread/platform-abstraction/include/radio_vendor.h"/>
           </folder>
         </folder>
       </folder>
     </folder>
   </folder>
-  <file name="main.c" linked="false" uri="studio:/project/main.c"/>
   <file name="app.h" linked="false" uri="studio:/project/app.h"/>
   <file name="README.md" linked="false" uri="studio:/project/README.md"/>
   <includePath uri="studio:/project/"/>
-  <includePath uri="studio:/project/gecko_sdk_4.2.3/platform/Device/SiliconLabs/MGM24/Include"/>
-  <includePath uri="studio:/project/gecko_sdk_4.2.3/platform/common/inc"/>
-  <includePath uri="studio:/project/gecko_sdk_4.2.3/platform/CMSIS/Core/Include"/>
-  <includePath uri="studio:/project/gecko_sdk_4.2.3/platform/service/device_init/inc"/>
-  <includePath uri="studio:/project/gecko_sdk_4.2.3/platform/emdrv/dmadrv/inc"/>
-  <includePath uri="studio:/project/gecko_sdk_4.2.3/platform/emdrv/common/inc"/>
-  <includePath uri="studio:/project/gecko_sdk_4.2.3/platform/emlib/inc"/>
-  <includePath uri="studio:/project/gecko_sdk_4.2.3/platform/radio/rail_lib/plugin/fem_util"/>
-  <includePath uri="studio:/project/gecko_sdk_4.2.3/platform/emdrv/gpiointerrupt/inc"/>
-  <includePath uri="studio:/project/gecko_sdk_4.2.3/platform/service/hfxo_manager/inc"/>
-  <includePath uri="studio:/project/gecko_sdk_4.2.3/platform/driver/i2cspm/inc"/>
-  <includePath uri="studio:/project/gecko_sdk_4.2.3/platform/security/sl_component/sl_mbedtls_support/config"/>
-  <includePath uri="studio:/project/gecko_sdk_4.2.3/platform/security/sl_component/sl_mbedtls_support/inc"/>
-  <includePath uri="studio:/project/gecko_sdk_4.2.3/util/third_party/mbedtls/include"/>
-  <includePath uri="studio:/project/gecko_sdk_4.2.3/util/third_party/mbedtls/library"/>
-  <includePath uri="studio:/project/gecko_sdk_4.2.3/platform/service/mpu/inc"/>
-  <includePath uri="studio:/project/gecko_sdk_4.2.3/platform/emdrv/nvm3/inc"/>
-  <includePath uri="studio:/project/gecko_sdk_4.2.3/util/third_party/openthread/src"/>
-  <includePath uri="studio:/project/gecko_sdk_4.2.3/util/third_party/openthread/src/cli"/>
-  <includePath uri="studio:/project/gecko_sdk_4.2.3/util/third_party/openthread/include"/>
-  <includePath uri="studio:/project/gecko_sdk_4.2.3/util/third_party/openthread/include/openthread"/>
-  <includePath uri="studio:/project/gecko_sdk_4.2.3/util/third_party/openthread/src/core"/>
-  <includePath uri="studio:/project/gecko_sdk_4.2.3/util/third_party/openthread/third_party/tcplp"/>
-  <includePath uri="studio:/project/gecko_sdk_4.2.3/util/third_party/openthread/examples/platforms"/>
-  <includePath uri="studio:/project/gecko_sdk_4.2.3/util/third_party/openthread/examples/platforms/utils"/>
-  <includePath uri="studio:/project/gecko_sdk_4.2.3/protocol/openthread/platform-abstraction/efr32"/>
-  <includePath uri="studio:/project/gecko_sdk_4.2.3/platform/peripheral/inc"/>
-  <includePath uri="studio:/project/gecko_sdk_4.2.3/platform/service/power_manager/inc"/>
-  <includePath uri="studio:/project/gecko_sdk_4.2.3/platform/security/sl_component/sl_psa_driver/inc"/>
-  <includePath uri="studio:/project/gecko_sdk_4.2.3/platform/security/sl_component/sl_psa_driver/inc/public"/>
-  <includePath uri="studio:/project/gecko_sdk_4.2.3/platform/radio/rail_lib/common"/>
-  <includePath uri="studio:/project/gecko_sdk_4.2.3/platform/radio/rail_lib/protocol/ble"/>
-  <includePath uri="studio:/project/gecko_sdk_4.2.3/platform/radio/rail_lib/protocol/ieee802154"/>
-  <includePath uri="studio:/project/gecko_sdk_4.2.3/platform/radio/rail_lib/protocol/zwave"/>
-  <includePath uri="studio:/project/gecko_sdk_4.2.3/platform/radio/rail_lib/chip/efr32/efr32xg2x"/>
-  <includePath uri="studio:/project/gecko_sdk_4.2.3/platform/radio/rail_lib/plugin/pa-conversions"/>
-  <includePath uri="studio:/project/gecko_sdk_4.2.3/platform/radio/rail_lib/plugin/pa-conversions/efr32xg24"/>
-  <includePath uri="studio:/project/gecko_sdk_4.2.3/platform/radio/rail_lib/plugin/rail_util_pti"/>
-  <includePath uri="studio:/project/gecko_sdk_4.2.3/platform/radio/rail_lib/plugin/rail_util_rssi"/>
-  <includePath uri="studio:/project/gecko_sdk_4.2.3/platform/security/sl_component/se_manager/inc"/>
-  <includePath uri="studio:/project/gecko_sdk_4.2.3/platform/security/sl_component/se_manager/src"/>
-  <includePath uri="studio:/project/gecko_sdk_4.2.3/util/plugin/security_manager"/>
-  <includePath uri="studio:/project/gecko_sdk_4.2.3/util/third_party/segger/systemview/SEGGER"/>
-  <includePath uri="studio:/project/gecko_sdk_4.2.3/util/silicon_labs/silabs_core/memory_manager"/>
-  <includePath uri="studio:/project/gecko_sdk_4.2.3/platform/common/toolchain/inc"/>
-  <includePath uri="studio:/project/gecko_sdk_4.2.3/platform/service/system/inc"/>
-  <includePath uri="studio:/project/gecko_sdk_4.2.3/platform/service/sleeptimer/inc"/>
-  <includePath uri="studio:/project/gecko_sdk_4.2.3/platform/security/sl_component/sl_protocol_crypto/src"/>
-  <includePath uri="studio:/project/gecko_sdk_4.2.3/platform/emdrv/uartdrv/inc"/>
-  <includePath uri="studio:/project/gecko_sdk_4.2.3/platform/service/udelay/inc"/>
+  <includePath uri="studio:/project/gecko_sdk_4.3.0/platform/Device/SiliconLabs/MGM24/Include"/>
+  <includePath uri="studio:/project/gecko_sdk_4.3.0/platform/common/inc"/>
+  <includePath uri="studio:/project/gecko_sdk_4.3.0/platform/CMSIS/Core/Include"/>
+  <includePath uri="studio:/project/gecko_sdk_4.3.0/platform/service/device_init/inc"/>
+  <includePath uri="studio:/project/gecko_sdk_4.3.0/platform/emdrv/dmadrv/inc"/>
+  <includePath uri="studio:/project/gecko_sdk_4.3.0/platform/emdrv/common/inc"/>
+  <includePath uri="studio:/project/gecko_sdk_4.3.0/platform/emlib/inc"/>
+  <includePath uri="studio:/project/gecko_sdk_4.3.0/platform/radio/rail_lib/plugin/fem_util"/>
+  <includePath uri="studio:/project/gecko_sdk_4.3.0/platform/emdrv/gpiointerrupt/inc"/>
+  <includePath uri="studio:/project/gecko_sdk_4.3.0/platform/service/hfxo_manager/inc"/>
+  <includePath uri="studio:/project/gecko_sdk_4.3.0/platform/driver/i2cspm/inc"/>
+  <includePath uri="studio:/project/gecko_sdk_4.3.0/platform/security/sl_component/sl_mbedtls_support/config"/>
+  <includePath uri="studio:/project/gecko_sdk_4.3.0/platform/security/sl_component/sl_mbedtls_support/config/preset"/>
+  <includePath uri="studio:/project/gecko_sdk_4.3.0/platform/security/sl_component/sl_mbedtls_support/inc"/>
+  <includePath uri="studio:/project/gecko_sdk_4.3.0/util/third_party/mbedtls/include"/>
+  <includePath uri="studio:/project/gecko_sdk_4.3.0/util/third_party/mbedtls/library"/>
+  <includePath uri="studio:/project/gecko_sdk_4.3.0/platform/service/mpu/inc"/>
+  <includePath uri="studio:/project/gecko_sdk_4.3.0/platform/emdrv/nvm3/inc"/>
+  <includePath uri="studio:/project/gecko_sdk_4.3.0/util/third_party/openthread/src"/>
+  <includePath uri="studio:/project/gecko_sdk_4.3.0/util/third_party/openthread/src/cli"/>
+  <includePath uri="studio:/project/gecko_sdk_4.3.0/util/third_party/openthread/include"/>
+  <includePath uri="studio:/project/gecko_sdk_4.3.0/util/third_party/openthread/include/openthread"/>
+  <includePath uri="studio:/project/gecko_sdk_4.3.0/util/third_party/openthread/src/core"/>
+  <includePath uri="studio:/project/gecko_sdk_4.3.0/util/third_party/openthread/third_party/tcplp"/>
+  <includePath uri="studio:/project/gecko_sdk_4.3.0/util/third_party/openthread/examples/platforms"/>
+  <includePath uri="studio:/project/gecko_sdk_4.3.0/util/third_party/openthread/examples/platforms/utils"/>
+  <includePath uri="studio:/project/gecko_sdk_4.3.0/protocol/openthread/platform-abstraction/efr32"/>
+  <includePath uri="studio:/project/gecko_sdk_4.3.0/protocol/openthread/platform-abstraction/include"/>
+  <includePath uri="studio:/project/gecko_sdk_4.3.0/platform/peripheral/inc"/>
+  <includePath uri="studio:/project/gecko_sdk_4.3.0/platform/service/power_manager/inc"/>
+  <includePath uri="studio:/project/gecko_sdk_4.3.0/platform/security/sl_component/sl_psa_driver/inc"/>
+  <includePath uri="studio:/project/gecko_sdk_4.3.0/platform/radio/rail_lib/common"/>
+  <includePath uri="studio:/project/gecko_sdk_4.3.0/platform/radio/rail_lib/protocol/ble"/>
+  <includePath uri="studio:/project/gecko_sdk_4.3.0/platform/radio/rail_lib/protocol/ieee802154"/>
+  <includePath uri="studio:/project/gecko_sdk_4.3.0/platform/radio/rail_lib/protocol/wmbus"/>
+  <includePath uri="studio:/project/gecko_sdk_4.3.0/platform/radio/rail_lib/protocol/zwave"/>
+  <includePath uri="studio:/project/gecko_sdk_4.3.0/platform/radio/rail_lib/chip/efr32/efr32xg2x"/>
+  <includePath uri="studio:/project/gecko_sdk_4.3.0/platform/radio/rail_lib/plugin/pa-conversions"/>
+  <includePath uri="studio:/project/gecko_sdk_4.3.0/platform/radio/rail_lib/plugin/pa-conversions/efr32xg24"/>
+  <includePath uri="studio:/project/gecko_sdk_4.3.0/platform/radio/rail_lib/plugin/rail_util_power_manager_init"/>
+  <includePath uri="studio:/project/gecko_sdk_4.3.0/platform/radio/rail_lib/plugin/rail_util_pti"/>
+  <includePath uri="studio:/project/gecko_sdk_4.3.0/platform/radio/rail_lib/plugin/rail_util_rssi"/>
+  <includePath uri="studio:/project/gecko_sdk_4.3.0/platform/security/sl_component/se_manager/inc"/>
+  <includePath uri="studio:/project/gecko_sdk_4.3.0/platform/security/sl_component/se_manager/src"/>
+  <includePath uri="studio:/project/gecko_sdk_4.3.0/util/plugin/security_manager"/>
+  <includePath uri="studio:/project/gecko_sdk_4.3.0/util/third_party/segger/systemview/SEGGER"/>
+  <includePath uri="studio:/project/gecko_sdk_4.3.0/util/silicon_labs/silabs_core/memory_manager"/>
+  <includePath uri="studio:/project/gecko_sdk_4.3.0/platform/common/toolchain/inc"/>
+  <includePath uri="studio:/project/gecko_sdk_4.3.0/platform/service/system/inc"/>
+  <includePath uri="studio:/project/gecko_sdk_4.3.0/platform/service/sleeptimer/inc"/>
+  <includePath uri="studio:/project/gecko_sdk_4.3.0/platform/security/sl_component/sl_protocol_crypto/src"/>
+  <includePath uri="studio:/project/gecko_sdk_4.3.0/platform/emdrv/uartdrv/inc"/>
+  <includePath uri="studio:/project/gecko_sdk_4.3.0/platform/service/udelay/inc"/>
   <macroDefinition name="MGM240PB32VNA"/>
   <macroDefinition name="SL_COMPONENT_CATALOG_PRESENT"/>
   <macroDefinition name="MBEDTLS_CONFIG_FILE" value="&lt;sl_mbedtls_config.h>"/>
@@ -1460,10 +1491,10 @@
   <macroDefinition name="SEGGER_RTT_SECTION" value="&quot;SEGGER_RTT&quot;"/>
   <macroDefinition name="SLI_RADIOAES_REQUIRES_MASKING"/>
   <libraryFile name="stdc++"/>
-  <libraryFile uri="studio:/project/gecko_sdk_4.2.3/platform/emdrv/nvm3/lib/libnvm3_CM33_gcc.a"/>
-  <libraryFile uri="studio:/project/gecko_sdk_4.2.3/protocol/openthread/libs/libsl_openthread_efr32mg2x_gcc.a"/>
-  <libraryFile uri="studio:/project/gecko_sdk_4.2.3/platform/radio/rail_lib/autogen/librail_release/librail_config_mgm240pb32vna_gcc.a"/>
-  <libraryFile uri="studio:/project/gecko_sdk_4.2.3/platform/radio/rail_lib/autogen/librail_release/librail_module_efr32xg24_gcc_release.a"/>
+  <libraryFile uri="studio:/project/gecko_sdk_4.3.0/platform/emdrv/nvm3/lib/libnvm3_CM33_gcc.a"/>
+  <libraryFile uri="studio:/project/gecko_sdk_4.3.0/protocol/openthread/libs/libsl_openthread_efr32mg2x_gcc.a"/>
+  <libraryFile uri="studio:/project/gecko_sdk_4.3.0/platform/radio/rail_lib/autogen/librail_release/librail_config_mgm240pb32vna_gcc.a"/>
+  <libraryFile uri="studio:/project/gecko_sdk_4.3.0/platform/radio/rail_lib/autogen/librail_release/librail_module_efr32xg24_gcc_release.a"/>
   <libraryFile name="gcc"/>
   <libraryFile name="c"/>
   <libraryFile name="m"/>
