@@ -2,15 +2,27 @@
 #define APP_SENSOR_H
 
 
-
+#include <iostream>
+#include <utility>
+#include "bsec_interface.h"
 
 namespace sensor {
 // Namespace for wrapping BSEC, bme68x and platform abstractions together
 
+typedef std::pair<float, uint8_t> op_data_t;
 typedef struct
 {
+	op_data_t iaq;
+	op_data_t comp_temp;
+	op_data_t comp_hum;
+	op_data_t pres;
+	op_data_t class1;
+	op_data_t class2;
+	bool stab;
+	bool run_in;
+	int64_t timestamp;
+} sig_if_t; // TODO output data form
 
-} output; // TODO output data form
 
 
 
@@ -24,7 +36,7 @@ typedef struct
  * @return          Returns a value of type bsec_library_return_t (enum)
  */
 bsec_library_return_t proc(void (*const burtc_cb)(uint32_t), uint32_t (*const ts)(void));
-output get(void);
+
 
 }
 

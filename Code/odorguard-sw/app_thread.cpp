@@ -15,6 +15,8 @@
 #include <openthread/srp_client.h>
 #include <openthread/srp_client_buffers.h>
 
+#include "stdio.h"
+#include "string.h"
 
 #include "sl_component_catalog.h"
 #ifdef SL_CATALOG_POWER_MANAGER_PRESENT
@@ -86,7 +88,7 @@ void setNetworkConfiguration(void)
     aDataset.mComponents.mIsActiveTimestampPresent = true;
 
     /* Set Channel to 15 */
-    aDataset.mChannel                      = ;
+    aDataset.mChannel                      = 15;
     aDataset.mComponents.mIsChannelPresent = true;
 
     /* Set Pan ID to 2222 */
@@ -94,12 +96,12 @@ void setNetworkConfiguration(void)
     aDataset.mComponents.mIsPanIdPresent = true;
 
     /* Set Extended Pan ID to C0DE1AB5C0DE1AB5 */
-    uint8_t extPanId[OT_EXT_PAN_ID_SIZE] = { };
+    uint8_t extPanId[OT_EXT_PAN_ID_SIZE] = {};
     memcpy(aDataset.mExtendedPanId.m8, extPanId, sizeof(aDataset.mExtendedPanId));
     aDataset.mComponents.mIsExtendedPanIdPresent = true;
 
     /* Set network key to 1234C0DE1AB51234C0DE1AB51234C0DE */
-    uint8_t key[OT_NETWORK_KEY_SIZE] = { };
+    uint8_t key[OT_NETWORK_KEY_SIZE] = {};
     memcpy(aDataset.mNetworkKey.m8, key, sizeof(aDataset.mNetworkKey));
     aDataset.mComponents.mIsNetworkKeyPresent = true;
 
@@ -131,26 +133,26 @@ void initUdp(void)
 void appSrpInit(void)
 {
     otError error = OT_ERROR_NONE;
-/*
+
     char *hostName;
-    const char *HOST_NAME = "OT-CO2SN-0";
+    const char *HOST_NAME = "OT-test-0";
     uint16_t size;
-    hostName = otSrpClientBuffersGetHostNameString(sInstance, &size);
-    error = otSrpClientSetHostName(sInstance, HOST_NAME);
+    hostName = otSrpClientBuffersGetHostNameString(otGetInstance(), &size);
+    error = otSrpClientSetHostName(otGetInstance(), HOST_NAME);
     memcpy(hostName, HOST_NAME, sizeof(HOST_NAME) + 1);
 
 
-    otSrpClientEnableAutoHostAddress(sInstance);
+    otSrpClientEnableAutoHostAddress(otGetInstance());
 
 
     otSrpClientBuffersServiceEntry *entry = NULL;
     char *string;
 
-    entry = otSrpClientBuffersAllocateService(sInstance);
+    entry = otSrpClientBuffersAllocateService(otGetInstance());
 
     entry->mService.mPort = 33434;
     char INST_NAME[32];
-    snprintf(INST_NAME, 32, "ipv6bc%d", (uint8_t)(eui._64b & 0xFF));
+    snprintf(INST_NAME, 32, "ipv6bc%d", (uint8_t)(1));
     const char *SERV_NAME = "_ot._udp";
     string = otSrpClientBuffersGetServiceEntryInstanceNameString(entry, &size);
     memcpy(string, INST_NAME, size);
@@ -159,12 +161,12 @@ void appSrpInit(void)
     string = otSrpClientBuffersGetServiceEntryServiceNameString(entry, &size);
     memcpy(string, SERV_NAME, size);
 
-    error = otSrpClientAddService(sInstance, &entry->mService);
+    error = otSrpClientAddService(otGetInstance(), &entry->mService);
 
     assert(OT_ERROR_NONE == error);
 
     entry = NULL;
-*/
+
     otSrpClientEnableAutoStartMode(otGetInstance(), /* aCallback */ NULL, /* aContext */ NULL);
 }
 

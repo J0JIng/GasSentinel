@@ -1,3 +1,6 @@
+#include "app_sensor.h"
+#include "app_main.h"
+#include "app_coap.h"
 #include <assert.h>
 #include <openthread-core-config.h>
 #include <openthread/config.h>
@@ -16,7 +19,7 @@
 #include "sl_i2cspm.h"
 #include "sl_sleeptimer.h"
 #include "sl_udelay.h"
-#include "app_main.h"
+
 #include <cstring>
 
 
@@ -85,17 +88,18 @@ static bsec_library_return_t _bsec_get_data(bsec_input_t *bsec_inputs,
 
 	bsec_library_return_t bsec_status = BSEC_OK;
 
-	int64_t timestamp = 0;
-	float gas_estimate_1 = 0.0f;
-	float gas_estimate_2 = 0.0f;
-	float gas_estimate_3 = 0.0f;
-	float gas_estimate_4 = 0.0f;
-	float raw_pressure = 0.0f;
-	float raw_temp = 0.0f;
-	float raw_humidity = 0.0f;
-	float raw_gas = 0.0f;
-	uint8_t raw_gas_index = 0;
 
+    int64_t timestamp = 0;
+    float iaq = 0.0f;
+    float stab = 0.0f;
+    float runin = 0.0f;
+    float temp = 0.0f;
+    float hum = 0.0f;
+    float pres = 0.0f;
+    float gas_class1 = 0.0f;
+    float gas_class2 = 0.0f;
+
+    sig_if_t data;
 	/* Check if something should be processed by BSEC */
 	if (num_bsec_inputs > 0) {
 		/* Set number of outputs to the size of the allocated buffer */
@@ -113,46 +117,41 @@ static bsec_library_return_t _bsec_get_data(bsec_input_t *bsec_inputs,
 		/* Iterate through the outputs and extract the relevant ones. */
 		for (index = 0; index < num_bsec_outputs; index++) {
 			switch (bsec_outputs[index].sensor_id) {
-			case BSEC_OUTPUT_GAS_ESTIMATE_1:
-				gas_estimate_1 = bsec_outputs[index].signal;
+			case BSEC_OUTPUT_IAQ:
+				data.iaq = std::make_pair(bsec_outputs[index].signal, bsec_outputs[index].accuracy);
 				break;
-			case BSEC_OUTPUT_GAS_ESTIMATE_2:
-				gas_estimate_2 = bsec_outputs[index].signal;
+			case BSEC_OUTPUT_STABILIZATION_STATUS:
+				data.stab = static_cast<bool>(bsec_outputs[index].signal);
 				break;
-			case BSEC_OUTPUT_GAS_ESTIMATE_3:
-				gas_estimate_3 = bsec_outputs[index].signal;
+			case BSEC_OUTPUT_RUN_IN_STATUS:
+				data.run_in = static_cast<bool>(bsec_outputs[index].signal);
 				break;
-			case BSEC_OUTPUT_GAS_ESTIMATE_4:
-				gas_estimate_4 = bsec_outputs[index].signal;
+			case BSEC_OUTPUT_SENSOR_HEAT_COMPENSATED_TEMPERATURE:
+				data.comp_temp = std::make_pair(bsec_outputs[index].signal, bsec_outputs[index].accuracy);
+				break;
+			case BSEC_OUTPUT_SENSOR_HEAT_COMPENSATED_HUMIDITY:
+				data.comp_hum = std::make_pair(bsec_outputs[index].signal, bsec_outputs[index].accuracy);
 				break;
 			case BSEC_OUTPUT_RAW_PRESSURE:
-				raw_pressure = bsec_outputs[index].signal;
+				data.pres = std::make_pair(bsec_outputs[index].signal, bsec_outputs[index].accuracy);
 				break;
-			case BSEC_OUTPUT_RAW_TEMPERATURE:
-				raw_temp = bsec_outputs[index].signal;
+			case BSEC_OUTPUT_GAS_ESTIMATE_1:
+				data.class1 = std::make_pair(bsec_outputs[index].signal, bsec_outputs[index].accuracy);
 				break;
-			case BSEC_OUTPUT_RAW_HUMIDITY:
-				raw_humidity = bsec_outputs[index].signal;
+			case BSEC_OUTPUT_GAS_ESTIMATE_2:
+				data.class2 = std::make_pair(bsec_outputs[index].signal, bsec_outputs[index].accuracy);
 				break;
-			case BSEC_OUTPUT_RAW_GAS:
-				raw_gas = bsec_outputs[index].signal;
-				break;
-			case BSEC_OUTPUT_RAW_GAS_INDEX:
-				raw_gas_index = (uint8_t) bsec_outputs[index].signal;
-				break;
-
 			default:
 				continue;
 			}
 
 			/* Assume that all the returned timestamps are the same */
-			timestamp = bsec_outputs[index].time_stamp;
+			data.timestamp = bsec_outputs[index].time_stamp;
+
 		}
 
-		/* Pass the extracted outputs to the user provided output_ready() function. */
-		output_print(timestamp, gas_estimate_1, gas_estimate_2, gas_estimate_3,
-				gas_estimate_4, raw_pressure, raw_temp, raw_humidity, raw_gas,
-				raw_gas_index, bsec_status);
+		coap::ux_queue.push(data);
+		otCliOutputFormat("iaq: %d, stab: %d, run: %d, temp: %d, hum: %d, pres: %d, gas: %d, gas: %d", (int32_t)(iaq), (int32_t)(stab), (int32_t)(runin), (int32_t)(temp*1000), (int32_t)(hum*1000), (int32_t)(pres*1000), (int32_t)gas_class1, (int32_t)gas_class2);
 	}
 	return bsec_status;
 }

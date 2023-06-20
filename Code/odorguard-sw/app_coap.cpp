@@ -18,80 +18,77 @@
 #include "stdio.h"
 #include "string.h"
 
-/** COAP info **/
-char resource_name[32];
-otCoapResource mResource_PERMISSIONS;
-const char *mPERMISSIONSUriPath = "permissions";
+namespace coap {
 
-char *ack = "1";
-char *nack = "0";
-otIp6Address brAddr;
-otIp6Address selfAddr;
+static otIp6Address destAddr;
+static otIp6Address selfAddr;
 
-bool appCoapConnectionEstablished = false;
-uint32_t appCoapFailCtr = 0;
+static bool discovered = false;
+static uint32_t txFailCtr = 0;
 
-void appCoapRecvCb(void *aContext, otMessage *aMessage, const otMessageInfo *aMessageInfo)
-{
-    //printIPv6Addr(&aMessageInfo->mPeerAddr);
-    brAddr = aMessageInfo->mPeerAddr;
-    selfAddr = aMessageInfo->mSockAddr;
-    otError error = OT_ERROR_NONE;
-    otMessage *responseMessage;
-    otCoapCode responseCode = OT_COAP_CODE_CHANGED;
-    otCoapCode messageCode = otCoapMessageGetCode(aMessage);
+static bool parseIntoBuffer(const sensor::sig_if_t *in);
+static void coapTxMsg(void);
 
-    responseMessage = otCoapNewMessage((otInstance*) aContext, NULL);
-    otCoapMessageInitResponse(responseMessage, aMessage,
-                              OT_COAP_TYPE_ACKNOWLEDGMENT, responseCode);
-    otCoapMessageSetToken(responseMessage, otCoapMessageGetToken(aMessage),
-                          otCoapMessageGetTokenLength(aMessage));
-    otCoapMessageSetPayloadMarker(responseMessage);
+static char buffer[255];
+constexpr static char *payload_fmt = "%lx,%.8lx%.8lx,%lu,%ld,%lu,%lu,%lu,%lu,%d,%d,";
+constexpr static char *uri = "path";
+constexpr static uint32_t token = 0x1234ABCD;
 
 
-    uint16_t offset = otMessageGetOffset(aMessage);
-    otMessageRead(aMessage, offset, resource_name, sizeof(resource_name)-1);
-    //otCliOutputFormat("Unique resource ID: %s\n", resource_name);
+MailboxQueue<sensor::sig_if_t, COAP_MAILBOX_QUEUE_DEPTH> ux_queue;
 
-    if (OT_COAP_CODE_GET == messageCode)
-    {
-
-        error = otMessageAppend(responseMessage, ack, strlen((const char*) ack));
-
-        error = otCoapSendResponse((otInstance*) aContext, responseMessage,
-                                   aMessageInfo);
-    }
-    else
-    {
-        error = otMessageAppend(responseMessage, nack, strlen((const char*) nack));
-        otCoapMessageSetCode(responseMessage, OT_COAP_CODE_METHOD_NOT_ALLOWED);
-        error = otCoapSendResponse((otInstance*) aContext, responseMessage,
-                                   aMessageInfo);
-
-    }
-
-    if (error != OT_ERROR_NONE && responseMessage != NULL)
-    {
-        otMessageFree(responseMessage);
-    }
-    appCoapConnectionEstablished = true;
-}
-
-void appCoapInit() {
-
+void init(otIp6Address server_ip) {
+	discovered = true;
 	otCoapStart(otGetInstance(), OT_DEFAULT_COAP_PORT);
-
-	mResource_PERMISSIONS.mUriPath = mPERMISSIONSUriPath;
-	mResource_PERMISSIONS.mContext = otGetInstance();
-	mResource_PERMISSIONS.mHandler = &appCoapRecvCb;
-
-	otCoapAddResource(otGetInstance(), &mResource_PERMISSIONS);
-
+	updateAddr(server_ip);
 }
 
-void appCoapSendMsg(char *tx_buf, bool req_ack) {
 
-	appCoapCheckConnection();
+void updateAddr(otIp6Address server_ip)
+{
+	destAddr = server_ip;
+}
+
+bool service(void)
+{
+	if(!discovered) return false;
+	if(ux_queue.empty()) {
+		//otCliOutputFormat("empty queue\n");
+		return false;
+	}
+	sensor::sig_if_t data = ux_queue.front();
+	otCliOutputFormat("pop\n");
+	if(parseIntoBuffer(&data)) {
+		ux_queue.pop();
+		coapTxMsg();
+		otCliOutputFormat("sent\n");
+		return true;
+	}
+	return false;
+}
+
+
+static bool parseIntoBuffer(const sensor::sig_if_t *in)
+{
+	uint32_t iaq = static_cast<uint32_t>(in->iaq.first);
+	int32_t temp = static_cast<int32_t>(in->comp_temp.first*COAP_LFACTOR_DECIMAL_COUNT);
+	uint32_t hum = static_cast<uint32_t>(in->comp_hum.first*COAP_LFACTOR_DECIMAL_COUNT);
+	uint32_t pres = static_cast<uint32_t>(in->pres.first);
+
+	uint32_t cl1 = static_cast<uint32_t>(in->comp_temp.first*COAP_LFACTOR_DECIMAL_COUNT);
+	uint32_t cl2 = static_cast<uint32_t>(in->comp_temp.first*COAP_LFACTOR_DECIMAL_COUNT);
+	int8_t rssi;
+
+	otThreadGetParentLastRssi(otGetInstance(), &rssi);
+
+	uint32_t ret = snprintf(buffer, 254, payload_fmt, token, 0,
+			0 ,iaq, temp, hum, pres, cl1, cl2, rssi, 0 /* voltage */);
+	if(ret >= 254) return false;
+
+	return true;
+}
+
+static void coapTxMsg(void) {
 
 	otError error = OT_ERROR_NONE;
 	otMessage *message = NULL;
@@ -99,18 +96,16 @@ void appCoapSendMsg(char *tx_buf, bool req_ack) {
 	uint16_t payloadLength = 0;
 
 	// Default parameters
-	otCoapType coapType =
-			req_ack ?
-					OT_COAP_TYPE_CONFIRMABLE : OT_COAP_TYPE_NON_CONFIRMABLE;
-	otIp6Address coapDestinationIp = brAddr;
+	otCoapType coapType = OT_COAP_TYPE_CONFIRMABLE;
+	otIp6Address coapDestinationIp = destAddr;
 	message = otCoapNewMessage(otGetInstance(), NULL);
 
 	otCoapMessageInit(message, coapType, OT_COAP_CODE_PUT);
 	otCoapMessageGenerateToken(message, OT_COAP_DEFAULT_TOKEN_LENGTH);
-	error = otCoapMessageAppendUriPathOptions(message, resource_name);
+	error = otCoapMessageAppendUriPathOptions(message, uri);
 	otEXPECT(OT_ERROR_NONE == error);
 
-	payloadLength = strlen(tx_buf);
+	payloadLength = strlen(buffer);
 
 	if (payloadLength > 0) {
 		error = otCoapMessageSetPayloadMarker(message);
@@ -119,7 +114,7 @@ void appCoapSendMsg(char *tx_buf, bool req_ack) {
 
 	// Embed content into message if given
 	if (payloadLength > 0) {
-		error = otMessageAppend(message, tx_buf, payloadLength);
+		error = otMessageAppend(message, buffer, payloadLength);
 		otEXPECT(OT_ERROR_NONE == error);
 	}
 
@@ -132,34 +127,16 @@ void appCoapSendMsg(char *tx_buf, bool req_ack) {
 	otEXPECT(OT_ERROR_NONE == error);
 
 	exit: if ((error != OT_ERROR_NONE) && (message != NULL)) {
-		appCoapFailCtr = 0;
+		txFailCtr = 0;
 		otMessageFree(message);
 	}
 
 	if (error != OT_ERROR_NONE) {
-		appCoapFailCtr++;
-		//GPIO_PinOutSet(ERR_LED_PORT, ERR_LED_PIN);
+		txFailCtr++;
 	}
-		//GPIO_PinOutClear(ERR_LED_PORT, ERR_LED_PIN);
 
-	//otCliOutputFormat("Sent message: %d\n", error);
-	//GPIO_PinOutClear(IP_LED_PORT, IP_LED_PIN);
+}
+
 }
 
 
-void appCoapCheckConnection(void)
-{
-    if(!appCoapConnectionEstablished) return;
-
-    if(otThreadGetDeviceRole(otGetInstance()) != OT_DEVICE_ROLE_CHILD || appCoapFailCtr > 10)
-    {
-        otThreadBecomeDetached(otGetInstance());
-        //otInstanceErasePersistentInfo();
-        sleepyInit();
-        setNetworkConfiguration();
-        otIp6SetEnabled(otGetInstance(), true);
-        otThreadSetEnabled(otGetInstance(), true);
-        appCoapInit();
-        appCoapFailCtr = 0;
-    }
-}
