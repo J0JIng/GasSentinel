@@ -11,23 +11,7 @@ import aiocoap.numbers.constants
 import netifaces
 
 # imported modules
-import influx_sender
-from server_sv_manager import ServerManager
-from server_resource_handler import ResourceHandler
-from user_handler import user_handler_init
-import asyncio  # pylint: disable=import-error
-import ipaddress
-import logging
-import coloredlogs
-
-# CoAP lib / Network
-import aiocoap
-from aiocoap import resource
-import aiocoap.numbers.constants
-import netifaces
-
-# imported modules
-import influx_sender
+#import influx_sender
 from server_sv_manager import ServerManager
 from server_resource_handler import ResourceHandler
 
@@ -38,9 +22,7 @@ POLL_NEW_CHILDREN_INTERVAL_S = 30
 # Change accordingly to machine
 COAP_UDP_DEFAULT_PORT = 5683
 OT_DEFAULT_PREFIX = "fd74"
-OT_DEFAULT_IFACE = "wpan0"
-
-# resource.site imported from aiocoap.
+OT_DEFAULT_IFACE = "wlan0"
 
 def get_ipv6_address(interface_name, address_prefix):
     """
