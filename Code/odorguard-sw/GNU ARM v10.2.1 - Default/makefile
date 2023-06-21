@@ -60,7 +60,7 @@ RM := rm -rf
 -include gecko_sdk_4.3.0/platform/common/src/subdir.mk
 -include gecko_sdk_4.3.0/platform/Device/SiliconLabs/MGM24/Source/subdir.mk
 -include autogen/subdir.mk
--include BSEC2/bme680_iaq_33v_3s_28d/subdir.mk
+-include BSEC2/config/subdir.mk
 -include BME68x_API/subdir.mk
 -include subdir.mk
 -include objects.mk

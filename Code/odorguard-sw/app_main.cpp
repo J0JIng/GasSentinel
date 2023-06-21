@@ -4,6 +4,7 @@
 #include "app_coap.h"
 #include <app_main.h>
 #include <assert.h>
+#include <config/bsec_selectivity.h>
 #include <openthread-core-config.h>
 #include <openthread/config.h>
 
@@ -24,7 +25,6 @@
 
 #include <cstring>
 
-#include "bme680_iaq_33v_3s_28d/bsec_iaq.h"
 
 void sleepyInit(void);
 void setNetworkConfiguration(void);
@@ -39,8 +39,8 @@ static bool pend_resolve_server = false;
 struct bme68x_dev bme;
 static uint8_t bme_addr = BME68X_I2C_ADDR_LOW;
 static volatile bool bsec_run = true;
-static uint8_t work_buffer[BSEC_MAX_WORKBUFFER_SIZE];
-
+uint8_t work_buffer[BSEC_MAX_WORKBUFFER_SIZE];
+uint8_t bsec_state[BSEC_MAX_STATE_BLOB_SIZE];
 
 sl_sleeptimer_timer_handle_t resolve_server_timer;
 constexpr static uint32_t RESOLVE_POST_EST_CONN_MS = 5000;
@@ -142,7 +142,8 @@ void app_process_action(void)
 	}
 	if (bsec_run) {
 		bsec_run = false;
-		sensor::proc(app_burtc_callback, sl_sleeptimer_get_time);
+		sensor::proc(app_burtc_callback);
+
 	}
 	bool ret = coap::service();
 	//if(!ret) otCliOutputFormat("Not sent \n");
@@ -177,42 +178,50 @@ void app_init_bme(void)
 	ret = bsec_init();
 	otCliOutputFormat("%d / ", ret);
 
-	uint32_t bsec_config_len = sizeof(bsec_config_iaq);
 
-	ret = bsec_set_configuration(bsec_config_iaq, bsec_config_len, work_buffer, sizeof(work_buffer));
+
+	uint32_t bsec_config_len = sizeof(bsec_config_selectivity);
+
+	ret = bsec_set_configuration(bsec_config_selectivity, bsec_config_len, work_buffer, sizeof(work_buffer));
+
+	bsec_set_state(bsec_state, sizeof(bsec_state), work_buffer, sizeof(work_buffer));
 
 	otCliOutputFormat("%d / ", ret);
 
-	bsec_sensor_configuration_t requested_virtual_sensors[8];
-	uint8_t n_requested_virtual_sensors = 8;
+	bsec_sensor_configuration_t requested_virtual_sensors[9];
+	uint8_t n_requested_virtual_sensors = 9;
 
 	bsec_sensor_configuration_t required_sensor_settings[BSEC_MAX_PHYSICAL_SENSOR];
 	uint8_t n_required_sensor_settings = BSEC_MAX_PHYSICAL_SENSOR;
 
 
-    requested_virtual_sensors[0].sensor_id = BSEC_OUTPUT_IAQ;
-    requested_virtual_sensors[0].sample_rate = BSEC_SAMPLE_RATE_LP;
-    requested_virtual_sensors[1].sensor_id = BSEC_OUTPUT_STABILIZATION_STATUS;
-    requested_virtual_sensors[1].sample_rate = BSEC_SAMPLE_RATE_LP;
-    requested_virtual_sensors[2].sensor_id = BSEC_OUTPUT_RUN_IN_STATUS;
-    requested_virtual_sensors[2].sample_rate = BSEC_SAMPLE_RATE_LP;
-    requested_virtual_sensors[3].sensor_id = BSEC_OUTPUT_SENSOR_HEAT_COMPENSATED_TEMPERATURE;
-    requested_virtual_sensors[3].sample_rate = BSEC_SAMPLE_RATE_LP;
-    requested_virtual_sensors[4].sensor_id = BSEC_OUTPUT_SENSOR_HEAT_COMPENSATED_HUMIDITY;
-    requested_virtual_sensors[4].sample_rate = BSEC_SAMPLE_RATE_LP;
-    requested_virtual_sensors[5].sensor_id = BSEC_OUTPUT_RAW_PRESSURE;
-    requested_virtual_sensors[5].sample_rate = BSEC_SAMPLE_RATE_LP;
-    requested_virtual_sensors[6].sensor_id = BSEC_OUTPUT_GAS_ESTIMATE_1;
-    requested_virtual_sensors[6].sample_rate = BSEC_SAMPLE_RATE_DISABLED;
-    requested_virtual_sensors[7].sensor_id = BSEC_OUTPUT_GAS_ESTIMATE_2;
-    requested_virtual_sensors[7].sample_rate = BSEC_SAMPLE_RATE_DISABLED;
-
+    requested_virtual_sensors[0].sensor_id = BSEC_OUTPUT_GAS_ESTIMATE_1;
+    requested_virtual_sensors[0].sample_rate = BSEC_SAMPLE_RATE_SCAN;
+    requested_virtual_sensors[1].sensor_id = BSEC_OUTPUT_GAS_ESTIMATE_2;
+    requested_virtual_sensors[1].sample_rate = BSEC_SAMPLE_RATE_SCAN;
+    requested_virtual_sensors[2].sensor_id = BSEC_OUTPUT_GAS_ESTIMATE_3;
+    requested_virtual_sensors[2].sample_rate = BSEC_SAMPLE_RATE_SCAN;
+    requested_virtual_sensors[3].sensor_id = BSEC_OUTPUT_GAS_ESTIMATE_4;
+    requested_virtual_sensors[3].sample_rate = BSEC_SAMPLE_RATE_SCAN;
+    requested_virtual_sensors[4].sensor_id = BSEC_OUTPUT_RAW_PRESSURE;
+    requested_virtual_sensors[4].sample_rate = BSEC_SAMPLE_RATE_SCAN;
+    requested_virtual_sensors[5].sensor_id = BSEC_OUTPUT_RAW_TEMPERATURE;
+    requested_virtual_sensors[5].sample_rate = BSEC_SAMPLE_RATE_SCAN;
+    requested_virtual_sensors[6].sensor_id = BSEC_OUTPUT_RAW_HUMIDITY;
+    requested_virtual_sensors[6].sample_rate = BSEC_SAMPLE_RATE_SCAN;
+    requested_virtual_sensors[7].sensor_id = BSEC_OUTPUT_RAW_GAS;
+    requested_virtual_sensors[7].sample_rate = BSEC_SAMPLE_RATE_SCAN;
+    requested_virtual_sensors[8].sensor_id = BSEC_OUTPUT_RAW_GAS_INDEX;
+    requested_virtual_sensors[8].sample_rate = BSEC_SAMPLE_RATE_SCAN;
 
 
 	ret = bsec_update_subscription(requested_virtual_sensors,
 					n_requested_virtual_sensors, required_sensor_settings,
 					&n_required_sensor_settings);
 	 otCliOutputFormat("%d / ", ret);
+	 bsec_version_t ver;
+	 bsec_get_version(&ver);
+	 otCliOutputFormat("v%d.%d.%d.%d", ver.major,ver.minor,ver.major_bugfix,ver.minor_bugfix);
 }
 
 

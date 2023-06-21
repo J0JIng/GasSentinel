@@ -7,7 +7,7 @@ extern "C" {
 #endif
 
 #include "openthread/instance.h"
-
+#include "bsec_datatypes.h"
 
 
 void app_init(void);
@@ -20,7 +20,8 @@ void applicationTick(void);
 
 otInstance *otGetInstance(void);
 extern struct bme68x_dev bme;
-
+extern uint8_t bsec_state[BSEC_MAX_STATE_BLOB_SIZE];
+extern uint8_t work_buffer[BSEC_MAX_WORKBUFFER_SIZE];
 void sleepyInit(void);
 void setNetworkConfiguration(void);
 void initUdp(void);

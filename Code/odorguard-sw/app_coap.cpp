@@ -60,7 +60,7 @@ bool service(void)
 	otCliOutputFormat("pop\n");
 	if(parseIntoBuffer(&data)) {
 		ux_queue.pop();
-		coapTxMsg();
+		//coapTxMsg();
 		otCliOutputFormat("sent\n");
 		return true;
 	}

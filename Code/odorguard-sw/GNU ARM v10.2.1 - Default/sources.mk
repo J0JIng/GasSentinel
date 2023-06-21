@@ -27,7 +27,7 @@ CPP_DEPS :=
 # Every subdirectory with source files must be described here
 SUBDIRS := \
 BME68x_API \
-BSEC2/bme680_iaq_33v_3s_28d \
+BSEC2/config \
 . \
 autogen \
 gecko_sdk_4.3.0/platform/Device/SiliconLabs/MGM24/Source \

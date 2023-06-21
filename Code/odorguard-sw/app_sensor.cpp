@@ -24,6 +24,7 @@
 
 
 #define BSEC_CHECK_INPUT(x, shift)		(x & (1 << (shift-1)))
+#define BSEC_TOTAL_HEAT_DUR             UINT16_C(140)
 
 namespace sensor {
 
@@ -38,6 +39,7 @@ static uint8_t nFields, iFields;
 static uint8_t lastOpMode = BME68X_SLEEP_MODE;
 static uint8_t opMode;
 static constexpr uint32_t CONST_SCALE_MS_TO_US = 1000000;
+static constexpr uint32_t SAVE_CYCLE_COUNT = 10000;
 
 
 static void output_print(int64_t timestamp, float gas_estimate_1, float gas_estimate_2,
@@ -48,6 +50,15 @@ static void output_print(int64_t timestamp, float gas_estimate_1, float gas_esti
 			raw_gas_index, (uint32_t) bsec_status,
 			(uint32_t) (raw_temp * 1000.0f), (uint32_t) (raw_gas * 1000.0f));
 }
+
+static uint32_t bme_get_meas_dur(uint8_t mode)
+{
+	if (mode == BME68X_SLEEP_MODE)
+		mode = lastOpMode;
+
+	return bme68x_get_meas_dur(mode, &bme_conf, &bme);
+}
+
 
 static void bme_set_forced(bsec_bme_settings_t *sensor_settings) {
 	int8_t status;
@@ -77,6 +88,43 @@ static void bme_set_forced(bsec_bme_settings_t *sensor_settings) {
 
 	lastOpMode = BME68X_FORCED_MODE;
 	opMode = BME68X_FORCED_MODE;
+}
+
+
+static void bme_set_parallel(bsec_bme_settings_t *sensor_settings)
+{
+    uint16_t sharedHeaterDur = 0;
+	int8_t status;
+
+	/* Set the filter, odr, temperature, pressure and humidity settings */
+	status = bme68x_get_conf(&bme_conf, &bme);
+	if (status != BME68X_OK)
+		return;
+
+	bme_conf.os_hum = sensor_settings->humidity_oversampling;
+	bme_conf.os_temp = sensor_settings->temperature_oversampling;
+	bme_conf.os_pres = sensor_settings->pressure_oversampling;
+	status = bme68x_set_conf(&bme_conf, &bme);
+    if (status != BME68X_OK)
+		return;
+
+
+    sharedHeaterDur = BSEC_TOTAL_HEAT_DUR - (bme_get_meas_dur(BME68X_PARALLEL_MODE) / INT64_C(1000));
+    bme_heat_conf.enable = BME68X_ENABLE;
+    bme_heat_conf.heatr_temp_prof = sensor_settings->heater_temperature_profile;
+    bme_heat_conf.heatr_dur_prof = sensor_settings->heater_duration_profile;
+    bme_heat_conf.shared_heatr_dur = sharedHeaterDur;
+    bme_heat_conf.profile_len = sensor_settings->heater_profile_len;
+    status = bme68x_set_heatr_conf(BME68X_PARALLEL_MODE, &bme_heat_conf, &bme);
+    if (status != BME68X_OK)
+		return;
+
+    status = bme68x_set_op_mode(BME68X_PARALLEL_MODE, &bme);
+	if (status != BME68X_OK)
+		return;
+
+	lastOpMode = BME68X_PARALLEL_MODE;
+    opMode = BME68X_PARALLEL_MODE;
 }
 
 static bsec_library_return_t _bsec_get_data(bsec_input_t *bsec_inputs,
@@ -151,8 +199,8 @@ static bsec_library_return_t _bsec_get_data(bsec_input_t *bsec_inputs,
 		}
 
 		coap::ux_queue.push(data);
-		otCliOutputFormat("iaq: %d, stab: %d, run: %d, temp: %d, hum: %d, pres: %d, gas: %d, gas: %d", (int32_t)(iaq), (int32_t)(stab), (int32_t)(runin), (int32_t)(temp*1000), (int32_t)(hum*1000), (int32_t)(pres*1000), (int32_t)gas_class1, (int32_t)gas_class2);
-	}
+		otCliOutputFormat("iaq: %d, stab: %d, run: %d, temp: %d, hum: %d, pres: %d, gas: %d, gas: %d", (int32_t)(data.iaq.first), (int32_t)(data.stab), (int32_t)(data.run_in), (int32_t)(data.comp_temp.first*1000), (int32_t)(data.comp_hum.first*1000), (int32_t)(data.pres.first*1000), (int32_t)(data.class1.first*1000), (int32_t)(data.class2.first*1000));
+	} else otCliOutputFormat("no data");
 	return bsec_status;
 }
 
@@ -243,20 +291,28 @@ static uint8_t _get_data(struct bme68x_data *data) {
 }
 
 
-bsec_library_return_t proc(void (*burtc_cb)(uint32_t), uint32_t (*ts)(void)) {
+bsec_library_return_t proc(void (*burtc_cb)(uint32_t)) {
+	static uint32_t ctr = 0;
 
 	bsec_library_return_t ret = BSEC_OK;
 
 	ret = bsec_sensor_control(0, &bme_stg);
-	otCliOutputFormat("Sensor control called with %d delay and error %d %d\n",
+/*	otCliOutputFormat("Sensor control called with %d delay and error %d %d\n",
 			(uint32_t) (bme_stg.next_call / 1000 / 1000), ret,
-			sl_sleeptimer_get_time() * 1000 * 1000);
-
+			sl_sleeptimer_tick_to_ms(sl_sleeptimer_get_tick_count()) * 1000);
+*/
 	burtc_cb((uint32_t) (bme_stg.next_call / CONST_SCALE_MS_TO_US));
 
 	if (bme_stg.op_mode == BME68X_FORCED_MODE) {
 		bme_set_forced(&bme_stg);
-	} else if (bme_stg.op_mode == BME68X_SLEEP_MODE) {
+	} else if(bme_stg.op_mode == BME68X_PARALLEL_MODE) {
+		if (opMode != bme_stg.op_mode)
+		{
+			bme_set_parallel(&bme_stg);
+		}
+	}
+	else if (bme_stg.op_mode == BME68X_SLEEP_MODE) {
+
 		if (opMode != bme_stg.op_mode) {
 			int8_t tmp = bme68x_set_op_mode(BME68X_SLEEP_MODE, &bme);
 			if ((tmp == BME68X_OK) && (opMode != BME68X_SLEEP_MODE)) {
@@ -274,13 +330,25 @@ bsec_library_return_t proc(void (*burtc_cb)(uint32_t), uint32_t (*ts)(void)) {
 				nFieldsLeft = _get_data(&data);
 				/* check for valid gas data */
 				if (data.status & BME68X_GASM_VALID_MSK) {
-					if ((ret = _proc_data((int64_t) (ts() * CONST_SCALE_MS_TO_US), data,
+					if ((ret = _proc_data((int64_t) (sl_sleeptimer_tick_to_ms(sl_sleeptimer_get_tick_count()) * CONST_SCALE_MS_TO_US), data,
 							bme_stg.process_data)) != BSEC_OK) {
 						return ret;
 					}
 				}
 			} while (nFieldsLeft);
 		}
+	}
+
+
+	ctr++;
+	if (ctr >= SAVE_CYCLE_COUNT) {
+		uint32_t len = sizeof(bsec_state);
+		ret = bsec_get_state(0, bsec_state, sizeof(bsec_state),
+				work_buffer, sizeof(work_buffer), &len);
+		if (ret == BSEC_OK) {
+			//state_save(bsec_state, bsec_state_len);
+		}
+		ctr = 0;
 	}
 	return ret;
 }

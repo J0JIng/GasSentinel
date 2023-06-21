@@ -31,11 +31,9 @@ typedef struct
  *
  * @param burtc_cb  Const fp to BURTC setting function, for (uint32_t) ms
  *
- * @param ts        Const fp to get system timestamp in ms
- *
  * @return          Returns a value of type bsec_library_return_t (enum)
  */
-bsec_library_return_t proc(void (*const burtc_cb)(uint32_t), uint32_t (*const ts)(void));
+bsec_library_return_t proc(void (*const burtc_cb)(uint32_t));
 
 
 }
