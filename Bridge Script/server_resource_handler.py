@@ -4,10 +4,9 @@ import re
 import logging
 from aiocoap import resource
 import aiocoap
-import tinytuya
 
 from server_sv_manager import ServerManager
-from user_handler import user_handler_callback
+#from user_handler import user_handler_callback
 
 class ResourceHandler(resource.Resource):
     """This resource supports the PUT methods.
