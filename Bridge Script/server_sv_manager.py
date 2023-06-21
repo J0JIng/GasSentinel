@@ -7,7 +7,6 @@ import asyncio
 import time
 
 from ipaddress import IPv6Address
-
 from dataclasses import dataclass, field
 import logging
 import aiocoap
@@ -23,6 +22,12 @@ OT_DEVICE_TIMEOUT_CYCLES = 5
 OT_DEVICE_CHILD_TIMEOUT_S = 190
 OT_DEVICE_CHILD_TIMEOUT_CYCLE_RATE = 1
 OT_DEVICE_POLL_INTERVAL_S = 5
+
+
+class OtDeviceType(enum.IntEnum):
+    oG = 0
+    UNKNOWN = -255
+
 
 @dataclass
 class OtDevice:
