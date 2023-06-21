@@ -21,8 +21,8 @@ POLL_NEW_CHILDREN_INTERVAL_S = 30
 
 # Change accordingly to machine
 COAP_UDP_DEFAULT_PORT = 5683
-OT_DEFAULT_PREFIX = "fd74"
-OT_DEFAULT_IFACE = "wlan0"
+OT_DEFAULT_PREFIX = "fd62"
+OT_DEFAULT_IFACE = "wpan0"
 
 def get_ipv6_address(interface_name, address_prefix):
     """
