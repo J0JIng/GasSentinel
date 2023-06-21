@@ -15,8 +15,21 @@ import influx_sender
 from server_sv_manager import ServerManager
 from server_resource_handler import ResourceHandler
 from user_handler import user_handler_init
+import asyncio  # pylint: disable=import-error
+import ipaddress
+import logging
+import coloredlogs
 
+# CoAP lib / Network
+import aiocoap
+from aiocoap import resource
+import aiocoap.numbers.constants
+import netifaces
 
+# imported modules
+import influx_sender
+from server_sv_manager import ServerManager
+from server_resource_handler import ResourceHandler
 
 # Declaring Global Variable
 START_TASK_INFLUX_SENDER = False
@@ -29,87 +42,77 @@ OT_DEFAULT_IFACE = "wpan0"
 
 # resource.site imported from aiocoap.
 
-def main(root_res: resource.Site):
-    """Main function that starts the server"""
-
-    # Resource tree creation
-    addrs = netifaces.ifaddresses(OT_DEFAULT_IFACE)
-
-    # Find addr
-    iteration = 0
+def get_ipv6_address(interface_name, address_prefix):
+    """
+    Get the IPv6 address of a specific network interface with a given address prefix.
+    Returns None if no matching address is found.
+    """
     try:
-        for i in addrs[netifaces.AF_INET6]:
-            if i["addr"].startswith(OT_DEFAULT_PREFIX):
-                break
+        addresses = netifaces.ifaddresses(interface_name)
+        iteration = 0
+        for address_info in addresses[netifaces.AF_INET6]:
+            if address_info["addresses"].startswith(address_prefix):
+                # return ipv6 addr as a string
+                return addresses[netifaces.AF_INET6][iteration]["addresses"]
             iteration += 1
 
     except KeyError:
-        # Handle the KeyError exception here
-        logging.error("KeyError: The 'netifaces.AF_INET6' key is not present in 'addrs'")
+        logging.error(f"KeyError: The '{netifaces.AF_INET6}' key is not present")
 
-    # Add an endpoint to advertise the CoAP service
-    root_res.add_resource(
-        ('.well-known', 'core'),
-        resource.WKCResource(root_res.get_resources_as_linkheader)
-    )
+    return None
 
-    """ asynchronously creates a server context for the CoAP server, which will listen
-        for incoming requests on the specified IP address and port."""
+def main(root_res: resource.Site):
+    """Main function that starts the server"""
+    # Resource tree creation
+    server_ipv6_address = get_ipv6_address(OT_DEFAULT_IFACE,OT_DEFAULT_PREFIX)
+    if server_ipv6_address:
+        logging.info(f"Server running. IPv6 address: {server_ipv6_address}")
+    else:
+        logging.error("Failed to retrieve IPv6 address")
 
-    asyncio.create_task(
-        aiocoap.Context.create_server_context(
-            root_res,
-            bind=(addrs[netifaces.AF_INET6][iteration]["addr"],COAP_UDP_DEFAULT_PORT)
-        )
-    )
-
-    # log server is running
     logging.info("Server running")
 
+    # Creates a server context for the CoAP server
+    asyncio.create_task(
+        aiocoap.Context.create_server_context(
+            root_res,bind=(server_ipv6_address,COAP_UDP_DEFAULT_PORT)
+        )
+    )
     # create an instance of ServerManager() class
-    sv_mgr = ServerManager()
+    sv_mgr = ServerManager(ipaddress.ip_address(server_ipv6_address))
+    logging.info("Advertising Server...")
+    # Advertise server via DNS-SD
+    sv_mgr.DNS_register_service(COAP_UDP_DEFAULT_PORT)
 
     asyncio.get_event_loop().run_until_complete(
-
         # create a new coroutine that waits for the provided coroutines to complete concurrently.
         asyncio.gather(
-            # Poll for children
             main_task(sv_mgr,root_res),
-
             # send data to an InfluxDB database if START_TASK_INFLUX_SENDER == TRUE
             #influx_sender.influx_task(ot_mgr) if START_TASK_INFLUX_SENDER else None
         )
     )
 
-"""
-
-not really sure if i should keep this 
-
-async def main_task(ot_manager: ServerManager, root_res: resource.Site):
-    #Main task that polls for new children and adds them to the resource tree every 30s
-
+async def main_task(sv_manager: ServerManager, root_res: resource.Site):
+    """Add clients to resource tree"""
     while True:
-        logging.info("Finding new children...")
-        sv_manager.find_child_ips()
-        ip = ot_manager.dequeue_child_ip()
+        logging.info("inviting new children...")
+        ip = sv_manager.pend_queue_res_child_ips.pop()
         while ip is not None:
             try:
                 root_res.add_resource(
-                    (ot_manager.get_child_ips()[ip].uri,),
-                    ResourceHandler(ot_manager.get_child_ips()[ip].uri, ot_manager)
+                    (sv_manager.get_all_child_ips()[ip].uri,),
+                    ResourceHandler(sv_manager.get_all_child_ips()[ip].uri, sv_manager),
                 )
                 logging.info(
-                    "Added new child " + str(ip) + " with resource " + ot_manager.get_child_ips()[ip].uri
+                    "Added new child " + str(ip) + " with resource " + sv_manager.get_all_child_ips()[ip].uri
                 )
-
             except KeyError:
                 logging.info("Child " + str(ip) + " error")
                 pass
 
-            ip = ot_manager.dequeue_child_ip()
-
         await asyncio.sleep(POLL_NEW_CHILDREN_INTERVAL_S)
-"""
+
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
