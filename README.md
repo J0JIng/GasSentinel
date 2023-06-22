@@ -2,6 +2,7 @@
 
 ## Overview 
 Gas leaks can be dangerous but hard to detect. This project aims to use edge AI to provide low-latency, accurate detection of gas leaks. In particular, these are propane, butane and natural gas.<br>
+It is also possible to detect indicative gases such as H<sub>2</sub>S.
 
 ## Algorithm and Detection Principles
 Interpreting gas sensor resistances is complex and may require specialized knowledge in electrochemical sensor behaviors. Resistance of the sensing element is nontrivially influenced by ambient conditions, and even past gas exposure events. As such, this situation provides an opportunity to utilize ML techniques to interpret the data.<br>
@@ -20,7 +21,7 @@ h(t) = \begin{cases}
   320°C, & \text{if } 12.46s \leq t \leq 18.34s.
 \end{cases}
 ```
-where the undefined intervals are transition (i.e. ramp-up/down) periods. This heater activity is responsible of the majority of the power consumption (>12mA), where other loads (i.e. microcontroller+RF) are negligible. Hence, the battery life is almost directly proportional to the measurement duty cycle. For this particular application, a duty cycle of 25% was found to yield a good balance between response time (73.36s) and power consumption (avg. 2.1mA).
+where the undefined intervals are transition (i.e. ramp-up/down) periods. This heater activity is responsible for the majority of the power consumption (>12mA), where other loads (i.e. microcontroller+RF) are negligible. Hence, the battery life is almost directly proportional to the measurement duty cycle. For this particular application, a duty cycle of 25% was found to yield a good balance between response time (73.36s) and power consumption (avg. 2.1mA).
 <br><br>
 
 ## Design
