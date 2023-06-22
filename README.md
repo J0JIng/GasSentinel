@@ -27,8 +27,8 @@ where the undefined intervals are transition (i.e. ramp-up/down) periods. This h
 For this particular application, it is vital that warning latencies are kept low. This project provides on-device inference, which allows for rapid reaction to events, and low data transmission overhead.<br>
 Additionally, the device has a low-latency Thread network connection (compared to BLE/Zigbee) for offsite notifications and action triggering, which is also low-power, allowing for operation either from USB power, or from AA batteries.<br>
 The algorithms described above are run on a EFR32MG24 series microcontroller, with integrated 802.15.4 radio for Thread communications.<br>
-The application layer overview for the microcontroller software can be found in Figure 2:<br>
-![SW](https://github.com/J0JIng/OdorGuard/tree/main/Code/sw.png)<br>
+The application layer overview for the microcontroller software can be found in Figure 2:<br><br>
+![SW](https://github.com/J0JIng/OdorGuard/blob/main/Doc/sw.png)<br>
 Figure 2: Application-Layer Block Diagram (Microcontroller)<br>
 
 
