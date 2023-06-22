@@ -1,0 +1,9 @@
+Added Component: Designator=J2(CONN12_C-31-M-12_HRO)
+Add component (AddParameter): Name = "Mfr_Name"; Value = "HRO Electronics"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "RefDes"; Value = "RefDes"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Type"; Value = "Type"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=GND Pin=J2-A1-B12
+Added Pin To Net: NetName=Vbat Pin=J2-A4-B9
+Added Pin To Net: NetName=GND Pin=J2-B1-A12
+Added Pin To Net: NetName=Vbat Pin=J2-B4-A9
+Added Member To Class: ClassName=supply Member=Component J2 TYPE-C-31-M-12

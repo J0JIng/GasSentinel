@@ -197,7 +197,16 @@ static bsec_library_return_t _bsec_get_data(bsec_input_t *bsec_inputs,
 			data.timestamp = bsec_outputs[index].time_stamp;
 
 		}
-
+		GPIO_PinOutClear(IP_LED_PORT, IP_LED_PIN);
+		GPIO_PinOutClear(ACT_LED_PORT, ACT_LED_PIN);
+		if(data.class1.first > 0.5)
+		{
+			GPIO_PinOutSet(IP_LED_PORT, ERR_LED_PIN);
+		}
+		else if(data.class2.first > 0.5)
+		{
+			GPIO_PinOutSet(ACT_LED_PORT, ACT_LED_PIN);
+		}
 		coap::ux_queue.push(data);
 		otCliOutputFormat("iaq: %d, stab: %d, run: %d, temp: %d, hum: %d, pres: %d, gas: %d, gas: %d", (int32_t)(data.iaq.first), (int32_t)(data.stab), (int32_t)(data.run_in), (int32_t)(data.comp_temp.first*1000), (int32_t)(data.comp_hum.first*1000), (int32_t)(data.pres.first*1000), (int32_t)(data.class1.first*1000), (int32_t)(data.class2.first*1000));
 	} else otCliOutputFormat("no data");

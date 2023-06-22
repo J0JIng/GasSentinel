@@ -102,7 +102,7 @@ void app_init(void) {
 	pend_resolve_server = false;
 
 	eui._64b = SYSTEM_GetUnique();
-
+	//GPIO_PinOutSet(ERR_LED_PORT, ERR_LED_PIN);
 }
 
 

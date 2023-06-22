@@ -43,6 +43,16 @@ void initBURTC(void) {
 }
 
 
+void initGPIO(void) {
+	CMU_ClockEnable(cmuClock_GPIO, true);
+
+	GPIO_PinModeSet(IP_LED_PORT, IP_LED_PIN, gpioModePushPull, 0);
+	GPIO_PinModeSet(ACT_LED_PORT, ACT_LED_PIN, gpioModePushPull, 0);
+	GPIO_PinModeSet(ERR_LED_PORT, ERR_LED_PIN, gpioModePushPull, 0);
+
+}
+
+
 int main(void)
 {
   // Initialize Silicon Labs device, system, service(s) and protocol stack(s).
@@ -50,6 +60,7 @@ int main(void)
   // this call.
   sl_system_init();
   initBURTC();
+  initGPIO();
   // Initialize the application. For example, create periodic timer(s) or
   // task(s) if the kernel is present.
   app_init();
