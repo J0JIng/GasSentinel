@@ -42,15 +42,6 @@ static constexpr uint32_t CONST_SCALE_MS_TO_US = 1000000;
 static constexpr uint32_t SAVE_CYCLE_COUNT = 10000;
 
 
-static void output_print(int64_t timestamp, float gas_estimate_1, float gas_estimate_2,
-		float gas_estimate_3, float gas_estimate_4, float raw_pressure,
-		float raw_temp, float raw_humidity, float raw_gas,
-		uint8_t raw_gas_index, bsec_library_return_t bsec_status) {
-	otCliOutputFormat("IAQ: %d , Status: %d , raw_temp: %d , raw_gas: %d \n",
-			raw_gas_index, (uint32_t) bsec_status,
-			(uint32_t) (raw_temp * 1000.0f), (uint32_t) (raw_gas * 1000.0f));
-}
-
 static uint32_t bme_get_meas_dur(uint8_t mode)
 {
 	if (mode == BME68X_SLEEP_MODE)
@@ -174,10 +165,10 @@ static bsec_library_return_t _bsec_get_data(bsec_input_t *bsec_inputs,
 			case BSEC_OUTPUT_RUN_IN_STATUS:
 				data.run_in = static_cast<bool>(bsec_outputs[index].signal);
 				break;
-			case BSEC_OUTPUT_SENSOR_HEAT_COMPENSATED_TEMPERATURE:
+			case BSEC_OUTPUT_RAW_TEMPERATURE:
 				data.comp_temp = std::make_pair(bsec_outputs[index].signal, bsec_outputs[index].accuracy);
 				break;
-			case BSEC_OUTPUT_SENSOR_HEAT_COMPENSATED_HUMIDITY:
+			case BSEC_OUTPUT_RAW_HUMIDITY:
 				data.comp_hum = std::make_pair(bsec_outputs[index].signal, bsec_outputs[index].accuracy);
 				break;
 			case BSEC_OUTPUT_RAW_PRESSURE:
@@ -197,19 +188,9 @@ static bsec_library_return_t _bsec_get_data(bsec_input_t *bsec_inputs,
 			data.timestamp = bsec_outputs[index].time_stamp;
 
 		}
-		GPIO_PinOutClear(IP_LED_PORT, IP_LED_PIN);
-		GPIO_PinOutClear(ACT_LED_PORT, ACT_LED_PIN);
-		if(data.class1.first > 0.5)
-		{
-			GPIO_PinOutSet(IP_LED_PORT, ERR_LED_PIN);
-		}
-		else if(data.class2.first > 0.5)
-		{
-			GPIO_PinOutSet(ACT_LED_PORT, ACT_LED_PIN);
-		}
 		coap::ux_queue.push(data);
-		otCliOutputFormat("iaq: %d, stab: %d, run: %d, temp: %d, hum: %d, pres: %d, gas: %d, gas: %d", (int32_t)(data.iaq.first), (int32_t)(data.stab), (int32_t)(data.run_in), (int32_t)(data.comp_temp.first*1000), (int32_t)(data.comp_hum.first*1000), (int32_t)(data.pres.first*1000), (int32_t)(data.class1.first*1000), (int32_t)(data.class2.first*1000));
-	} else otCliOutputFormat("no data");
+		otCliOutputFormat("[APP SENSOR][I] iaq: %d, stab: %d, run: %d, temp: %d, hum: %d, pres: %d, gas: %d, gas: %d\n", (int32_t)(data.iaq.first), ((int32_t)(data.stab))&0x1, ((int32_t)(data.run_in))&0x1, (int32_t)(data.comp_temp.first*1000), (int32_t)(data.comp_hum.first*1000), (int32_t)(data.pres.first*1000), (int32_t)(data.class1.first*1000), (int32_t)(data.class2.first*1000));
+	}
 	return bsec_status;
 }
 

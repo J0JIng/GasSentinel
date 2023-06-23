@@ -31,11 +31,11 @@ void sl_ot_cli_init(void);
 
 
 #define IP_LED_PORT      gpioPortC
-#define IP_LED_PIN       5
+#define IP_LED_PIN       7
 #define ACT_LED_PORT     gpioPortC
 #define ACT_LED_PIN      6
 #define ERR_LED_PORT     gpioPortC
-#define ERR_LED_PIN      7
+#define ERR_LED_PIN      5
 
 #define I2C_SCL_PORT     gpioPortB
 #define I2C_SCL_PIN      1

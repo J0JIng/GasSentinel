@@ -57,7 +57,7 @@ static union {
 extern "C" void otAppCliInit(otInstance *aInstance);
 
 static otInstance* sInstance = NULL;
-constexpr static char *endpoint_dnssd_name = "_ot._udp.default.service.arpa.";
+constexpr static char *endpoint_dnssd_name = "_coap._udp.default.service.arpa.";
 static BME68X_INTF_RET_TYPE app_i2c_plat_read(uint8_t reg_addr, uint8_t *reg_data,
 		uint32_t length, void *intf_ptr);
 static BME68X_INTF_RET_TYPE app_i2c_plat_write(uint8_t reg_addr, const uint8_t *reg_data,
@@ -89,7 +89,7 @@ otInstance *otGetInstance(void)
 /** Application initialization **/
 void app_init(void) {
 
-
+	GPIO_PinOutSet(ERR_LED_PORT, ERR_LED_PIN);
 	app_init_bme();
 	sleepyInit();
 	setNetworkConfiguration();
@@ -100,9 +100,10 @@ void app_init(void) {
 	sl_sleeptimer_start_timer_ms(&resolve_server_timer, RESOLVE_POST_EST_CONN_MS, resolveServerHandler, NULL, 0, 0);
 	found_server = false;
 	pend_resolve_server = false;
-
+	otCliOutputFormat("[APP MAIN][I] Initialization successful \n");
 	eui._64b = SYSTEM_GetUnique();
-	//GPIO_PinOutSet(ERR_LED_PORT, ERR_LED_PIN);
+	GPIO_PinOutSet(IP_LED_PORT, IP_LED_PIN);
+	GPIO_PinOutClear(ERR_LED_PORT, ERR_LED_PIN);
 }
 
 
@@ -116,7 +117,8 @@ void app_process_action(void)
 	if(pend_resolve_server) {
 		pend_resolve_server = false;
 		DNS.browse(endpoint_dnssd_name);
-		otCliOutputFormat("search started");
+		otCliOutputFormat("[APP MAIN][I] search started\n");
+		GPIO_PinOutSet(IP_LED_PORT, IP_LED_PIN);
 	}
 	if(!found_server)
 	{
@@ -125,28 +127,31 @@ void app_process_action(void)
 		if(DNS.browseResultReady(&info, &sz))
 		{
 			if(sz == 0) {
-				otCliOutputFormat("Failed search \n");
-				//pend_resolve_server = false;
+				otCliOutputFormat("[APP MAIN][W] Failed search \n");
+				pend_resolve_server = true;
+				GPIO_PinOutSet(ERR_LED_PORT, ERR_LED_PIN);
 			}
 			else {
-				otCliOutputFormat("Server found \n");
+				otCliOutputFormat("[APP MAIN][I] Server found \n");
 				server = (*info).mHostAddress;
 				char string[OT_IP6_ADDRESS_STRING_SIZE];
 				otIp6AddressToString(&server, string, sizeof(string));
-				otCliOutputFormat("%s\n ", string);
+				otCliOutputFormat("[APP MAIN][I] Server IPv6 resolved as %s\n", string);
 				found_server = true;
 				coap::init(server);
+				GPIO_PinOutClear(ERR_LED_PORT, ERR_LED_PIN);
 			}
-		}
+			GPIO_PinOutClear(IP_LED_PORT, IP_LED_PIN);
+		} else GPIO_PinOutToggle(IP_LED_PORT, IP_LED_PIN);
 
 	}
+	GPIO_PinOutSet(ACT_LED_PORT, ACT_LED_PIN);
 	if (bsec_run) {
 		bsec_run = false;
 		sensor::proc(app_burtc_callback);
-
 	}
 	bool ret = coap::service();
-	//if(!ret) otCliOutputFormat("Not sent \n");
+	GPIO_PinOutClear(ACT_LED_PORT, ACT_LED_PIN);
 
 }
 
@@ -173,7 +178,7 @@ void app_init_bme(void)
 	assert(bme68x_init(&bme) == BME68X_OK);
 	volatile int8_t ret = 0;
 
-	 otCliOutputFormat("%d / ", ret);
+	 otCliOutputFormat("[APP MAIN][I] BSEC ret codes: %d / ", ret);
 
 	ret = bsec_init();
 	otCliOutputFormat("%d / ", ret);
@@ -218,10 +223,10 @@ void app_init_bme(void)
 	ret = bsec_update_subscription(requested_virtual_sensors,
 					n_requested_virtual_sensors, required_sensor_settings,
 					&n_required_sensor_settings);
-	 otCliOutputFormat("%d / ", ret);
+	 otCliOutputFormat("%d\n", ret);
 	 bsec_version_t ver;
 	 bsec_get_version(&ver);
-	 otCliOutputFormat("v%d.%d.%d.%d", ver.major,ver.minor,ver.major_bugfix,ver.minor_bugfix);
+	 otCliOutputFormat("[APP MAIN][I] BSEC Version: v%d.%d.%d.%d\n", ver.major,ver.minor,ver.major_bugfix,ver.minor_bugfix);
 }
 
 

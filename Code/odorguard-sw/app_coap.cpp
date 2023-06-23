@@ -15,6 +15,7 @@
 #include <openthread/coap.h>
 #include "utils/code_utils.h"
 
+#include "em_gpio.h"
 #include "stdio.h"
 #include "string.h"
 
@@ -30,8 +31,8 @@ static bool parseIntoBuffer(const sensor::sig_if_t *in);
 static void coapTxMsg(void);
 
 static char buffer[255];
-constexpr static char *payload_fmt = "%lx,%.8lx%.8lx,%lu,%ld,%lu,%lu,%lu,%lu,%d,%d,";
-constexpr static char *uri = "path";
+constexpr static char *payload_fmt = "%.8lx%.8lx,%lu,%ld,%lu,%lu,%lu,%lu,%d,%d,";
+constexpr static char *uri = "common";
 constexpr static uint32_t token = 0x1234ABCD;
 
 
@@ -41,6 +42,8 @@ void init(otIp6Address server_ip) {
 	discovered = true;
 	otCoapStart(otGetInstance(), OT_DEFAULT_COAP_PORT);
 	updateAddr(server_ip);
+
+
 }
 
 
@@ -57,11 +60,13 @@ bool service(void)
 		return false;
 	}
 	sensor::sig_if_t data = ux_queue.front();
-	otCliOutputFormat("pop\n");
+	otCliOutputFormat("[APP COAP][I] this <---ux_queue--- sensor  pop\n");
 	if(parseIntoBuffer(&data)) {
 		ux_queue.pop();
-		//coapTxMsg();
-		otCliOutputFormat("sent\n");
+		GPIO_PinOutSet(IP_LED_PORT, IP_LED_PIN);
+		coapTxMsg();
+		GPIO_PinOutClear(IP_LED_PORT, IP_LED_PIN);
+		otCliOutputFormat("[APP COAP][I] CoAP message sent\n");
 		return true;
 	}
 	return false;
@@ -81,7 +86,7 @@ static bool parseIntoBuffer(const sensor::sig_if_t *in)
 
 	otThreadGetParentLastRssi(otGetInstance(), &rssi);
 
-	uint32_t ret = snprintf(buffer, 254, payload_fmt, token, 0,
+	uint32_t ret = snprintf(buffer, 254, payload_fmt, 0,
 			0 ,iaq, temp, hum, pres, cl1, cl2, rssi, 0 /* voltage */);
 	if(ret >= 254) return false;
 

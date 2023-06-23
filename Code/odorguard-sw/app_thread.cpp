@@ -42,7 +42,7 @@ static bool                sAllowSleep                    = true;
 void sleepyInit(void)
 {
     otError error;
-    otCliOutputFormat("app thread started\r\n");
+    otCliOutputFormat("[APP THREAD][I] app thread started\r\n");
 
     otLinkModeConfig config;
     SuccessOrExit(error = otLinkSetPollPeriod(otGetInstance(), SLEEPY_POLL_PERIOD_MS));
@@ -55,7 +55,7 @@ void sleepyInit(void)
 exit:
     if (error != OT_ERROR_NONE)
     {
-        otCliOutputFormat("Initialization failed with: %d, %s\r\n", error, otThreadErrorToString(error));
+        otCliOutputFormat("[APP THREAD][E] Initialization failed with: %d, %s\r\n", error, otThreadErrorToString(error));
     }
     return;
 }
@@ -65,6 +65,7 @@ exit:
  */
 bool efr32AllowSleepCallback(void)
 {
+	otCliOutputFormat("[APP THREAD][I] Sleep \n");
     return sAllowSleep;
 }
 
@@ -96,12 +97,12 @@ void setNetworkConfiguration(void)
     aDataset.mComponents.mIsPanIdPresent = true;
 
     /* Set Extended Pan ID to C0DE1AB5C0DE1AB5 */
-    uint8_t extPanId[OT_EXT_PAN_ID_SIZE] = {};
+    uint8_t extPanId[OT_EXT_PAN_ID_SIZE] = { };
     memcpy(aDataset.mExtendedPanId.m8, extPanId, sizeof(aDataset.mExtendedPanId));
     aDataset.mComponents.mIsExtendedPanIdPresent = true;
 
     /* Set network key to 1234C0DE1AB51234C0DE1AB51234C0DE */
-    uint8_t key[OT_NETWORK_KEY_SIZE] = {};
+    uint8_t key[OT_NETWORK_KEY_SIZE] = { };
     memcpy(aDataset.mNetworkKey.m8, key, sizeof(aDataset.mNetworkKey));
     aDataset.mComponents.mIsNetworkKeyPresent = true;
 
@@ -115,7 +116,7 @@ void setNetworkConfiguration(void)
     error = otDatasetSetActive(otGetInstance(), &aDataset);
     if (error != OT_ERROR_NONE)
     {
-        otCliOutputFormat("otDatasetSetActive failed with: %d, %s\r\n", error, otThreadErrorToString(error));
+        otCliOutputFormat("[APP THREAD][E] otDatasetSetActive failed with: %d, %s\r\n", error, otThreadErrorToString(error));
         return;
     }
 }

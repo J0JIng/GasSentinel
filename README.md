@@ -10,7 +10,7 @@ Interpreting gas sensor resistances is complex and may require specialized knowl
 This project utilizes the BSEC software (which runs on the microcontroller) to run the associated signal processing/fusion and ML model. Refer to Figure 1 below for the confusion matrix and F1 scores:<br>
 
 img<br>
-Figure 1: Confusion matrix and F1 scores<br>
+Figure 1: Confusion matrix and F1 scores (LP)<br>
 
 The model was trained with low concentrations of butane, propane, etc. at room temperature/pressure at (or above) their respective Lower Explosive Limit (LEL). The model runs every 73.36s with a duty cycle of 25%.<br>
 Additionally, for each $t \in [0, 18.34]s$ during a measurement cycle, the sensor heater is configured to have the profile[^1]:
@@ -21,17 +21,29 @@ h(t) = \begin{cases}
   320°C, & \text{if } 12.46s \leq t \leq 18.34s.
 \end{cases}
 ```
-where the undefined intervals are transition (i.e. ramp-up/down) periods. This heater activity is responsible for the majority of the power consumption (>12mA), where other loads (i.e. microcontroller+RF) are negligible. Hence, the battery life is almost directly proportional to the measurement duty cycle. For this particular application, a duty cycle of 25% was found to yield a good balance between response time (73.36s) and power consumption (avg. 2.1mA).
+where the undefined intervals are transition (i.e. ramp-up/down) periods. This heater activity is responsible for the majority of the power consumption (>12mA), where other loads (i.e. microcontroller+RF) are negligible. Hence, the battery life is almost directly proportional to the measurement duty cycle. For this particular application, a duty cycle of 25% was found to yield a good balance between response time (73.36s) and power consumption (avg. 2.1mA).<br>
+Note that if USB power is detected at startup, a 100% duty cycle high performance model will be loaded instead. The F1 scores of this model are as follows:
+<br>
+img<br>
+Figure 2: Confusion matrix and F1 scores (Normal)<br>
 <br><br>
 
-## Design
+## System Design
 For this particular application, it is vital that warning latencies are kept low. This project provides on-device inference, which allows for rapid reaction to events, and low data transmission overhead.<br>
-Additionally, the device has a low-latency Thread network connection (compared to BLE/Zigbee) for offsite notifications and action triggering, which is also low-power, allowing for operation either from USB power, or from AA batteries.<br>
-The algorithms described above are run on a EFR32MG24 series microcontroller, with integrated 802.15.4 radio for Thread communications.<br>
+Additionally, the device has a low-latency Thread network connection (compared to BLE/Zigbee) for offsite notifications and action triggering, which is also low-power, allowing for operation either from USB power, or from AA batteries. <br>
+
+img<br>
+Figure 3: GasSentinel Custom Board<br>
+
+The algorithms described above are run the onboard EFR32MG24 series microcontroller, with integrated 802.15.4 radio for Thread communications.<br>
 The application layer overview for the microcontroller software can be found in Figure 2:<br><br>
 ![SW](https://github.com/J0JIng/OdorGuard/blob/main/Doc/sw.png)<br>
-Figure 2: Application-Layer Block Diagram (Microcontroller)<br>
+Figure 4: Application-Layer Block Diagram (Microcontroller)<br>
+<br>
+The device will also send the inference results and other metadata over CoAP to InfluxDB for backend integration and data analytics/visualization.<br>
 
+## Performance Evaluation
 
+## 
 
 [^1]: This profile was found to yield the highest F1 score and generalization to test/live data.

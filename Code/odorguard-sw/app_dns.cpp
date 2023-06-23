@@ -18,7 +18,7 @@
 #include "stdio.h"
 #include "string.h"
 
-#define APP_DNS_DEBUG_PRINT
+//#define APP_DNS_DEBUG_PRINT
 
 dns::dns(otInstance* (*getotInst)(void), uint8_t max_dns, uint8_t max_addr) {
 	getInst = getotInst;
