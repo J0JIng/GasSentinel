@@ -81,6 +81,15 @@ void resolveServerHandler(sl_sleeptimer_timer_handle_t *handle, void *data)
 	pend_resolve_server = true;
 }
 
+void TEST_HANDLER(sl_sleeptimer_timer_handle_t *handle, void *data)
+{
+	if(!found_server) return;
+	sensor::sig_if_t tmp;
+	coap::ux_queue.push(tmp);
+	otCliOutputFormat("[APP MAIN][I] Simulated data loaded onto queue\n");
+}
+sl_sleeptimer_timer_handle_t TEST_TIMER;
+
 otInstance *otGetInstance(void)
 {
     return sInstance;
@@ -90,7 +99,7 @@ otInstance *otGetInstance(void)
 void app_init(void) {
 
 	GPIO_PinOutSet(ERR_LED_PORT, ERR_LED_PIN);
-	app_init_bme();
+	//app_init_bme();
 	sleepyInit();
 	setNetworkConfiguration();
 	initUdp();
@@ -98,6 +107,7 @@ void app_init(void) {
 	assert(otThreadSetEnabled(sInstance, true) == OT_ERROR_NONE);
 	appSrpInit();
 	sl_sleeptimer_start_timer_ms(&resolve_server_timer, RESOLVE_POST_EST_CONN_MS, resolveServerHandler, NULL, 0, 0);
+	sl_sleeptimer_start_periodic_timer_ms(&TEST_TIMER, 2500, TEST_HANDLER, NULL, 0, 0);
 	found_server = false;
 	pend_resolve_server = false;
 	otCliOutputFormat("[APP MAIN][I] Initialization successful \n");
@@ -148,7 +158,7 @@ void app_process_action(void)
 	GPIO_PinOutSet(ACT_LED_PORT, ACT_LED_PIN);
 	if (bsec_run) {
 		bsec_run = false;
-		sensor::proc(app_burtc_callback);
+		//sensor::proc(app_burtc_callback);
 	}
 	bool ret = coap::service();
 	GPIO_PinOutClear(ACT_LED_PORT, ACT_LED_PIN);

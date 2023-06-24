@@ -14,7 +14,7 @@
 
 #include <openthread/coap.h>
 #include "utils/code_utils.h"
-
+#include "coap.h"
 #include "em_gpio.h"
 #include "stdio.h"
 #include "string.h"

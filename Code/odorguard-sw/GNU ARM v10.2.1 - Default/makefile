@@ -48,7 +48,6 @@ RM := rm -rf
 -include gecko_sdk_4.3.0/platform/radio/rail_lib/plugin/rail_util_pti/subdir.mk
 -include gecko_sdk_4.3.0/platform/radio/rail_lib/plugin/rail_util_power_manager_init/subdir.mk
 -include gecko_sdk_4.3.0/platform/radio/rail_lib/plugin/pa-conversions/subdir.mk
--include gecko_sdk_4.3.0/platform/radio/rail_lib/plugin/fem_util/subdir.mk
 -include gecko_sdk_4.3.0/platform/peripheral/src/subdir.mk
 -include gecko_sdk_4.3.0/platform/emlib/src/subdir.mk
 -include gecko_sdk_4.3.0/platform/emdrv/uartdrv/src/subdir.mk
@@ -58,7 +57,7 @@ RM := rm -rf
 -include gecko_sdk_4.3.0/platform/driver/i2cspm/src/subdir.mk
 -include gecko_sdk_4.3.0/platform/common/toolchain/src/subdir.mk
 -include gecko_sdk_4.3.0/platform/common/src/subdir.mk
--include gecko_sdk_4.3.0/platform/Device/SiliconLabs/MGM24/Source/subdir.mk
+-include gecko_sdk_4.3.0/platform/Device/SiliconLabs/EFR32MG24/Source/subdir.mk
 -include autogen/subdir.mk
 -include BSEC2/config/subdir.mk
 -include BME68x_API/subdir.mk

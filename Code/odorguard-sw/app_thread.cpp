@@ -74,6 +74,8 @@ bool efr32AllowSleepCallback(void)
  */
 void setNetworkConfiguration(void)
 {
+
+#error "Add network configs"
     static char          aNetworkName[] = "";
     otError              error;
     otOperationalDataset aDataset;
@@ -93,7 +95,7 @@ void setNetworkConfiguration(void)
     aDataset.mComponents.mIsChannelPresent = true;
 
     /* Set Pan ID to 2222 */
-    aDataset.mPanId                      = (otPanId);
+    aDataset.mPanId                      = (otPanId)0;
     aDataset.mComponents.mIsPanIdPresent = true;
 
     /* Set Extended Pan ID to C0DE1AB5C0DE1AB5 */
@@ -116,7 +118,7 @@ void setNetworkConfiguration(void)
     error = otDatasetSetActive(otGetInstance(), &aDataset);
     if (error != OT_ERROR_NONE)
     {
-        otCliOutputFormat("[APP THREAD][E] otDatasetSetActive failed with: %d, %s\r\n", error, otThreadErrorToString(error));
+        otCliOutputFormat("otDatasetSetActive failed with: %d, %s\r\n", error, otThreadErrorToString(error));
         return;
     }
 }

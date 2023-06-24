@@ -4,59 +4,59 @@
     <folder name="platform">
       <folder name="Device">
         <folder name="SiliconLabs">
-          <folder name="MGM24">
+          <folder name="EFR32MG24">
             <folder name="Source">
-              <file name="startup_mgm24.c" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/MGM24/Source/startup_mgm24.c"/>
-              <file name="system_mgm24.c" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/MGM24/Source/system_mgm24.c"/>
+              <file name="system_efr32mg24.c" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/EFR32MG24/Source/system_efr32mg24.c"/>
+              <file name="startup_efr32mg24.c" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/EFR32MG24/Source/startup_efr32mg24.c"/>
             </folder>
             <folder name="Include">
-              <file name="mgm240pb32vna.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/MGM24/Include/mgm240pb32vna.h"/>
-              <file name="em_device.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/MGM24/Include/em_device.h"/>
-              <file name="mgm24_acmp.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/MGM24/Include/mgm24_acmp.h"/>
-              <file name="mgm24_aes.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/MGM24/Include/mgm24_aes.h"/>
-              <file name="mgm24_buram.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/MGM24/Include/mgm24_buram.h"/>
-              <file name="mgm24_burtc.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/MGM24/Include/mgm24_burtc.h"/>
-              <file name="mgm24_cmu.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/MGM24/Include/mgm24_cmu.h"/>
-              <file name="mgm24_dcdc.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/MGM24/Include/mgm24_dcdc.h"/>
-              <file name="mgm24_devinfo.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/MGM24/Include/mgm24_devinfo.h"/>
-              <file name="mgm24_dma_descriptor.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/MGM24/Include/mgm24_dma_descriptor.h"/>
-              <file name="mgm24_dpll.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/MGM24/Include/mgm24_dpll.h"/>
-              <file name="mgm24_emu.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/MGM24/Include/mgm24_emu.h"/>
-              <file name="mgm24_eusart.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/MGM24/Include/mgm24_eusart.h"/>
-              <file name="mgm24_fsrco.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/MGM24/Include/mgm24_fsrco.h"/>
-              <file name="mgm24_gpcrc.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/MGM24/Include/mgm24_gpcrc.h"/>
-              <file name="mgm24_gpio.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/MGM24/Include/mgm24_gpio.h"/>
-              <file name="mgm24_gpio_port.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/MGM24/Include/mgm24_gpio_port.h"/>
-              <file name="mgm24_hfrco.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/MGM24/Include/mgm24_hfrco.h"/>
-              <file name="mgm24_hfxo.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/MGM24/Include/mgm24_hfxo.h"/>
-              <file name="mgm24_i2c.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/MGM24/Include/mgm24_i2c.h"/>
-              <file name="mgm24_iadc.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/MGM24/Include/mgm24_iadc.h"/>
-              <file name="mgm24_icache.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/MGM24/Include/mgm24_icache.h"/>
-              <file name="mgm24_keyscan.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/MGM24/Include/mgm24_keyscan.h"/>
-              <file name="mgm24_ldma.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/MGM24/Include/mgm24_ldma.h"/>
-              <file name="mgm24_ldmaxbar.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/MGM24/Include/mgm24_ldmaxbar.h"/>
-              <file name="mgm24_ldmaxbar_defines.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/MGM24/Include/mgm24_ldmaxbar_defines.h"/>
-              <file name="mgm24_letimer.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/MGM24/Include/mgm24_letimer.h"/>
-              <file name="mgm24_lfrco.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/MGM24/Include/mgm24_lfrco.h"/>
-              <file name="mgm24_lfxo.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/MGM24/Include/mgm24_lfxo.h"/>
-              <file name="mgm24_mailbox.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/MGM24/Include/mgm24_mailbox.h"/>
-              <file name="mgm24_mpahbram.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/MGM24/Include/mgm24_mpahbram.h"/>
-              <file name="mgm24_msc.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/MGM24/Include/mgm24_msc.h"/>
-              <file name="mgm24_mvp.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/MGM24/Include/mgm24_mvp.h"/>
-              <file name="mgm24_pcnt.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/MGM24/Include/mgm24_pcnt.h"/>
-              <file name="mgm24_prs.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/MGM24/Include/mgm24_prs.h"/>
-              <file name="mgm24_prs_signals.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/MGM24/Include/mgm24_prs_signals.h"/>
-              <file name="mgm24_scratchpad.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/MGM24/Include/mgm24_scratchpad.h"/>
-              <file name="mgm24_semailbox.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/MGM24/Include/mgm24_semailbox.h"/>
-              <file name="mgm24_smu.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/MGM24/Include/mgm24_smu.h"/>
-              <file name="mgm24_syscfg.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/MGM24/Include/mgm24_syscfg.h"/>
-              <file name="mgm24_sysrtc.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/MGM24/Include/mgm24_sysrtc.h"/>
-              <file name="mgm24_timer.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/MGM24/Include/mgm24_timer.h"/>
-              <file name="mgm24_ulfrco.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/MGM24/Include/mgm24_ulfrco.h"/>
-              <file name="mgm24_usart.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/MGM24/Include/mgm24_usart.h"/>
-              <file name="mgm24_vdac.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/MGM24/Include/mgm24_vdac.h"/>
-              <file name="mgm24_wdog.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/MGM24/Include/mgm24_wdog.h"/>
-              <file name="system_mgm24.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/MGM24/Include/system_mgm24.h"/>
+              <file name="efr32mg24b210f1536im48.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/EFR32MG24/Include/efr32mg24b210f1536im48.h"/>
+              <file name="efr32mg24_acmp.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/EFR32MG24/Include/efr32mg24_acmp.h"/>
+              <file name="efr32mg24_aes.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/EFR32MG24/Include/efr32mg24_aes.h"/>
+              <file name="efr32mg24_buram.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/EFR32MG24/Include/efr32mg24_buram.h"/>
+              <file name="efr32mg24_burtc.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/EFR32MG24/Include/efr32mg24_burtc.h"/>
+              <file name="efr32mg24_cmu.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/EFR32MG24/Include/efr32mg24_cmu.h"/>
+              <file name="efr32mg24_dcdc.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/EFR32MG24/Include/efr32mg24_dcdc.h"/>
+              <file name="efr32mg24_devinfo.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/EFR32MG24/Include/efr32mg24_devinfo.h"/>
+              <file name="efr32mg24_dma_descriptor.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/EFR32MG24/Include/efr32mg24_dma_descriptor.h"/>
+              <file name="efr32mg24_dpll.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/EFR32MG24/Include/efr32mg24_dpll.h"/>
+              <file name="efr32mg24_emu.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/EFR32MG24/Include/efr32mg24_emu.h"/>
+              <file name="efr32mg24_eusart.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/EFR32MG24/Include/efr32mg24_eusart.h"/>
+              <file name="efr32mg24_fsrco.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/EFR32MG24/Include/efr32mg24_fsrco.h"/>
+              <file name="efr32mg24_gpcrc.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/EFR32MG24/Include/efr32mg24_gpcrc.h"/>
+              <file name="efr32mg24_gpio.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/EFR32MG24/Include/efr32mg24_gpio.h"/>
+              <file name="efr32mg24_gpio_port.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/EFR32MG24/Include/efr32mg24_gpio_port.h"/>
+              <file name="efr32mg24_hfrco.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/EFR32MG24/Include/efr32mg24_hfrco.h"/>
+              <file name="efr32mg24_hfxo.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/EFR32MG24/Include/efr32mg24_hfxo.h"/>
+              <file name="efr32mg24_i2c.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/EFR32MG24/Include/efr32mg24_i2c.h"/>
+              <file name="efr32mg24_iadc.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/EFR32MG24/Include/efr32mg24_iadc.h"/>
+              <file name="efr32mg24_icache.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/EFR32MG24/Include/efr32mg24_icache.h"/>
+              <file name="efr32mg24_keyscan.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/EFR32MG24/Include/efr32mg24_keyscan.h"/>
+              <file name="efr32mg24_ldma.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/EFR32MG24/Include/efr32mg24_ldma.h"/>
+              <file name="efr32mg24_ldmaxbar.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/EFR32MG24/Include/efr32mg24_ldmaxbar.h"/>
+              <file name="efr32mg24_ldmaxbar_defines.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/EFR32MG24/Include/efr32mg24_ldmaxbar_defines.h"/>
+              <file name="efr32mg24_letimer.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/EFR32MG24/Include/efr32mg24_letimer.h"/>
+              <file name="efr32mg24_lfrco.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/EFR32MG24/Include/efr32mg24_lfrco.h"/>
+              <file name="efr32mg24_lfxo.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/EFR32MG24/Include/efr32mg24_lfxo.h"/>
+              <file name="efr32mg24_mailbox.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/EFR32MG24/Include/efr32mg24_mailbox.h"/>
+              <file name="efr32mg24_mpahbram.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/EFR32MG24/Include/efr32mg24_mpahbram.h"/>
+              <file name="efr32mg24_msc.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/EFR32MG24/Include/efr32mg24_msc.h"/>
+              <file name="efr32mg24_mvp.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/EFR32MG24/Include/efr32mg24_mvp.h"/>
+              <file name="efr32mg24_pcnt.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/EFR32MG24/Include/efr32mg24_pcnt.h"/>
+              <file name="efr32mg24_prs.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/EFR32MG24/Include/efr32mg24_prs.h"/>
+              <file name="efr32mg24_prs_signals.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/EFR32MG24/Include/efr32mg24_prs_signals.h"/>
+              <file name="efr32mg24_scratchpad.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/EFR32MG24/Include/efr32mg24_scratchpad.h"/>
+              <file name="efr32mg24_semailbox.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/EFR32MG24/Include/efr32mg24_semailbox.h"/>
+              <file name="efr32mg24_smu.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/EFR32MG24/Include/efr32mg24_smu.h"/>
+              <file name="efr32mg24_syscfg.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/EFR32MG24/Include/efr32mg24_syscfg.h"/>
+              <file name="efr32mg24_sysrtc.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/EFR32MG24/Include/efr32mg24_sysrtc.h"/>
+              <file name="efr32mg24_timer.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/EFR32MG24/Include/efr32mg24_timer.h"/>
+              <file name="efr32mg24_ulfrco.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/EFR32MG24/Include/efr32mg24_ulfrco.h"/>
+              <file name="efr32mg24_usart.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/EFR32MG24/Include/efr32mg24_usart.h"/>
+              <file name="efr32mg24_vdac.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/EFR32MG24/Include/efr32mg24_vdac.h"/>
+              <file name="efr32mg24_wdog.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/EFR32MG24/Include/efr32mg24_wdog.h"/>
+              <file name="em_device.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/EFR32MG24/Include/em_device.h"/>
+              <file name="system_efr32mg24.h" linked="false" uri="studio:/sdk/platform/Device/SiliconLabs/EFR32MG24/Include/system_efr32mg24.h"/>
             </folder>
           </folder>
         </folder>
@@ -109,7 +109,7 @@
           <folder name="src">
             <file name="sl_device_init_dcdc_s2.c" linked="false" uri="studio:/sdk/platform/service/device_init/src/sl_device_init_dcdc_s2.c"/>
             <file name="sl_device_init_emu_s2.c" linked="false" uri="studio:/sdk/platform/service/device_init/src/sl_device_init_emu_s2.c"/>
-            <file name="sl_device_init_hfxo_mgm24.c" linked="false" uri="studio:/sdk/platform/service/device_init/src/sl_device_init_hfxo_mgm24.c"/>
+            <file name="sl_device_init_hfxo_s2.c" linked="false" uri="studio:/sdk/platform/service/device_init/src/sl_device_init_hfxo_s2.c"/>
             <file name="sl_device_init_nvic.c" linked="false" uri="studio:/sdk/platform/service/device_init/src/sl_device_init_nvic.c"/>
           </folder>
         </folder>
@@ -276,75 +276,6 @@
           <file name="em_usart.h" linked="false" uri="studio:/sdk/platform/emlib/inc/em_usart.h"/>
         </folder>
       </folder>
-      <folder name="radio">
-        <folder name="rail_lib">
-          <folder name="plugin">
-            <folder name="fem_util">
-              <file name="sl_fem_util.c" linked="false" uri="studio:/sdk/platform/radio/rail_lib/plugin/fem_util/sl_fem_util.c"/>
-              <file name="sl_fem_util.h" linked="false" uri="studio:/sdk/platform/radio/rail_lib/plugin/fem_util/sl_fem_util.h"/>
-            </folder>
-            <folder name="pa-conversions">
-              <folder name="efr32xg24">
-                <file name="sl_rail_util_pa_curves_10dbm.h" linked="false" uri="studio:/sdk/platform/radio/rail_lib/plugin/pa-conversions/efr32xg24/sl_rail_util_pa_curves_10dbm.h"/>
-                <file name="sl_rail_util_pa_curves_20dbm.h" linked="false" uri="studio:/sdk/platform/radio/rail_lib/plugin/pa-conversions/efr32xg24/sl_rail_util_pa_curves_20dbm.h"/>
-              </folder>
-              <file name="pa_conversions_efr32.c" linked="false" uri="studio:/sdk/platform/radio/rail_lib/plugin/pa-conversions/pa_conversions_efr32.c"/>
-              <file name="pa_conversions_efr32.h" linked="false" uri="studio:/sdk/platform/radio/rail_lib/plugin/pa-conversions/pa_conversions_efr32.h"/>
-              <file name="pa_curve_types_efr32.h" linked="false" uri="studio:/sdk/platform/radio/rail_lib/plugin/pa-conversions/pa_curve_types_efr32.h"/>
-              <file name="pa_curves_efr32.h" linked="false" uri="studio:/sdk/platform/radio/rail_lib/plugin/pa-conversions/pa_curves_efr32.h"/>
-            </folder>
-            <folder name="rail_util_power_manager_init">
-              <file name="sl_rail_util_power_manager_init.c" linked="false" uri="studio:/sdk/platform/radio/rail_lib/plugin/rail_util_power_manager_init/sl_rail_util_power_manager_init.c"/>
-              <file name="sl_rail_util_power_manager_init.h" linked="false" uri="studio:/sdk/platform/radio/rail_lib/plugin/rail_util_power_manager_init/sl_rail_util_power_manager_init.h"/>
-            </folder>
-            <folder name="rail_util_pti">
-              <file name="sl_rail_util_pti.c" linked="false" uri="studio:/sdk/platform/radio/rail_lib/plugin/rail_util_pti/sl_rail_util_pti.c"/>
-              <file name="sl_rail_util_pti.h" linked="false" uri="studio:/sdk/platform/radio/rail_lib/plugin/rail_util_pti/sl_rail_util_pti.h"/>
-            </folder>
-            <folder name="rail_util_rssi">
-              <file name="sl_rail_util_rssi.c" linked="false" uri="studio:/sdk/platform/radio/rail_lib/plugin/rail_util_rssi/sl_rail_util_rssi.c"/>
-              <file name="sl_rail_util_rssi.h" linked="false" uri="studio:/sdk/platform/radio/rail_lib/plugin/rail_util_rssi/sl_rail_util_rssi.h"/>
-            </folder>
-            <folder name="rail_util_sequencer">
-              <file name="sl_rail_util_sequencer.c" linked="false" uri="studio:/sdk/platform/radio/rail_lib/plugin/rail_util_sequencer/sl_rail_util_sequencer.c"/>
-            </folder>
-          </folder>
-          <folder name="common">
-            <file name="rail.h" linked="false" uri="studio:/sdk/platform/radio/rail_lib/common/rail.h"/>
-            <file name="rail_mfm.h" linked="false" uri="studio:/sdk/platform/radio/rail_lib/common/rail_mfm.h"/>
-            <file name="rail_assert_error_codes.h" linked="false" uri="studio:/sdk/platform/radio/rail_lib/common/rail_assert_error_codes.h"/>
-            <file name="rail_types.h" linked="false" uri="studio:/sdk/platform/radio/rail_lib/common/rail_types.h"/>
-            <file name="rail_features.h" linked="false" uri="studio:/sdk/platform/radio/rail_lib/common/rail_features.h"/>
-          </folder>
-          <folder name="protocol">
-            <folder name="ble">
-              <file name="rail_ble.h" linked="false" uri="studio:/sdk/platform/radio/rail_lib/protocol/ble/rail_ble.h"/>
-            </folder>
-            <folder name="ieee802154">
-              <file name="rail_ieee802154.h" linked="false" uri="studio:/sdk/platform/radio/rail_lib/protocol/ieee802154/rail_ieee802154.h"/>
-            </folder>
-            <folder name="wmbus">
-              <file name="rail_wmbus.h" linked="false" uri="studio:/sdk/platform/radio/rail_lib/protocol/wmbus/rail_wmbus.h"/>
-            </folder>
-            <folder name="zwave">
-              <file name="rail_zwave.h" linked="false" uri="studio:/sdk/platform/radio/rail_lib/protocol/zwave/rail_zwave.h"/>
-            </folder>
-          </folder>
-          <folder name="chip">
-            <folder name="efr32">
-              <folder name="efr32xg2x">
-                <file name="rail_chip_specific.h" linked="false" uri="studio:/sdk/platform/radio/rail_lib/chip/efr32/efr32xg2x/rail_chip_specific.h"/>
-              </folder>
-            </folder>
-          </folder>
-          <folder name="autogen">
-            <folder name="librail_release">
-              <file name="librail_config_mgm240pb32vna_gcc.a" linked="false" uri="studio:/sdk/platform/radio/rail_lib/autogen/librail_release/librail_config_mgm240pb32vna_gcc.a"/>
-              <file name="librail_module_efr32xg24_gcc_release.a" linked="false" uri="studio:/sdk/platform/radio/rail_lib/autogen/librail_release/librail_module_efr32xg24_gcc_release.a"/>
-            </folder>
-          </folder>
-        </folder>
-      </folder>
       <folder name="driver">
         <folder name="i2cspm">
           <folder name="src">
@@ -484,6 +415,71 @@
         </folder>
         <folder name="inc">
           <file name="peripheral_sysrtc.h" linked="false" uri="studio:/sdk/platform/peripheral/inc/peripheral_sysrtc.h"/>
+        </folder>
+      </folder>
+      <folder name="radio">
+        <folder name="rail_lib">
+          <folder name="common">
+            <file name="rail.h" linked="false" uri="studio:/sdk/platform/radio/rail_lib/common/rail.h"/>
+            <file name="rail_mfm.h" linked="false" uri="studio:/sdk/platform/radio/rail_lib/common/rail_mfm.h"/>
+            <file name="rail_assert_error_codes.h" linked="false" uri="studio:/sdk/platform/radio/rail_lib/common/rail_assert_error_codes.h"/>
+            <file name="rail_types.h" linked="false" uri="studio:/sdk/platform/radio/rail_lib/common/rail_types.h"/>
+            <file name="rail_features.h" linked="false" uri="studio:/sdk/platform/radio/rail_lib/common/rail_features.h"/>
+          </folder>
+          <folder name="protocol">
+            <folder name="ble">
+              <file name="rail_ble.h" linked="false" uri="studio:/sdk/platform/radio/rail_lib/protocol/ble/rail_ble.h"/>
+            </folder>
+            <folder name="ieee802154">
+              <file name="rail_ieee802154.h" linked="false" uri="studio:/sdk/platform/radio/rail_lib/protocol/ieee802154/rail_ieee802154.h"/>
+            </folder>
+            <folder name="wmbus">
+              <file name="rail_wmbus.h" linked="false" uri="studio:/sdk/platform/radio/rail_lib/protocol/wmbus/rail_wmbus.h"/>
+            </folder>
+            <folder name="zwave">
+              <file name="rail_zwave.h" linked="false" uri="studio:/sdk/platform/radio/rail_lib/protocol/zwave/rail_zwave.h"/>
+            </folder>
+          </folder>
+          <folder name="chip">
+            <folder name="efr32">
+              <folder name="efr32xg2x">
+                <file name="rail_chip_specific.h" linked="false" uri="studio:/sdk/platform/radio/rail_lib/chip/efr32/efr32xg2x/rail_chip_specific.h"/>
+              </folder>
+            </folder>
+          </folder>
+          <folder name="autogen">
+            <folder name="librail_release">
+              <file name="librail_efr32xg24_gcc_release.a" linked="false" uri="studio:/sdk/platform/radio/rail_lib/autogen/librail_release/librail_efr32xg24_gcc_release.a"/>
+            </folder>
+          </folder>
+          <folder name="plugin">
+            <folder name="pa-conversions">
+              <folder name="efr32xg24">
+                <file name="sl_rail_util_pa_curves_10dbm.h" linked="false" uri="studio:/sdk/platform/radio/rail_lib/plugin/pa-conversions/efr32xg24/sl_rail_util_pa_curves_10dbm.h"/>
+                <file name="sl_rail_util_pa_curves_20dbm.h" linked="false" uri="studio:/sdk/platform/radio/rail_lib/plugin/pa-conversions/efr32xg24/sl_rail_util_pa_curves_20dbm.h"/>
+              </folder>
+              <file name="pa_conversions_efr32.c" linked="false" uri="studio:/sdk/platform/radio/rail_lib/plugin/pa-conversions/pa_conversions_efr32.c"/>
+              <file name="pa_curves_efr32.c" linked="false" uri="studio:/sdk/platform/radio/rail_lib/plugin/pa-conversions/pa_curves_efr32.c"/>
+              <file name="pa_conversions_efr32.h" linked="false" uri="studio:/sdk/platform/radio/rail_lib/plugin/pa-conversions/pa_conversions_efr32.h"/>
+              <file name="pa_curve_types_efr32.h" linked="false" uri="studio:/sdk/platform/radio/rail_lib/plugin/pa-conversions/pa_curve_types_efr32.h"/>
+              <file name="pa_curves_efr32.h" linked="false" uri="studio:/sdk/platform/radio/rail_lib/plugin/pa-conversions/pa_curves_efr32.h"/>
+            </folder>
+            <folder name="rail_util_power_manager_init">
+              <file name="sl_rail_util_power_manager_init.c" linked="false" uri="studio:/sdk/platform/radio/rail_lib/plugin/rail_util_power_manager_init/sl_rail_util_power_manager_init.c"/>
+              <file name="sl_rail_util_power_manager_init.h" linked="false" uri="studio:/sdk/platform/radio/rail_lib/plugin/rail_util_power_manager_init/sl_rail_util_power_manager_init.h"/>
+            </folder>
+            <folder name="rail_util_pti">
+              <file name="sl_rail_util_pti.c" linked="false" uri="studio:/sdk/platform/radio/rail_lib/plugin/rail_util_pti/sl_rail_util_pti.c"/>
+              <file name="sl_rail_util_pti.h" linked="false" uri="studio:/sdk/platform/radio/rail_lib/plugin/rail_util_pti/sl_rail_util_pti.h"/>
+            </folder>
+            <folder name="rail_util_rssi">
+              <file name="sl_rail_util_rssi.c" linked="false" uri="studio:/sdk/platform/radio/rail_lib/plugin/rail_util_rssi/sl_rail_util_rssi.c"/>
+              <file name="sl_rail_util_rssi.h" linked="false" uri="studio:/sdk/platform/radio/rail_lib/plugin/rail_util_rssi/sl_rail_util_rssi.h"/>
+            </folder>
+            <folder name="rail_util_sequencer">
+              <file name="sl_rail_util_sequencer.c" linked="false" uri="studio:/sdk/platform/radio/rail_lib/plugin/rail_util_sequencer/sl_rail_util_sequencer.c"/>
+            </folder>
+          </folder>
         </folder>
       </folder>
     </folder>
@@ -1420,14 +1416,13 @@
   <file name="app.h" linked="false" uri="studio:/project/app.h"/>
   <file name="README.md" linked="false" uri="studio:/project/README.md"/>
   <includePath uri="studio:/project/"/>
-  <includePath uri="studio:/project/gecko_sdk_4.3.0/platform/Device/SiliconLabs/MGM24/Include"/>
+  <includePath uri="studio:/project/gecko_sdk_4.3.0/platform/Device/SiliconLabs/EFR32MG24/Include"/>
   <includePath uri="studio:/project/gecko_sdk_4.3.0/platform/common/inc"/>
   <includePath uri="studio:/project/gecko_sdk_4.3.0/platform/CMSIS/Core/Include"/>
   <includePath uri="studio:/project/gecko_sdk_4.3.0/platform/service/device_init/inc"/>
   <includePath uri="studio:/project/gecko_sdk_4.3.0/platform/emdrv/dmadrv/inc"/>
   <includePath uri="studio:/project/gecko_sdk_4.3.0/platform/emdrv/common/inc"/>
   <includePath uri="studio:/project/gecko_sdk_4.3.0/platform/emlib/inc"/>
-  <includePath uri="studio:/project/gecko_sdk_4.3.0/platform/radio/rail_lib/plugin/fem_util"/>
   <includePath uri="studio:/project/gecko_sdk_4.3.0/platform/emdrv/gpiointerrupt/inc"/>
   <includePath uri="studio:/project/gecko_sdk_4.3.0/platform/service/hfxo_manager/inc"/>
   <includePath uri="studio:/project/gecko_sdk_4.3.0/platform/driver/i2cspm/inc"/>
@@ -1473,7 +1468,7 @@
   <includePath uri="studio:/project/gecko_sdk_4.3.0/platform/security/sl_component/sl_protocol_crypto/src"/>
   <includePath uri="studio:/project/gecko_sdk_4.3.0/platform/emdrv/uartdrv/inc"/>
   <includePath uri="studio:/project/gecko_sdk_4.3.0/platform/service/udelay/inc"/>
-  <macroDefinition name="MGM240PB32VNA"/>
+  <macroDefinition name="EFR32MG24B210F1536IM48"/>
   <macroDefinition name="SL_COMPONENT_CATALOG_PRESENT"/>
   <macroDefinition name="MBEDTLS_CONFIG_FILE" value="&lt;sl_mbedtls_config.h>"/>
   <macroDefinition name="OPENTHREAD_CONFIG_ENABLE_BUILTIN_MBEDTLS" value="0"/>
@@ -1493,8 +1488,7 @@
   <libraryFile name="stdc++"/>
   <libraryFile uri="studio:/project/gecko_sdk_4.3.0/platform/emdrv/nvm3/lib/libnvm3_CM33_gcc.a"/>
   <libraryFile uri="studio:/project/gecko_sdk_4.3.0/protocol/openthread/libs/libsl_openthread_efr32mg2x_gcc.a"/>
-  <libraryFile uri="studio:/project/gecko_sdk_4.3.0/platform/radio/rail_lib/autogen/librail_release/librail_config_mgm240pb32vna_gcc.a"/>
-  <libraryFile uri="studio:/project/gecko_sdk_4.3.0/platform/radio/rail_lib/autogen/librail_release/librail_module_efr32xg24_gcc_release.a"/>
+  <libraryFile uri="studio:/project/gecko_sdk_4.3.0/platform/radio/rail_lib/autogen/librail_release/librail_efr32xg24_gcc_release.a"/>
   <libraryFile name="gcc"/>
   <libraryFile name="c"/>
   <libraryFile name="m"/>
@@ -1568,7 +1562,7 @@
   <toolOption toolId="com.silabs.ide.si32.gcc.cdt.managedbuild.tool.gnu.cpp.linker.base" optionId="com.silabs.ide.si32.gcc.cdt.managedbuild.tool.gnu.cpp.linker.clibs" value="com.silabs.ide.si32.gcc.cdt.managedbuild.tool.gnu.c.linker.nanospec"/>
   <toolOption toolId="com.silabs.ide.si32.gcc.cdt.managedbuild.tool.gnu.c.linker.base" optionId="com.silabs.ide.si32.gcc.cdt.managedbuild.tool.gnu.c.linker.map" value="true"/>
   <toolOption toolId="com.silabs.ide.si32.gcc.cdt.managedbuild.tool.gnu.cpp.linker.base" optionId="com.silabs.ide.si32.gcc.cdt.managedbuild.tool.gnu.cpp.linker.map" value="true"/>
-  <toolOption toolId="studio.ide.project" optionId="device_opn" value="mgm240pb32vna"/>
+  <toolOption toolId="studio.ide.project" optionId="device_opn" value="efr32mg24b210f1536im48"/>
   <toolOption toolId="makefile.arm.gcc.compiler" optionId="misc">
     <toolListOption value="-mcmse"/>
     <toolListOption value="-Wno-sign-compare"/>

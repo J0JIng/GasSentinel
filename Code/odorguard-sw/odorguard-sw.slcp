@@ -29,10 +29,10 @@ toolchain_settings: []
 component:
 - {id: power_manager}
 - {id: power_manager_deepsleep}
-- {id: MGM240PB32VNA}
 - {id: ot_stack_mtd}
 - {id: rail_util_pti}
 - {id: ot_cli_source}
+- {id: EFR32MG24B210F1536IM48}
 - instance: [vcom]
   id: uartdrv_usart
 - instance: [i2c0]

@@ -30,7 +30,7 @@ BME68x_API \
 BSEC2/config \
 . \
 autogen \
-gecko_sdk_4.3.0/platform/Device/SiliconLabs/MGM24/Source \
+gecko_sdk_4.3.0/platform/Device/SiliconLabs/EFR32MG24/Source \
 gecko_sdk_4.3.0/platform/common/src \
 gecko_sdk_4.3.0/platform/common/toolchain/src \
 gecko_sdk_4.3.0/platform/driver/i2cspm/src \
@@ -40,7 +40,6 @@ gecko_sdk_4.3.0/platform/emdrv/nvm3/src \
 gecko_sdk_4.3.0/platform/emdrv/uartdrv/src \
 gecko_sdk_4.3.0/platform/emlib/src \
 gecko_sdk_4.3.0/platform/peripheral/src \
-gecko_sdk_4.3.0/platform/radio/rail_lib/plugin/fem_util \
 gecko_sdk_4.3.0/platform/radio/rail_lib/plugin/pa-conversions \
 gecko_sdk_4.3.0/platform/radio/rail_lib/plugin/rail_util_power_manager_init \
 gecko_sdk_4.3.0/platform/radio/rail_lib/plugin/rail_util_pti \
