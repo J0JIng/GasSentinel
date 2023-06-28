@@ -1,0 +1,3 @@
+Added Component: Designator=U?(FP-L622-1C-IPC_A)
+Add component (AddParameter): Name = "RoHS Compliant"; Value = "Yes"; VariantName = "[No Variations]"
+Added Class: Name=supply

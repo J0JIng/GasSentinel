@@ -1,0 +1,139 @@
+Change Component Comment : Designator= Old Comment= New Comment=0.1 µF
+Change Component Comment : Designator= Old Comment= New Comment=0.1 µF
+Change Component Comment : Designator= Old Comment= New Comment=0.1 µF
+Change Component Comment : Designator= Old Comment= New Comment=1.5 kOhms
+Change Component Comment : Designator= Old Comment= New Comment=1.5 kOhms
+Change Component Comment : Designator= Old Comment= New Comment=2.2 µH
+Change Component Comment : Designator= Old Comment= New Comment=10 kOhms
+Change Component Comment : Designator= Old Comment= New Comment=10 kOhms
+Change Component Comment : Designator= Old Comment= New Comment=10 µF
+Change Component Comment : Designator= Old Comment= New Comment=10 µF
+Change Component Comment : Designator= Old Comment= New Comment=80.6 kOhms
+Change Component Comment : Designator= Old Comment= New Comment=2479
+Change Component Comment : Designator= Old Comment= New Comment=62131021021
+Change Component Comment : Designator= Old Comment= New Comment==Value
+Change Component Comment : Designator= Old Comment= New Comment=ABS06-32.768KHZ-9-1-T
+Change Component Comment : Designator= Old Comment= New Comment=BME688
+Change Component Comment : Designator= Old Comment= New Comment=MAX17224ELT+T
+Change Component Comment : Designator= Old Comment= New Comment=MGM240PB32VNA3
+Change Component Comment : Designator= Old Comment= New Comment=STTS22HTR
+Change Component Comment : Designator= Old Comment= New Comment=Yellow
+Change Component Comment : Designator= Old Comment= New Comment=Yellow
+Change Component Comment : Designator= Old Comment= New Comment=Yellow
+Change Component Designator: OldDesignator= NewDesignator=C1
+Change Component Designator: OldDesignator= NewDesignator=C2
+Change Component Designator: OldDesignator= NewDesignator=C3
+Change Component Designator: OldDesignator= NewDesignator=C4
+Change Component Designator: OldDesignator= NewDesignator=C5
+Change Component Designator: OldDesignator= NewDesignator=D1
+Change Component Designator: OldDesignator= NewDesignator=D2
+Change Component Designator: OldDesignator= NewDesignator=D3
+Change Component Designator: OldDesignator= NewDesignator=J1
+Change Component Designator: OldDesignator= NewDesignator=L1
+Change Component Designator: OldDesignator= NewDesignator=R1
+Change Component Designator: OldDesignator= NewDesignator=R2
+Change Component Designator: OldDesignator= NewDesignator=R3
+Change Component Designator: OldDesignator= NewDesignator=R4
+Change Component Designator: OldDesignator= NewDesignator=R5
+Change Component Designator: OldDesignator= NewDesignator=R6
+Change Component Designator: OldDesignator= NewDesignator=U1
+Change Component Designator: OldDesignator= NewDesignator=U2
+Change Component Designator: OldDesignator= NewDesignator=U3
+Change Component Designator: OldDesignator= NewDesignator=U4
+Change Component Designator: OldDesignator= NewDesignator=U5
+Change Component Designator: OldDesignator= NewDesignator=Y1
+Added Component: Designator=R7(RES 0402_1005)
+Add component (AddParameter): Name = "ComponentLink1Description"; Value = "Datasheet"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink1URL"; Value = "https://api.pim.na.industrial.panasonic.com/file_stream/main/fileversion/9152"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink2Description"; Value = "DigiKey Link"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink2URL"; Value = "https://www.digikey.com/en/products/detail/panasonic-electronic-components/ERA-2VRW1501X/12086957"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Composition"; Value = "Thin Film"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Device Package"; Value = "0402 (1005 Metric)"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Features"; Value = "Anti-Sulfur, Automotive AEC-Q200"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Height - Seated (Max)"; Value = "0.016" (0.40mm)"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "LastUpdated"; Value = "11/9/2022 9:53:08 am"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Lifecycle Status"; Value = "Active"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = "Panasonic Electronic Components"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Minimum Order"; Value = "1"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Number of Terminations"; Value = "2"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Operating Temperature"; Value = "-55°C ~ 155°C"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Package / Case"; Value = "0402 (1005 Metric)"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Packaging"; Value = "TapeAndReel"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Part Number"; Value = "ERA-2VRW1501X"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Part Status"; Value = "Active"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PartId"; Value = "67400"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Power (Watts)"; Value = "0.1W, 1/10W"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Price"; Value = "0.24"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Ratings"; Value = "AEC-Q200"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Resistance"; Value = "1.5 kOhms"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Series"; Value = "ERA-2V"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Size / Dimension"; Value = "0.039" L x 0.020" W (1.00mm x 0.50mm)"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "DigiKey"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Device Package"; Value = "0402"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number 1"; Value = "10-ERA-2VRW1501XCT-ND"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Temperature Coefficient"; Value = "±10ppm/°C"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Tolerance"; Value = "±0.05%"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "1.5 kOhms"; VariantName = "[No Variations]"
+Added Component: Designator=R8(RES 0402_1005)
+Add component (AddParameter): Name = "ComponentLink1Description"; Value = "Datasheet"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink1URL"; Value = "https://api.pim.na.industrial.panasonic.com/file_stream/main/fileversion/9152"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink2Description"; Value = "DigiKey Link"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink2URL"; Value = "https://www.digikey.com/en/products/detail/panasonic-electronic-components/ERA-2VRW1501X/12086957"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Composition"; Value = "Thin Film"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Device Package"; Value = "0402 (1005 Metric)"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Features"; Value = "Anti-Sulfur, Automotive AEC-Q200"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Height - Seated (Max)"; Value = "0.016" (0.40mm)"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "LastUpdated"; Value = "11/9/2022 9:53:08 am"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Lifecycle Status"; Value = "Active"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = "Panasonic Electronic Components"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Minimum Order"; Value = "1"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Number of Terminations"; Value = "2"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Operating Temperature"; Value = "-55°C ~ 155°C"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Package / Case"; Value = "0402 (1005 Metric)"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Packaging"; Value = "TapeAndReel"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Part Number"; Value = "ERA-2VRW1501X"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Part Status"; Value = "Active"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PartId"; Value = "67400"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Power (Watts)"; Value = "0.1W, 1/10W"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Price"; Value = "0.24"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Ratings"; Value = "AEC-Q200"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Resistance"; Value = "1.5 kOhms"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Series"; Value = "ERA-2V"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Size / Dimension"; Value = "0.039" L x 0.020" W (1.00mm x 0.50mm)"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "DigiKey"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Device Package"; Value = "0402"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number 1"; Value = "10-ERA-2VRW1501XCT-ND"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Temperature Coefficient"; Value = "±10ppm/°C"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Tolerance"; Value = "±0.05%"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "1.5 kOhms"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=GND Pin=R8-2
+Change Net Name : Old Net Name=NetC1_2 New Net Name=Vbat
+Added Pin To Net: NetName=NetR7_2 Pin=R7-2
+Added Pin To Net: NetName=NetR7_2 Pin=R8-1
+Added Pin To Net: NetName=NetR7_2 Pin=U1-24
+Added Net: Name=NetR7_2
+Add Net: Net with name "Vbat" already exists
+Added Member To Class: ClassName=supply Member=Component C1 10 µF
+Added Member To Class: ClassName=supply Member=Component C2 10 µF
+Added Member To Class: ClassName=sensor Member=Component C3 0.1 µF
+Added Member To Class: ClassName=sensor Member=Component C4 0.1 µF
+Added Member To Class: ClassName=sensor Member=Component C5 0.1 µF
+Added Member To Class: ClassName=mcu Member=Component D1 Yellow
+Added Member To Class: ClassName=mcu Member=Component D2 Yellow
+Added Member To Class: ClassName=mcu Member=Component D3 Yellow
+Added Member To Class: ClassName=mcu Member=Component J1 62131021021
+Added Member To Class: ClassName=supply Member=Component L1 2.2 µH
+Added Member To Class: ClassName=mcu Member=Component R1 10 kOhms
+Added Member To Class: ClassName=mcu Member=Component R2 10 kOhms
+Added Member To Class: ClassName=supply Member=Component R3 80.6 kOhms
+Added Member To Class: ClassName=mcu Member=Component R4 1.5 kOhms
+Added Member To Class: ClassName=mcu Member=Component R5 1.5 kOhms
+Added Member To Class: ClassName=mcu Member=Component R6 =Value
+Added Member To Class: ClassName=mcu Member=Component R7 1.5 kOhms
+Added Member To Class: ClassName=mcu Member=Component R8 1.5 kOhms
+Added Member To Class: ClassName=mcu Member=Component U1 MGM240PB32VNA3
+Added Member To Class: ClassName=supply Member=Component U2 MAX17224ELT+T
+Added Member To Class: ClassName=sensor Member=Component U3 STTS22HTR
+Added Member To Class: ClassName=sensor Member=Component U4 BME688
+Added Member To Class: ClassName=supply Member=Component U5 2479
+Added Member To Class: ClassName=mcu Member=Component Y1 ABS06-32.768KHZ-9-1-T

@@ -1,0 +1,96 @@
+Protel Design System Design Rule Check
+PCB File : C:\Users\Workstation\AppData\Local\Temp\History\PCB1.PcbDoc
+Date     : 6/28/2023
+Time     : 2:10:42 PM
+
+Processing Rule : Clearance Constraint (Gap=3.5mil) (All),(All)
+Rule Violations :0
+
+Processing Rule : Clearance Constraint (Gap=0mil) (IsKeepOut),(All)
+Rule Violations :0
+
+Processing Rule : Short-Circuit Constraint (Allowed=No) (All),(All)
+Rule Violations :0
+
+Processing Rule : Un-Routed Net Constraint ( (All) )
+Rule Violations :0
+
+Processing Rule : Modified Polygon (Allow modified: No), (Allow shelved: No)
+Rule Violations :0
+
+Processing Rule : Width Constraint (Min=3.5mil) (Max=71497.938mil) (Preferred=3.5mil) (All)
+Rule Violations :0
+
+Processing Rule : Power Plane Connect Rule(Direct Connect )(Expansion=11.811mil) (Conductor Width=3.5mil) (Air Gap=3.5mil) (Entries=4) (All)
+Rule Violations :0
+
+Processing Rule : Power Plane Connect Rule(Direct Connect )(Expansion=20mil) (Conductor Width=10mil) (Air Gap=10mil) (Entries=4) (InPadClass('PowerPads'))
+Rule Violations :0
+
+Processing Rule : Minimum Annular Ring (Minimum=3mil) (All)
+Rule Violations :0
+
+Processing Rule : Hole Size Constraint (Min=7.874mil) (Max=248.031mil) (All)
+Rule Violations :0
+
+Processing Rule : Hole To Hole Clearance (Gap=9.842mil) (All),(All)
+Rule Violations :0
+
+Processing Rule : Minimum Solder Mask Sliver (Gap=0mil) (All),(All)
+Rule Violations :0
+
+Processing Rule : Silk To Solder Mask (Clearance=3.5mil) (IsPad),(All)
+Rule Violations :0
+
+Processing Rule : Silk to Silk (Clearance=0mil) (All),(All)
+Rule Violations :0
+
+Processing Rule : Net Antennae (Tolerance=0mil) (All)
+Rule Violations :0
+
+Processing Rule : Board Clearance Constraint (Gap=0mil) (All)
+Rule Violations :0
+
+Processing Rule : Height Constraint (Min=0mil) (Max=71497.938mil) (Prefered=500mil) (All)
+Rule Violations :0
+
+Waived Violations Of Rule : Hole Size Constraint (Min=7.874mil) (Max=248.031mil) (All)
+   Waived Violation between Hole Size Constraint: (1mil < 7.874mil) Pad -13(1510.14mil,1276.866mil) on Multi-Layer Actual Hole Size = 1milWaived by Edward Tan at 6/28/2023 2:07:44 PM
+   Waived Violation between Hole Size Constraint: (1mil < 7.874mil) Pad -14(1850.301mil,1276.866mil) on Multi-Layer Actual Hole Size = 1milWaived by Edward Tan at 6/28/2023 2:07:44 PM
+   Waived Violation between Hole Size Constraint: (1mil < 7.874mil) Pad -15(1510.14mil,1112.299mil) on Multi-Layer Actual Hole Size = 1milWaived by Edward Tan at 6/28/2023 2:07:44 PM
+   Waived Violation between Hole Size Constraint: (1mil < 7.874mil) Pad -16(1850.299mil,1112.299mil) on Multi-Layer Actual Hole Size = 1milWaived by Edward Tan at 6/28/2023 2:07:44 PM
+Waived Violations :4
+
+Waived Violations Of Rule : Hole To Hole Clearance (Gap=9.842mil) (All),(All)
+   Waived Violation between Hole To Hole Clearance Constraint: (Collision < 9.842mil) Between Pad -13(1510.14mil,1276.866mil) on Multi-Layer And Pad -19(1510.14mil,1276.866mil) on Multi-Layer Pad/Via Touching HolesWaived by Edward Tan at 6/28/2023 2:07:29 PM
+   Waived Violation between Hole To Hole Clearance Constraint: (Collision < 9.842mil) Between Pad -14(1850.301mil,1276.866mil) on Multi-Layer And Pad -21(1850.301mil,1276.866mil) on Multi-Layer Pad/Via Touching HolesWaived by Edward Tan at 6/28/2023 2:07:29 PM
+   Waived Violation between Hole To Hole Clearance Constraint: (Collision < 9.842mil) Between Pad -15(1510.14mil,1112.299mil) on Multi-Layer And Pad -23(1510.14mil,1112.299mil) on Multi-Layer Pad/Via Touching HolesWaived by Edward Tan at 6/28/2023 2:07:29 PM
+   Waived Violation between Hole To Hole Clearance Constraint: (Collision < 9.842mil) Between Pad -16(1850.299mil,1112.299mil) on Multi-Layer And Pad -25(1850.299mil,1112.299mil) on Multi-Layer Pad/Via Touching HolesWaived by Edward Tan at 6/28/2023 2:07:29 PM
+Waived Violations :4
+
+Waived Violations Of Rule : Silk To Solder Mask (Clearance=3.5mil) (IsPad),(All)
+   Waived Violation between Silk To Solder Mask Clearance Constraint: (3.465mil < 3.5mil) Between Arc (1452.26mil,1312.929mil) on Top Overlay And Pad -1(1420mil,1345.323mil) on Top Layer [Top Overlay] to [Top Solder] clearance [3.465mil]Waived by Edward Tan at 6/28/2023 2:07:29 PM
+   Waived Violation between Silk To Solder Mask Clearance Constraint: (Collision < 3.5mil) Between Arc (1452.26mil,1312.929mil) on Top Overlay And Pad -2(1420mil,1310.677mil) on Top Layer [Top Overlay] to [Top Solder] clearance [0mil]Waived by Edward Tan at 6/28/2023 2:07:29 PM
+   Waived Violation between Silk To Solder Mask Clearance Constraint: (3.455mil < 3.5mil) Between Pad -2(1246mil,1431.677mil) on Top Layer And Track (1226.01mil,1381.964mil)(1226.01mil,1433.145mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [3.455mil]Waived by Edward Tan at 6/28/2023 2:07:29 PM
+Waived Violations :3
+
+Waived Violations Of Rule : Board Clearance Constraint (Gap=0mil) (All)
+   Waived Violation between Board Outline Clearance(Outline Edge): (Collision < 7.874mil) Between Arc (1121mil,988.5mil) on Bottom Overlay And Board Edge Waived by Edward Tan at 6/28/2023 2:07:29 PM
+   Waived Violation between Board Outline Clearance(Outline Edge): (Collision < 7.874mil) Between Arc (1121mil,988.5mil) on Top Overlay And Board Edge Waived by Edward Tan at 6/28/2023 2:07:29 PM
+   Waived Violation between Board Outline Clearance(Outline Edge): (Collision < 7.874mil) Between Board Edge And Text "" (1006mil,2528mil) on Bottom Overlay Waived by Edward Tan at 6/28/2023 2:07:29 PM
+   Waived Violation between Board Outline Clearance(Outline Edge): (Collision < 7.874mil) Between Board Edge And Track (1014mil,1013.5mil)(1014mil,2499.5mil) on Bottom Overlay Waived by Edward Tan at 6/28/2023 2:07:29 PM
+   Waived Violation between Board Outline Clearance(Outline Edge): (Collision < 7.874mil) Between Board Edge And Track (1014mil,1013.5mil)(3096mil,1013.5mil) on Bottom Overlay Waived by Edward Tan at 6/28/2023 2:07:29 PM
+   Waived Violation between Board Outline Clearance(Outline Edge): (Collision < 7.874mil) Between Board Edge And Track (1014mil,2499.5mil)(3096mil,2499.5mil) on Bottom Overlay Waived by Edward Tan at 6/28/2023 2:07:29 PM
+   Waived Violation between Board Outline Clearance(Outline Edge): (1.934mil < 7.874mil) Between Board Edge And Track (1496.22mil,1004.933mil)(1496.22mil,1026.403mil) on Top Overlay Waived by Edward Tan at 6/28/2023 2:07:29 PM
+   Waived Violation between Board Outline Clearance(Outline Edge): (1.934mil < 7.874mil) Between Board Edge And Track (1496.22mil,1004.933mil)(1864.22mil,1004.933mil) on Top Overlay Waived by Edward Tan at 6/28/2023 2:07:29 PM
+   Waived Violation between Board Outline Clearance(Outline Edge): (1.934mil < 7.874mil) Between Board Edge And Track (1864.22mil,1004.933mil)(1864.22mil,1026.403mil) on Top Overlay Waived by Edward Tan at 6/28/2023 2:07:29 PM
+   Waived Violation between Board Outline Clearance(Outline Edge): (1.725mil < 7.874mil) Between Board Edge And Track (3077.628mil,1496.063mil)(3085.276mil,1496.063mil) on Top Overlay Waived by Edward Tan at 5/28/2023 12:06:57 PM
+   Waived Violation between Board Outline Clearance(Outline Edge): (1.725mil < 7.874mil) Between Board Edge And Track (3077.628mil,2013.937mil)(3085.276mil,2013.937mil) on Top Overlay Waived by Edward Tan at 5/28/2023 12:06:57 PM
+   Waived Violation between Board Outline Clearance(Outline Edge): (1.725mil < 7.874mil) Between Board Edge And Track (3085.276mil,1496.063mil)(3085.276mil,2013.937mil) on Top Overlay Waived by Edward Tan at 5/28/2023 12:06:57 PM
+   Waived Violation between Board Outline Clearance(Outline Edge): (Collision < 7.874mil) Between Board Edge And Track (3096mil,1013.5mil)(3096mil,2499.5mil) on Bottom Overlay Waived by Edward Tan at 6/28/2023 2:07:29 PM
+Waived Violations :13
+
+
+Violations Detected : 0
+Waived Violations : 24
+Time Elapsed        : 00:00:01
