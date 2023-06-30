@@ -69,9 +69,7 @@ bool efr32AllowSleepCallback(void)
     return sAllowSleep;
 }
 
-/*
- * Override default network settings, such as panid, so the devices can join a network
- */
+
 void setNetworkConfiguration(void)
 {
     static char          aNetworkName[] = "";
@@ -93,7 +91,7 @@ void setNetworkConfiguration(void)
     aDataset.mComponents.mIsChannelPresent = true;
 
     /* Set Pan ID to 2222 */
-    aDataset.mPanId                      = (otPanId)0;
+    aDataset.mPanId                      = (otPanId);
     aDataset.mComponents.mIsPanIdPresent = true;
 
     /* Set Extended Pan ID to C0DE1AB5C0DE1AB5 */
@@ -102,7 +100,7 @@ void setNetworkConfiguration(void)
     aDataset.mComponents.mIsExtendedPanIdPresent = true;
 
     /* Set network key to 1234C0DE1AB51234C0DE1AB51234C0DE */
-    uint8_t key[OT_NETWORK_KEY_SIZE] = { };
+    uint8_t key[OT_NETWORK_KEY_SIZE] = {};
     memcpy(aDataset.mNetworkKey.m8, key, sizeof(aDataset.mNetworkKey));
     aDataset.mComponents.mIsNetworkKeyPresent = true;
 
@@ -116,11 +114,10 @@ void setNetworkConfiguration(void)
     error = otDatasetSetActive(otGetInstance(), &aDataset);
     if (error != OT_ERROR_NONE)
     {
-        otCliOutputFormat("[APP THREAD][E] otDatasetSetActive failed with: %d, %s\r\n", error, otThreadErrorToString(error));
+        otCliOutputFormat("otDatasetSetActive failed with: %d, %s\r\n", error, otThreadErrorToString(error));
         return;
     }
 }
-
 
 
 
@@ -154,7 +151,7 @@ void appSrpInit(void)
     entry->mService.mPort = 33434;
     char INST_NAME[32];
     snprintf(INST_NAME, 32, "ipv6bc%d", (uint8_t)(1));
-    const char *SERV_NAME = "_ot._udp";
+    const char *SERV_NAME = "_scan._udp";
     string = otSrpClientBuffersGetServiceEntryInstanceNameString(entry, &size);
     memcpy(string, INST_NAME, size);
 

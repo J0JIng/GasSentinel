@@ -34,6 +34,7 @@ component:
 - {id: ot_stack_mtd}
 - {id: rail_util_pti}
 - {id: ot_cli_source}
+- {id: emlib_iadc}
 - instance: [vcom]
   id: uartdrv_usart
 - instance: [i2c0]

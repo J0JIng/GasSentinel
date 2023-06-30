@@ -27,6 +27,12 @@
 #endif // SL_CATALOG_KERNEL_PRESENT
 #include "em_burtc.h"
 #include "em_cmu.h"
+#include "em_prs.h"
+#include "em_iadc.h"
+
+
+
+
 
 void initBURTC(void) {
 	CMU_ClockSelectSet(cmuClock_EM4GRPACLK, cmuSelect_ULFRCO);
@@ -51,6 +57,40 @@ void initGPIO(void) {
 	GPIO_PinModeSet(ERR_LED_PORT, ERR_LED_PIN, gpioModePushPull, 0);
 	GPIO_PinModeSet(SW_PWR_SRC_PORT, SW_PWR_SRC_PIN, gpioModeInput, 0);
 }
+
+void initSupplyMonitor(void)
+{
+  IADC_Init_t init = IADC_INIT_DEFAULT;
+  IADC_AllConfigs_t initAllConfigs = IADC_ALLCONFIGS_DEFAULT;
+  IADC_InitSingle_t initSingle = IADC_INITSINGLE_DEFAULT;
+  IADC_SingleInput_t singleInput = IADC_SINGLEINPUT_DEFAULT;
+
+  CMU_ClockEnable (cmuClock_PRS, true);
+  PRS_SourceAsyncSignalSet (0,
+  PRS_ASYNC_CH_CTRL_SOURCESEL_MODEM,
+                            PRS_MODEMH_PRESENT);
+  PRS_ConnectConsumer (0, prsTypeAsync, prsConsumerIADC0_SINGLETRIGGER);
+  CMU_ClockEnable (cmuClock_IADC0, true);
+  initAllConfigs.configs[0].reference = iadcCfgReferenceInt1V2;
+  initAllConfigs.configs[0].vRef = 1200;
+  initAllConfigs.configs[0].osrHighSpeed = iadcCfgOsrHighSpeed2x;
+
+  initAllConfigs.configs[0].adcClkPrescale = IADC_calcAdcClkPrescale (
+      IADC0, 1000000, 0, iadcCfgModeNormal, init.srcClkPrescale);
+  initSingle.triggerSelect = iadcTriggerSelPrs0PosEdge;
+  initSingle.dataValidLevel = iadcFifoCfgDvl4;
+  initSingle.start = true;
+  singleInput.posInput = iadcPosInputPortBPin4;
+  singleInput.negInput = iadcNegInputGnd;
+  IADC_init (IADC0, &init, &initAllConfigs);
+  IADC_initSingle (IADC0, &initSingle, &singleInput);
+  IADC_clearInt (IADC0, _IADC_IF_MASK);
+  IADC_enableInt (IADC0, IADC_IEN_SINGLEDONE);
+  NVIC_ClearPendingIRQ (IADC_IRQn);
+  NVIC_SetPriority(GPIO_ODD_IRQn, 7);
+  NVIC_EnableIRQ (IADC_IRQn);
+}
+
 
 
 int main(void)

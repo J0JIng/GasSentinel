@@ -17,6 +17,8 @@
 #include "em_system.h"
 #include "sl_component_catalog.h"
 #include "em_burtc.h"
+#include "em_prs.h"
+#include "em_iadc.h"
 #include "bme68x.h"
 #include "bsec_interface.h"
 #include "sl_i2cspm.h"
@@ -45,13 +47,8 @@ uint8_t bsec_state[BSEC_MAX_STATE_BLOB_SIZE];
 sl_sleeptimer_timer_handle_t resolve_server_timer;
 constexpr static uint32_t RESOLVE_POST_EST_CONN_MS = 5000;
 
-static union {
-    uint64_t _64b;
-    struct {
-        uint32_t l;
-        uint32_t h;
-    } _32b;
-} eui;
+eui_t eui;
+
 
 static enum {
 	BATT = 0,
@@ -79,6 +76,16 @@ void BURTC_IRQHandler(void)
 	bsec_run = true;
 	BURTC_IntDisable(BURTC_IEN_COMP);
 }
+
+
+
+void IADC_IRQHandler(void){
+  IADC_Result_t sample;
+  sample = IADC_pullSingleFifoResult(IADC0);
+  coap::vsense_batt = (sample.data * 1200)/1000;
+  IADC_clearInt(IADC0, IADC_IF_SINGLEDONE);
+}
+
 
 void resolveServerHandler(sl_sleeptimer_timer_handle_t *handle, void *data)
 {

@@ -25,24 +25,29 @@ static otIp6Address destAddr;
 static otIp6Address selfAddr;
 
 static bool discovered = false;
+static bool registered = false;
 static uint32_t txFailCtr = 0;
 
 static bool parseIntoBuffer(const sensor::sig_if_t *in);
 static void coapTxMsg(void);
 
 static char buffer[255];
-constexpr static char *payload_fmt = "%.8lx%.8lx,%lu,%ld,%lu,%lu,%lu,%lu,%d,%d,";
-constexpr static char *uri = "common";
+constexpr static char *payload_fmt = "%.8lx%.8lx,%lu,%ld,%lu,%lu,%lu,%lu,%d,%d";
+constexpr static char *common_resource = "common";
 
+static char resource[16];
 
 MailboxQueue<sensor::sig_if_t, COAP_MAILBOX_QUEUE_DEPTH> ux_queue;
+
+
+volatile uint32_t vsense_batt;
 
 void init(otIp6Address server_ip) {
 	discovered = true;
 	otCoapStart(otGetInstance(), OT_DEFAULT_COAP_PORT);
 	updateAddr(server_ip);
-
-
+	snprintf(resource, 16, "%.8lx%.8lx", eui._32b.h, eui._32b.l);
+	otCliOutputFormat("[APP COAP][I] resource name: %s\n", resource);
 }
 
 
@@ -79,14 +84,14 @@ static bool parseIntoBuffer(const sensor::sig_if_t *in)
 	uint32_t hum = static_cast<uint32_t>(in->comp_hum.first*COAP_LFACTOR_DECIMAL_COUNT);
 	uint32_t pres = static_cast<uint32_t>(in->pres.first);
 
-	uint32_t cl1 = static_cast<uint32_t>(in->comp_temp.first*COAP_LFACTOR_DECIMAL_COUNT);
-	uint32_t cl2 = static_cast<uint32_t>(in->comp_temp.first*COAP_LFACTOR_DECIMAL_COUNT);
+	uint32_t cl1 = static_cast<uint32_t>(in->class1.first*COAP_LFACTOR_DECIMAL_COUNT);
+	uint32_t cl2 = static_cast<uint32_t>(in->class2.first*COAP_LFACTOR_DECIMAL_COUNT);
 	int8_t rssi;
 
 	otThreadGetParentLastRssi(otGetInstance(), &rssi);
 
-	uint32_t ret = snprintf(buffer, 254, payload_fmt, 0,
-			0 ,iaq, temp, hum, pres, cl1, cl2, rssi, 0 /* voltage */);
+	uint32_t ret = snprintf(buffer, 254, payload_fmt, eui._32b.h,
+			 eui._32b.l ,iaq, temp, hum, pres, cl1, cl2, rssi, vsense_batt);
 	if(ret >= 254) return false;
 
 	return true;
@@ -106,7 +111,8 @@ static void coapTxMsg(void) {
 
 	otCoapMessageInit(message, coapType, OT_COAP_CODE_PUT);
 	otCoapMessageGenerateToken(message, OT_COAP_DEFAULT_TOKEN_LENGTH);
-	error = otCoapMessageAppendUriPathOptions(message, uri);
+	error = otCoapMessageAppendUriPathOptions(message,/* registered ? resource :*/ common_resource);
+	registered = true;
 	otEXPECT(OT_ERROR_NONE == error);
 
 	payloadLength = strlen(buffer);

@@ -12,6 +12,15 @@ extern "C" {
 
 void app_init(void);
 
+typedef union {
+    uint64_t _64b;
+    struct {
+        uint32_t l;
+        uint32_t h;
+    } _32b;
+} eui_t;
+
+extern eui_t eui;
 
 void app_exit(void);
 
