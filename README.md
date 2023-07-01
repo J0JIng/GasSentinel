@@ -37,11 +37,8 @@ h(t) = \begin{cases}
 \end{cases}
 ```
 where the undefined intervals are transition (i.e. ramp-up/down) periods. This heater activity is responsible for the majority of the power consumption (>12mA), where other loads (i.e. microcontroller+RF) are negligible. Hence, the battery life is almost directly proportional to the measurement duty cycle. For this particular application, a duty cycle of 25% was found to yield a good balance between response time (73.36s) and power consumption (avg. 2.1mA).<br>
-Note that if USB power is detected at startup, a 100% duty cycle high performance model will be loaded instead. The F1 scores of this model are as follows:
+Note that if USB power is detected at startup, a 100% duty cycle high performance model will be loaded instead.
 <br>
-img<br>
-Figure 2: Confusion matrix and F1 scores (Normal)<br>
-<br><br>
 
 ## System Design
 For this particular application, it is vital that warning latencies are kept low. This project provides on-device inference, which allows for rapid reaction to events, and low data transmission overhead.<br>
@@ -54,20 +51,25 @@ $I_{Q} = 5.4μA$<br>
 Which is reflected in measurements. <br>
 
 img<br>
-Figure 3: GasSentinel Custom Board<br>
+Figure 2: GasSentinel Custom Board<br>
 
 The algorithms described above are run the onboard EFR32MG24 series microcontroller, with integrated 802.15.4 radio for Thread communications.<br>
-The application layer overview for the microcontroller software can be found in Figure 4:<br><br>
+The application layer overview for the microcontroller software can be found in Figure 3:<br><br>
 ![SW](https://github.com/J0JIng/OdorGuard/blob/main/Doc/sw.png)<br>
-Figure 4: Application-Layer Block Diagram (Microcontroller)<br>
+Figure 3: Application-Layer Block Diagram (Microcontroller)<br>
 <br>
 The device will also send the inference results and other metadata over CoAP to InfluxDB for backend integration and data analytics/visualization.<br>
 
 ![Seq](https://github.com/J0JIng/OdorGuard/blob/main/Doc/seq.jpg)<br>
-Figure 5: Messaging Sequence Diagram
+Figure 4: Messaging Sequence Diagram
 
 ## Performance Evaluation
+The qualitative results of the low-power classifier are shown in Figure 5, over a period of approx. 2h, the device was subjected to 3 periods of the positive class (Gas Leak), denoted by the "Ground Truth" label.<br>
+In general, the model has a recovery period of minimally a few cycles, after being exposed to the positive class. Some of this behavior can be attributed to the behaviors of the MOx element. In particular, the first instance of the positive class in Figure 5 shows that the recovery time is much greater after exposure to high concentrations of gas.<br>
 
+It is notable that in all instances, (correct) detection occured within one cycle (i.e. 73.36s), satisfying the objective of rapid classification.<br>
+![Eval](https://github.com/J0JIng/OdorGuard/blob/main/Doc/eval.jpg)<br>
+Figure 5: Qualitative results of the low-power classifier
 ## 
 [^1]: Note that methane (despite being found in gas leaks) was categorically avoided, as methane cannot be detected significantly by the sensor.
 [^2]: This profile was found to yield the highest F1 score and generalization to test/live data.
