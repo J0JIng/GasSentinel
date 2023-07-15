@@ -28,6 +28,7 @@
 #include <cstring>
 
 
+
 void sleepyInit(void);
 void setNetworkConfiguration(void);
 void initUdp(void);
@@ -210,6 +211,13 @@ void app_init_bme(uint8_t sense_pin)
 		uint32_t bsec_config_len = sizeof(bsec_config_selectivity_std);
 		ret = bsec_set_configuration(bsec_config_selectivity_std, bsec_config_len,
 				work_buffer, sizeof(work_buffer));
+		GPIO_PinOutSet(ERR_LED_PORT, ERR_LED_PIN);
+		GPIO_PinOutSet(ACT_LED_PORT, ACT_LED_PIN);
+		GPIO_PinOutSet(IP_LED_PORT, IP_LED_PIN);
+		sl_sleeptimer_delay_millisecond(500);
+		GPIO_PinOutClear(ERR_LED_PORT, ERR_LED_PIN);
+		GPIO_PinOutClear(ACT_LED_PORT, ACT_LED_PIN);
+		GPIO_PinOutClear(IP_LED_PORT, IP_LED_PIN);
 	}
 
 

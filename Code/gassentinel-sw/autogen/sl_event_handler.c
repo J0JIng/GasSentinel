@@ -19,6 +19,7 @@
 #include "sl_mpu.h"
 #include "nvm3_default.h"
 #include "sl_ot_init.h"
+#include "sl_spidrv_instances.h"
 #include "sl_uartdrv_instances.h"
 #include "psa/crypto.h"
 #include "sli_protocol_crypto.h"
@@ -42,6 +43,7 @@ void sl_driver_init(void)
 {
   GPIOINT_Init();
   sl_i2cspm_init_instances();
+  sl_spidrv_init_instances();
   sl_uartdrv_init_instances();
 }
 

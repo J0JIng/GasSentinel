@@ -54,8 +54,8 @@ void sl_ot_cli_init(void);
 #define TS_INT_PIN       0
 #define VBAT_SENSE_PORT  gpioPortC
 #define VBAT_SENSE_PIN   1
-#define SW_PWR_SRC_PORT  gpioPortC
-#define SW_PWR_SRC_PIN   4
+#define SW_PWR_SRC_PORT  gpioPortB
+#define SW_PWR_SRC_PIN   3
 
 
 

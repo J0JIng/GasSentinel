@@ -108,6 +108,30 @@
 // [I2C1]$
 
 // $[EUSART1]
+// EUSART1 RX on PC02
+#ifndef EUSART1_RX_PORT                         
+#define EUSART1_RX_PORT                          gpioPortC
+#endif
+#ifndef EUSART1_RX_PIN                          
+#define EUSART1_RX_PIN                           2
+#endif
+
+// EUSART1 SCLK on PC03
+#ifndef EUSART1_SCLK_PORT                       
+#define EUSART1_SCLK_PORT                        gpioPortC
+#endif
+#ifndef EUSART1_SCLK_PIN                        
+#define EUSART1_SCLK_PIN                         3
+#endif
+
+// EUSART1 TX on PC01
+#ifndef EUSART1_TX_PORT                         
+#define EUSART1_TX_PORT                          gpioPortC
+#endif
+#ifndef EUSART1_TX_PIN                          
+#define EUSART1_TX_PIN                           1
+#endif
+
 // [EUSART1]$
 
 // $[KEYSCAN]

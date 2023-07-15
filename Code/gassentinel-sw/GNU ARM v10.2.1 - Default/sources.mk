@@ -30,6 +30,7 @@ BME68x_API \
 BSEC2/config \
 . \
 autogen \
+gecko_sdk_4.3.0/hardware/driver/mx25_flash_shutdown/src/sl_mx25_flash_shutdown_eusart \
 gecko_sdk_4.3.0/platform/Device/SiliconLabs/MGM24/Source \
 gecko_sdk_4.3.0/platform/bootloader/security \
 gecko_sdk_4.3.0/platform/common/src \
@@ -38,6 +39,7 @@ gecko_sdk_4.3.0/platform/driver/i2cspm/src \
 gecko_sdk_4.3.0/platform/emdrv/dmadrv/src \
 gecko_sdk_4.3.0/platform/emdrv/gpiointerrupt/src \
 gecko_sdk_4.3.0/platform/emdrv/nvm3/src \
+gecko_sdk_4.3.0/platform/emdrv/spidrv/src \
 gecko_sdk_4.3.0/platform/emdrv/uartdrv/src \
 gecko_sdk_4.3.0/platform/emlib/src \
 gecko_sdk_4.3.0/platform/peripheral/src \

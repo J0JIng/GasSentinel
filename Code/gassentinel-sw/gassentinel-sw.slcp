@@ -30,6 +30,9 @@ component:
 - {id: power_manager}
 - {id: bootloader_crc}
 - {id: power_manager_deepsleep}
+- {id: mx25_flash_shutdown_eusart}
+- instance: [spi0]
+  id: spidrv_eusart
 - {id: MGM240PB32VNA}
 - {id: ot_stack_mtd}
 - {id: rail_util_pti}

@@ -50,8 +50,13 @@ $I_{Q} = 2.9μA + 0.15μA + 1.35μA + 7nA + 1μA$<br>
 $I_{Q} = 5.4μA$<br>
 Which is reflected in measurements. <br>
 
-img<br>
-Figure 2: GasSentinel Custom Board<br>
+<br>
+<div>
+    <img src="https://github.com/J0JIng/OdorGuard/blob/main/Doc/pcb.jpg" alt="PCB" width="400" />
+    <img src="https://github.com/J0JIng/OdorGuard/blob/main/Doc/case.jpg" alt="Case" width="400" />
+</div>
+
+Figure 2: GasSentinel Custom Board and Enclosure<br>
 
 The algorithms described above are run the onboard EFR32MG24 series microcontroller, with integrated 802.15.4 radio for Thread communications.<br>
 The application layer overview for the microcontroller software can be found in Figure 3:<br><br>

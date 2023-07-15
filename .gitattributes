@@ -1,7 +1,7 @@
-*.c linguist-vendored
-*.mk linguist-vendored
-*.makefile linguist-vendored
-Code/gassentinel-sw/gecko_sdk_4.3.0/* linguist-vendored
-Code/gassentinel-sw/gecko_sdk_4.3.0/* linguist-vendored
-Code/gassentinel-sw/GNU[[:space:]]ARM[[:space:]]v10.2.1[[:space:]]-[[:space:]]Default/* linguist-vendored
-PCB/* linguist-vendored
+*.c linguist-vendored=true
+*.mk linguist-vendored=true
+*.makefile linguist-vendored=true
+Code/gassentinel-sw/gecko_sdk_4.3.0/* linguist-vendored=true
+Code/gassentinel-sw/gecko_sdk_4.3.0/* linguist-vendored=true
+Code/gassentinel-sw/GNU[[:space:]]ARM[[:space:]]v10.2.1[[:space:]]-[[:space:]]Default/* linguist-vendored=true
+PCB/* linguist-vendored=true

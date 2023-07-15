@@ -91,7 +91,7 @@ void initSupplyMonitor(void)
   NVIC_EnableIRQ (IADC_IRQn);
 }
 
-
+#include "sl_mx25_flash_shutdown.h"
 
 int main(void)
 {
@@ -101,6 +101,7 @@ int main(void)
   sl_system_init();
   initBURTC();
   initGPIO();
+	sl_mx25_flash_shutdown();
   // Initialize the application. For example, create periodic timer(s) or
   // task(s) if the kernel is present.
   app_init();

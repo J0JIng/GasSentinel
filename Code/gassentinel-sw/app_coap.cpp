@@ -130,7 +130,7 @@ static void coapTxMsg(void) {
 
 	memset(&messageInfo, 0, sizeof(messageInfo));
 	messageInfo.mPeerAddr = coapDestinationIp;
-	messageInfo.mPeerPort = OT_DEFAULT_COAP_PORT;
+	messageInfo.mPeerPort = 5682; //todo revert
 	error = otCoapSendRequestWithParameters(otGetInstance(), message,
 			&messageInfo, NULL, NULL,
 			NULL);
