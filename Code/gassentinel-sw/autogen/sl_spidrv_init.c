@@ -36,5 +36,5 @@ void sl_spidrv_init_instances(void) {
 #if !defined(SL_SPIDRV_EUSART_SPI0_CS_PIN)
   EFM_ASSERT(sl_spidrv_eusart_init_spi0.csControl == spidrvCsControlApplication);
 #endif 
-  SPIDRV_Init(sl_spidrv_eusart_spi0_handle, &sl_spidrv_eusart_init_spi0);
+ // SPIDRV_Init(sl_spidrv_eusart_spi0_handle, &sl_spidrv_eusart_init_spi0);
 }

@@ -41,20 +41,20 @@
 #define SL_MX25_FLASH_SHUTDOWN_PERIPHERAL_NO     1
 #endif
 
-// EUSART1 TX on PC01
+// EUSART1 TX on PC02
 #ifndef SL_MX25_FLASH_SHUTDOWN_TX_PORT          
 #define SL_MX25_FLASH_SHUTDOWN_TX_PORT           gpioPortC
 #endif
 #ifndef SL_MX25_FLASH_SHUTDOWN_TX_PIN           
-#define SL_MX25_FLASH_SHUTDOWN_TX_PIN            1
+#define SL_MX25_FLASH_SHUTDOWN_TX_PIN            2
 #endif
 
-// EUSART1 RX on PC02
+// EUSART1 RX on PC01
 #ifndef SL_MX25_FLASH_SHUTDOWN_RX_PORT          
 #define SL_MX25_FLASH_SHUTDOWN_RX_PORT           gpioPortC
 #endif
 #ifndef SL_MX25_FLASH_SHUTDOWN_RX_PIN           
-#define SL_MX25_FLASH_SHUTDOWN_RX_PIN            2
+#define SL_MX25_FLASH_SHUTDOWN_RX_PIN            1
 #endif
 
 // EUSART1 SCLK on PC03

@@ -64,7 +64,7 @@
 // <o SL_SPIDRV_EUSART_SPI0_CS_CONTROL> SPI master chip select (CS) control scheme.
 // <spidrvCsControlAuto=> CS controlled by the SPI driver
 // <spidrvCsControlApplication=> CS controlled by the application
-#define SL_SPIDRV_EUSART_SPI0_CS_CONTROL        spidrvCsControlAuto
+#define SL_SPIDRV_EUSART_SPI0_CS_CONTROL        spidrvCsControlApplication
 
 // <o SL_SPIDRV_EUSART_SPI0_SLAVE_START_MODE> SPI slave transfer start scheme
 // <spidrvSlaveStartImmediate=> Transfer starts immediately
@@ -84,20 +84,20 @@
 #define SL_SPIDRV_EUSART_SPI0_PERIPHERAL_NO      1
 #endif
 
-// EUSART1 TX on PC01
+// EUSART1 TX on PC02
 #ifndef SL_SPIDRV_EUSART_SPI0_TX_PORT           
 #define SL_SPIDRV_EUSART_SPI0_TX_PORT            gpioPortC
 #endif
 #ifndef SL_SPIDRV_EUSART_SPI0_TX_PIN            
-#define SL_SPIDRV_EUSART_SPI0_TX_PIN             1
+#define SL_SPIDRV_EUSART_SPI0_TX_PIN             2
 #endif
 
-// EUSART1 RX on PC02
+// EUSART1 RX on PC01
 #ifndef SL_SPIDRV_EUSART_SPI0_RX_PORT           
 #define SL_SPIDRV_EUSART_SPI0_RX_PORT            gpioPortC
 #endif
 #ifndef SL_SPIDRV_EUSART_SPI0_RX_PIN            
-#define SL_SPIDRV_EUSART_SPI0_RX_PIN             2
+#define SL_SPIDRV_EUSART_SPI0_RX_PIN             1
 #endif
 
 // EUSART1 SCLK on PC03

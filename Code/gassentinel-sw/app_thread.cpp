@@ -95,7 +95,7 @@ void setNetworkConfiguration(void)
     aDataset.mComponents.mIsPanIdPresent = true;
 
     /* Set Extended Pan ID to C0DE1AB5C0DE1AB5 */
-    uint8_t extPanId[OT_EXT_PAN_ID_SIZE] = { };
+    uint8_t extPanId[OT_EXT_PAN_ID_SIZE] = {};
     memcpy(aDataset.mExtendedPanId.m8, extPanId, sizeof(aDataset.mExtendedPanId));
     aDataset.mComponents.mIsExtendedPanIdPresent = true;
 
@@ -118,6 +118,7 @@ void setNetworkConfiguration(void)
         return;
     }
 }
+
 
 
 

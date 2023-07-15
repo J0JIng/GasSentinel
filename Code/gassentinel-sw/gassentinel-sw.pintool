@@ -12,9 +12,9 @@
     <property object="PORTIO" propertyId="portio.eusart1.enable.rx" value="Enabled"/>
     <property object="PORTIO" propertyId="portio.eusart1.enable.sclk" value="Enabled"/>
     <property object="PORTIO" propertyId="portio.eusart1.enable.tx" value="Enabled"/>
-    <property object="PORTIO" propertyId="portio.eusart1.location.rx" value="34"/>
+    <property object="PORTIO" propertyId="portio.eusart1.location.rx" value="33"/>
     <property object="PORTIO" propertyId="portio.eusart1.location.sclk" value="35"/>
-    <property object="PORTIO" propertyId="portio.eusart1.location.tx" value="33"/>
+    <property object="PORTIO" propertyId="portio.eusart1.location.tx" value="34"/>
     <property object="PORTIO" propertyId="portio.i2c0.enable.scl" value="Enabled"/>
     <property object="PORTIO" propertyId="portio.i2c0.enable.sda" value="Enabled"/>
     <property object="PORTIO" propertyId="portio.i2c0.location.scl" value="17"/>

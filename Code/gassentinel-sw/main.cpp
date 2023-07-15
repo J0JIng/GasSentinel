@@ -101,11 +101,11 @@ int main(void)
   sl_system_init();
   initBURTC();
   initGPIO();
-	sl_mx25_flash_shutdown();
+
   // Initialize the application. For example, create periodic timer(s) or
   // task(s) if the kernel is present.
   app_init();
-
+  sl_mx25_flash_shutdown();
 #if defined(SL_CATALOG_KERNEL_PRESENT)
   // Start the kernel. Task(s) created in app_init() will start running.
   sl_system_kernel_start();
