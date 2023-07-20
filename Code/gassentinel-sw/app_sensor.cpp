@@ -178,7 +178,7 @@ static bsec_library_return_t _bsec_get_data(bsec_input_t *bsec_inputs,
 
 		}
 		coap::ux_queue.push(data);
-		otCliOutputFormat("[APP SENSOR][I] iaq: %d, stab: %d, run: %d, temp: %d, hum: %d, pres: %d, gas: %d, gas: %d\n", (int32_t)(data.iaq.first), ((int32_t)(data.stab))&0x1, ((int32_t)(data.run_in))&0x1, (int32_t)(data.comp_temp.first*1000), (int32_t)(data.comp_hum.first*1000), (int32_t)(data.pres.first*1000), (int32_t)(data.class1.first*1000), (int32_t)(data.class2.first*1000));
+		//otCliOutputFormat("[APP SENSOR][I] iaq: %d, stab: %d, run: %d, temp: %d, hum: %d, pres: %d, gas: %d, gas: %d\n", (int32_t)(data.iaq.first), ((int32_t)(data.stab))&0x1, ((int32_t)(data.run_in))&0x1, (int32_t)(data.comp_temp.first*1000), (int32_t)(data.comp_hum.first*1000), (int32_t)(data.pres.first*1000), (int32_t)(data.class1.first*1000), (int32_t)(data.class2.first*1000));
 	}
 	return bsec_status;
 }

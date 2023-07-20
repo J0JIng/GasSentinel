@@ -23,14 +23,6 @@
 #include "sl_power_manager.h"
 #endif
 
-// Constants
-#define MULTICAST_ADDR "ff03::1"
-#define MULTICAST_PORT 123
-#define RECV_PORT 234
-#define SLEEPY_POLL_PERIOD_MS 2000
-
-
-// Forward declarations
 
 //extern void otSysEventSignalPending(void);
 
@@ -39,10 +31,12 @@ otInstance *otGetInstance(void);
 
 static bool                sAllowSleep                    = true;
 
+constexpr static uint32_t SLEEPY_POLL_PERIOD_MS = 5000;
+
 void sleepyInit(void)
 {
     otError error;
-    otCliOutputFormat("[APP THREAD][I] app thread started\r\n");
+    //otCliOutputFormat("[APP THREAD][I] app thread started\r\n");
 
     otLinkModeConfig config;
     SuccessOrExit(error = otLinkSetPollPeriod(otGetInstance(), SLEEPY_POLL_PERIOD_MS));
@@ -55,17 +49,15 @@ void sleepyInit(void)
 exit:
     if (error != OT_ERROR_NONE)
     {
-        otCliOutputFormat("[APP THREAD][E] Initialization failed with: %d, %s\r\n", error, otThreadErrorToString(error));
+        //otCliOutputFormat("[APP THREAD][E] Initialization failed with: %d, %s\r\n", error, otThreadErrorToString(error));
     }
     return;
 }
 
-/*
- * Callback from sl_ot_is_ok_to_sleep to check if it is ok to go to sleep.
- */
+
 bool efr32AllowSleepCallback(void)
 {
-	otCliOutputFormat("[APP THREAD][I] Sleep \n");
+	//otCliOutputFormat("[APP THREAD][I] Sleep \n");
     return sAllowSleep;
 }
 
@@ -100,7 +92,7 @@ void setNetworkConfiguration(void)
     aDataset.mComponents.mIsExtendedPanIdPresent = true;
 
     /* Set network key to 1234C0DE1AB51234C0DE1AB51234C0DE */
-    uint8_t key[OT_NETWORK_KEY_SIZE] = {};
+    uint8_t key[OT_NETWORK_KEY_SIZE] = { };
     memcpy(aDataset.mNetworkKey.m8, key, sizeof(aDataset.mNetworkKey));
     aDataset.mComponents.mIsNetworkKeyPresent = true;
 
@@ -114,18 +106,11 @@ void setNetworkConfiguration(void)
     error = otDatasetSetActive(otGetInstance(), &aDataset);
     if (error != OT_ERROR_NONE)
     {
-        otCliOutputFormat("otDatasetSetActive failed with: %d, %s\r\n", error, otThreadErrorToString(error));
+        //otCliOutputFormat("otDatasetSetActive failed with: %d, %s\r\n", error, otThreadErrorToString(error));
         return;
     }
 }
 
-
-
-
-void initUdp(void)
-{
-
-}
 
 
 
@@ -167,26 +152,4 @@ void appSrpInit(void)
     entry = NULL;
 
     otSrpClientEnableAutoStartMode(otGetInstance(), /* aCallback */ NULL, /* aContext */ NULL);
-}
-
-
-#ifdef SL_CATALOG_KERNEL_PRESENT
-#define applicationTick sl_ot_rtos_application_tick
-#endif
-
-void applicationTick(void)
-{
-
-
-#if (defined(SL_CATALOG_KERNEL_PRESENT) && defined(SL_CATALOG_POWER_MANAGER_PRESENT))
-        if (sAllowSleep)
-        {
-            sl_power_manager_remove_em_requirement(SL_POWER_MANAGER_EM1);
-        }
-        else
-        {
-            sl_power_manager_add_em_requirement(SL_POWER_MANAGER_EM1);
-        }
-#endif
-
 }

@@ -1,38 +1,14 @@
-/***************************************************************************//**
- * @file
- * @brief main() function.
- *******************************************************************************
- * # License
- * <b>Copyright 2020 Silicon Laboratories Inc. www.silabs.com</b>
- *******************************************************************************
- *
- * The licensor of this software is Silicon Laboratories Inc. Your use of this
- * software is governed by the terms of Silicon Labs Master Software License
- * Agreement (MSLA) available at
- * www.silabs.com/about-us/legal/master-software-license-agreement. This
- * software is distributed to you in Source Code format and is governed by the
- * sections of the MSLA applicable to Source Code.
- *
- ******************************************************************************/
 #include <app_main.h>
 #include "sl_component_catalog.h"
 #include "sl_system_init.h"
-#if defined(SL_CATALOG_POWER_MANAGER_PRESENT)
 #include "sl_power_manager.h"
-#endif // SL_CATALOG_POWER_MANAGER_PRESENT
-#if defined(SL_CATALOG_KERNEL_PRESENT)
-#include "sl_system_kernel.h"
-#else // !SL_CATALOG_KERNEL_PRESENT
 #include "sl_system_process_action.h"
-#endif // SL_CATALOG_KERNEL_PRESENT
 #include "em_burtc.h"
 #include "em_cmu.h"
 #include "em_prs.h"
 #include "em_iadc.h"
 
-
-
-
+#include "sl_mx25_flash_shutdown.h"  // TODO remove once impl
 
 void initBURTC(void) {
 	CMU_ClockSelectSet(cmuClock_EM4GRPACLK, cmuSelect_ULFRCO);
@@ -55,7 +31,7 @@ void initGPIO(void) {
 	GPIO_PinModeSet(IP_LED_PORT, IP_LED_PIN, gpioModePushPull, 0);
 	GPIO_PinModeSet(ACT_LED_PORT, ACT_LED_PIN, gpioModePushPull, 0);
 	GPIO_PinModeSet(ERR_LED_PORT, ERR_LED_PIN, gpioModePushPull, 0);
-	GPIO_PinModeSet(SW_PWR_SRC_PORT, SW_PWR_SRC_PIN, gpioModeInput, 0);
+	GPIO_PinModeSet(SW_PWR_SRC_PORT, SW_PWR_SRC_PIN, gpioModeInputPullFilter, 1);
 }
 
 void initSupplyMonitor(void)
@@ -91,38 +67,30 @@ void initSupplyMonitor(void)
   NVIC_EnableIRQ (IADC_IRQn);
 }
 
-#include "sl_mx25_flash_shutdown.h"
+
 
 int main(void)
 {
-  // Initialize Silicon Labs device, system, service(s) and protocol stack(s).
-  // Note that if the kernel is present, processing task(s) will be created by
-  // this call.
+
   sl_system_init();
+
   initBURTC();
   initGPIO();
 
-  // Initialize the application. For example, create periodic timer(s) or
-  // task(s) if the kernel is present.
   app_init();
-  sl_mx25_flash_shutdown();
-#if defined(SL_CATALOG_KERNEL_PRESENT)
-  // Start the kernel. Task(s) created in app_init() will start running.
-  sl_system_kernel_start();
-#else // SL_CATALOG_KERNEL_PRESENT
-  while (1) {
-    // Do not remove this call: Silicon Labs components process action routine
-    // must be called from the super loop.
-    sl_system_process_action();
+  sl_mx25_flash_shutdown(); // TODO remove
 
-    // Application process.
-    app_process_action();
-#if defined(SL_CATALOG_POWER_MANAGER_PRESENT)
-    // Let the CPU go to sleep if the system allows it.
-    sl_power_manager_sleep();
-#endif
+
+  while (1) {
+
+    sl_system_process_action(); // System tasks
+
+    app_process_action(); // App tasks
+
+    sl_power_manager_sleep(); // Hand over to power manager
+
   }
-  // Clean-up when exiting the application.
+  // SHOULD NEVER EXECUTE
   app_exit();
-#endif // SL_CATALOG_KERNEL_PRESENT
+
 }

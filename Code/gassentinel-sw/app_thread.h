@@ -5,8 +5,6 @@
 extern "C" {
 #endif
 
-
-void applicationTick(void);
 void sleepyInit(void);
 void setNetworkConfiguration(void);
 
