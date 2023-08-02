@@ -61,7 +61,6 @@ RM := rm -rf
 -include gecko_sdk_4.3.0/platform/common/src/subdir.mk
 -include gecko_sdk_4.3.0/platform/bootloader/security/subdir.mk
 -include gecko_sdk_4.3.0/platform/Device/SiliconLabs/MGM24/Source/subdir.mk
--include gecko_sdk_4.3.0/hardware/driver/mx25_flash_shutdown/src/sl_mx25_flash_shutdown_eusart/subdir.mk
 -include autogen/subdir.mk
 -include BSEC2/config/subdir.mk
 -include BME68x_API/subdir.mk

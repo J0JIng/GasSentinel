@@ -1,4 +1,5 @@
 #include <app_main.h>
+#include <mx25_driver.h>
 #include "sl_component_catalog.h"
 #include "sl_system_init.h"
 #include "sl_power_manager.h"
@@ -7,8 +8,7 @@
 #include "em_cmu.h"
 #include "em_prs.h"
 #include "em_iadc.h"
-
-#include "sl_mx25_flash_shutdown.h"  // TODO remove once impl
+#include "sl_udelay.h"
 
 void initBURTC(void) {
 	CMU_ClockSelectSet(cmuClock_EM4GRPACLK, cmuSelect_ULFRCO);
@@ -74,11 +74,20 @@ int main(void)
 
   sl_system_init();
 
+
+  // LL check flash HW
+  MX25_init(); // wait tPUW
+  uint8_t dat = 0x00;
+  MX25_RES(&dat); // read eID
+  if(dat != 0x14) GPIO_PinOutSet(ERR_LED_PORT, ERR_LED_PIN);
+
   initBURTC();
   initGPIO();
 
+
+
   app_init();
-  sl_mx25_flash_shutdown(); // TODO remove
+
 
 
   while (1) {

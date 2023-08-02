@@ -24,9 +24,10 @@
 #include "sl_i2cspm.h"
 #include "sl_sleeptimer.h"
 #include "sl_udelay.h"
+#include "mx25_driver.h"
 
 #include <cstring>
-
+#include <cmath>
 
 // Forward declarations
 void sleepyInit(void);
@@ -50,6 +51,20 @@ uint8_t bsec_state[BSEC_MAX_STATE_BLOB_SIZE];
 
 sl_sleeptimer_timer_handle_t resolve_server_timer;
 constexpr static uint32_t RESOLVE_POST_EST_CONN_MS = 5000;
+
+static uint32_t FLASH_PAGE_SIZE_U = 0x100;
+static uint32_t FLASH_DATA_VALID_REGION_START = 0x00000000;
+static uint32_t FLASH_DATA_VALID_REGION_LEN = 0x4;
+static uint8_t FLASH_DATA_VALID_MARKER[4] = { 0x2F, 0xC6, 0x9A, 0x44 };
+
+static uint32_t FLASH_DATA_WBUF_REGION_START = 0x00000000
+		+ ceil(FLASH_DATA_VALID_REGION_LEN / FLASH_PAGE_SIZE) * FLASH_PAGE_SIZE;
+static uint32_t FLASH_DATA_WBUF_REGION_LEN = BSEC_MAX_WORKBUFFER_SIZE;
+
+static uint32_t FLASH_DATA_BLOB_REGION_START = 0x00000000
+		+ ceil(FLASH_DATA_VALID_REGION_LEN / FLASH_PAGE_SIZE) * FLASH_PAGE_SIZE
+		+ ceil(FLASH_DATA_WBUF_REGION_LEN / FLASH_PAGE_SIZE) * FLASH_PAGE_SIZE;
+static uint32_t FLASH_DATA_BLOB_REGION_LEN = BSEC_MAX_STATE_BLOB_SIZE;
 
 eui_t eui; // Device unique identifier
 
@@ -118,7 +133,7 @@ void app_init(void) {
 	GPIO_PinOutSet(ERR_LED_PORT, ERR_LED_PIN);
 	uint8_t sense = 0x1 & GPIO_PinInGet(SW_PWR_SRC_PORT, SW_PWR_SRC_PIN); // Read input power source and mask first bit
 	app_init_bme(sense);
-
+	GPIO_PinModeSet(SW_PWR_SRC_PORT, SW_PWR_SRC_PIN, gpioModeDisabled, 0); // Disable after read to reduce static power
 	/* ot initialization procedure */
 	sleepyInit();
 	setNetworkConfiguration();
@@ -203,7 +218,36 @@ void app_delay_us(uint32_t period, void *intf_ptr)
 }
 
 
+uint8_t _app_mx25_get_state(void)
+{
+	MX25_PP(FLASH_DATA_VALID_REGION_START, FLASH_DATA_VALID_MARKER, FLASH_DATA_VALID_REGION_LEN);
+	uint8_t buf[4];
+	MX25_READ(FLASH_DATA_VALID_REGION_START, buf, FLASH_DATA_VALID_REGION_LEN);
+	for(uint8_t i=0; i<sizeof(buf); i++)
+	{
+		if(buf[i] != FLASH_DATA_VALID_MARKER[i]) return 0;
+	}
+	return 1;
+}
 
+uint8_t _app_mx25_get_data(void)
+{
+	uint8_t ret = 0;
+	ret |= MX25_READ(FLASH_DATA_WBUF_REGION_START, work_buffer, FLASH_DATA_WBUF_REGION_LEN);
+	ret |= MX25_READ(FLASH_DATA_BLOB_REGION_START, bsec_state, FLASH_DATA_BLOB_REGION_LEN);
+}
+
+uint8_t _app_mx25_write_data(void)
+{
+
+	uint8_t ret = 0;
+	uint32_t offset_pages = 0;
+
+	if(ret == 0)
+		MX25_PP(FLASH_DATA_VALID_REGION_START, FLASH_DATA_VALID_MARKER, FLASH_DATA_VALID_REGION_LEN);
+	else GPIO_PinOutSet(ERR_LED_PORT, ERR_LED_PIN);
+	GPIO_PinOutClear(ACT_LED_PORT, ACT_LED_PIN);
+}
 
 void app_init_bme(uint8_t sense_pin)
 {
@@ -223,7 +267,7 @@ void app_init_bme(uint8_t sense_pin)
 	//otCliOutputFormat("%d / ", ret);
 
 	/* Set configuration according to detected power source */
-
+	uint8_t is_exist_wbuf = _app_mx25_get_state();
 	// TODO: modify work buffer to save to spi flash
 	if (sense_pin == BATT) {
 		uint32_t bsec_config_len = sizeof(bsec_config_selectivity);
@@ -244,10 +288,17 @@ void app_init_bme(uint8_t sense_pin)
 		GPIO_PinOutClear(IP_LED_PORT, IP_LED_PIN);
 	}
 
+	if(is_exist_wbuf) _app_mx25_get_data();
+
+	//MX25_DP();
+	//sl_udelay_wait(30); // tDPDD
 
 	bsec_set_state(bsec_state, sizeof(bsec_state), work_buffer, sizeof(work_buffer));
 
+	GPIO_PinOutSet(ACT_LED_PORT, ACT_LED_PIN);
+	//_app_mx25_write_data();
 	//otCliOutputFormat("%d / ", ret);
+	GPIO_PinOutClear(ACT_LED_PORT, ACT_LED_PIN);
 
 	bsec_sensor_configuration_t requested_virtual_sensors[9];
 	uint8_t n_requested_virtual_sensors = 9;

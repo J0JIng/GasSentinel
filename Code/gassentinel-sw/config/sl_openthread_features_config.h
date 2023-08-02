@@ -56,7 +56,7 @@
 #endif
 // <q>  DNS-SD Server (Thread 1.3)
 #ifndef OPENTHREAD_CONFIG_DNSSD_SERVER_ENABLE
-#define OPENTHREAD_CONFIG_DNSSD_SERVER_ENABLE       0
+#define OPENTHREAD_CONFIG_DNSSD_SERVER_ENABLE       1
 #endif
 // <q>  Service Registration Protocol (SRP) Client (Thread 1.3)
 #ifndef OPENTHREAD_CONFIG_SRP_CLIENT_ENABLE
@@ -133,7 +133,7 @@
 // </e>
 // <e>  DHCP6 Server
 #ifndef OPENTHREAD_CONFIG_DHCP6_SERVER_ENABLE
-#define OPENTHREAD_CONFIG_DHCP6_SERVER_ENABLE       0
+#define OPENTHREAD_CONFIG_DHCP6_SERVER_ENABLE       1
 #endif
 // </e>
 // <e>  Diagnostic
