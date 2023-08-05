@@ -132,7 +132,7 @@ void SendByte( uint8_t byte_value, uint8_t transfer_type )
    {
 #ifdef SIO
    case SIO: // Single I/O
-	   SPIDRV_MTransmitB(sl_spidrv_eusart_mx25_handle, &byte_value, sizeof(byte_value));
+	   SPIDRV_MTransmitB(sl_spidrv_eusart_mx25_handle, &byte_value, 1);
 		//USART_Tx(USART0, byte_value);
       break;
 #endif
@@ -196,7 +196,7 @@ uint8_t GetByte( uint8_t transfer_type )
 #ifdef SIO
    case SIO: // Single I/O
       //--- insert your code here for single IO receive. ---//
-	   SPIDRV_MReceiveB(sl_spidrv_eusart_mx25_handle, &data_buf, sizeof(data_buf));
+	   SPIDRV_MReceiveB(sl_spidrv_eusart_mx25_handle, &data_buf, 1);
 	   //data_buf = USART_Rx(USART0);
       break;
 #endif

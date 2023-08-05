@@ -62,7 +62,7 @@ bool efr32AllowSleepCallback(void)
 }
 void setNetworkConfiguration(void)
 {
-    static char          aNetworkName[] = "1";
+    static char          aNetworkName[] = "";
     otError              error;
     otOperationalDataset aDataset;
 
@@ -90,7 +90,7 @@ void setNetworkConfiguration(void)
     aDataset.mComponents.mIsExtendedPanIdPresent = true;
 
     /* Set network key to 1234C0DE1AB51234C0DE1AB51234C0DE */
-    uint8_t key[OT_NETWORK_KEY_SIZE] = {};
+    uint8_t key[OT_NETWORK_KEY_SIZE] = { };
     memcpy(aDataset.mNetworkKey.m8, key, sizeof(aDataset.mNetworkKey));
     aDataset.mComponents.mIsNetworkKeyPresent = true;
 

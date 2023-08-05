@@ -78,8 +78,7 @@ int main(void)
   // LL check flash HW
   MX25_init(); // wait tPUW
   uint8_t dat = 0x00;
-  MX25_RES(&dat); // read eID
-  if(dat != 0x14) GPIO_PinOutSet(ERR_LED_PORT, ERR_LED_PIN);
+  uint32_t id = 0;
 
   initBURTC();
   initGPIO();

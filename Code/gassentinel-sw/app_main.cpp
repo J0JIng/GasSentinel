@@ -52,19 +52,30 @@ uint8_t bsec_state[BSEC_MAX_STATE_BLOB_SIZE];
 sl_sleeptimer_timer_handle_t resolve_server_timer;
 constexpr static uint32_t RESOLVE_POST_EST_CONN_MS = 5000;
 
-static uint32_t FLASH_PAGE_SIZE_U = 0x100;
-static uint32_t FLASH_DATA_VALID_REGION_START = 0x00000000;
+const static uint32_t FLASH_PAGE_SIZE_U = 0x100;
+static uint32_t FLASH_DATA_VALID_REGION_START = 0x000F1000; // BLOCK 15 SECTOR 241
 static uint32_t FLASH_DATA_VALID_REGION_LEN = 0x4;
 static uint8_t FLASH_DATA_VALID_MARKER[4] = { 0x2F, 0xC6, 0x9A, 0x44 };
 
-static uint32_t FLASH_DATA_WBUF_REGION_START = 0x00000000
+static uint32_t FLASH_DATA_WBUF_REGION_START = 0x00001000 // BLOCK 0 SECTOR 1
 		+ ceil(FLASH_DATA_VALID_REGION_LEN / FLASH_PAGE_SIZE) * FLASH_PAGE_SIZE;
 static uint32_t FLASH_DATA_WBUF_REGION_LEN = BSEC_MAX_WORKBUFFER_SIZE;
 
-static uint32_t FLASH_DATA_BLOB_REGION_START = 0x00000000
+static uint32_t FLASH_DATA_BLOB_REGION_START = 0x00011000 // BLOCK 1 SECTOR 17
 		+ ceil(FLASH_DATA_VALID_REGION_LEN / FLASH_PAGE_SIZE) * FLASH_PAGE_SIZE
 		+ ceil(FLASH_DATA_WBUF_REGION_LEN / FLASH_PAGE_SIZE) * FLASH_PAGE_SIZE;
 static uint32_t FLASH_DATA_BLOB_REGION_LEN = BSEC_MAX_STATE_BLOB_SIZE;
+
+const static uint32_t FLASH_PGM_RETRY_MAX = 50;
+
+sl_sleeptimer_timer_handle_t flash_save_timer;
+constexpr static uint32_t FLASH_SAVE_INTERVAL_MS = 1 * 60 * 60 * 1000;  // 1 hour
+static bool pend_save_flash = false;
+
+uint8_t _app_mx25_write_data(void);
+uint8_t _app_mx25_get_data(void);
+uint8_t _app_mx25_get_state(void);
+
 
 eui_t eui; // Device unique identifier
 
@@ -119,7 +130,10 @@ void resolveServerHandler(sl_sleeptimer_timer_handle_t *handle, void *data)
 	pend_resolve_server = true;
 }
 
-
+void flashSaveHandler(sl_sleeptimer_timer_handle_t *handle, void *data)
+{
+	pend_save_flash = true;
+}
 
 /* Getter function for otinstance */
 otInstance *otGetInstance(void)
@@ -144,6 +158,8 @@ void app_init(void) {
 	/* dns initialization procedure */
 	appSrpInit();
 	sl_sleeptimer_start_timer_ms(&resolve_server_timer, RESOLVE_POST_EST_CONN_MS, resolveServerHandler, NULL, 0, 0);
+	sl_sleeptimer_start_periodic_timer_ms(&flash_save_timer, FLASH_SAVE_INTERVAL_MS, flashSaveHandler, NULL, 0, 0);
+
 	found_server = false;
 	pend_resolve_server = false;
 
@@ -204,7 +220,11 @@ void app_process_action(void)
 	}
 
 	/** coap yield **/
-	bool ret = coap::service();
+	coap::service();
+
+
+	if(pend_save_flash) {_app_mx25_write_data(); pend_save_flash = false; }
+
 
 	GPIO_PinOutClear(ACT_LED_PORT, ACT_LED_PIN);
 
@@ -220,9 +240,9 @@ void app_delay_us(uint32_t period, void *intf_ptr)
 
 uint8_t _app_mx25_get_state(void)
 {
-	MX25_PP(FLASH_DATA_VALID_REGION_START, FLASH_DATA_VALID_MARKER, FLASH_DATA_VALID_REGION_LEN);
+	uint8_t ret = 0;
 	uint8_t buf[4];
-	MX25_READ(FLASH_DATA_VALID_REGION_START, buf, FLASH_DATA_VALID_REGION_LEN);
+	ret = MX25_READ(FLASH_DATA_VALID_REGION_START, buf, FLASH_DATA_VALID_REGION_LEN);
 	for(uint8_t i=0; i<sizeof(buf); i++)
 	{
 		if(buf[i] != FLASH_DATA_VALID_MARKER[i]) return 0;
@@ -232,21 +252,60 @@ uint8_t _app_mx25_get_state(void)
 
 uint8_t _app_mx25_get_data(void)
 {
+	GPIO_PinOutSet(ACT_LED_PORT, ACT_LED_PIN);
 	uint8_t ret = 0;
-	ret |= MX25_READ(FLASH_DATA_WBUF_REGION_START, work_buffer, FLASH_DATA_WBUF_REGION_LEN);
-	ret |= MX25_READ(FLASH_DATA_BLOB_REGION_START, bsec_state, FLASH_DATA_BLOB_REGION_LEN);
+	ret = MX25_READ(FLASH_DATA_WBUF_REGION_START, work_buffer, FLASH_DATA_WBUF_REGION_LEN);
+	if(ret != 0) return 0;
+	ret = MX25_READ(FLASH_DATA_BLOB_REGION_START, bsec_state, FLASH_DATA_BLOB_REGION_LEN);
+	GPIO_PinOutClear(ACT_LED_PORT, ACT_LED_PIN);
+	if(ret != 0) return 0;
+	else return 1;
 }
 
-uint8_t _app_mx25_write_data(void)
-{
-
+uint8_t _app_mx25_write_data(void) {
+	GPIO_PinOutSet(ACT_LED_PORT, ACT_LED_PIN);
 	uint8_t ret = 0;
-	uint32_t offset_pages = 0;
+	uint32_t array_idx = 0, seg, timeout = 0;
+	while (array_idx < FLASH_DATA_BLOB_REGION_LEN) {
+		seg = (FLASH_DATA_BLOB_REGION_LEN - array_idx) >= FLASH_PAGE_SIZE_U ?
+				FLASH_PAGE_SIZE_U : (FLASH_DATA_BLOB_REGION_LEN - array_idx);
 
-	if(ret == 0)
-		MX25_PP(FLASH_DATA_VALID_REGION_START, FLASH_DATA_VALID_MARKER, FLASH_DATA_VALID_REGION_LEN);
-	else GPIO_PinOutSet(ERR_LED_PORT, ERR_LED_PIN);
+		ret = MX25_PP(FLASH_DATA_BLOB_REGION_START + array_idx,
+				&bsec_state[array_idx], seg);
+		if (ret == FlashOperationSuccess) {
+
+			GPIO_PinOutToggle(ACT_LED_PORT, ACT_LED_PIN);
+			array_idx += seg;
+			timeout = 0;
+		} else {
+			if(timeout > FLASH_PGM_RETRY_MAX) return 0;
+			timeout++;
+		}
+	}
+	array_idx = 0;
+	seg = 0;
+	timeout = 0;
+	while (array_idx < FLASH_DATA_WBUF_REGION_LEN) {
+		seg = (FLASH_DATA_WBUF_REGION_LEN - array_idx) >= FLASH_PAGE_SIZE_U ?
+				FLASH_PAGE_SIZE_U : (FLASH_DATA_WBUF_REGION_LEN - array_idx);
+
+		ret = MX25_PP(FLASH_DATA_WBUF_REGION_START + array_idx,
+				&bsec_state[array_idx], seg);
+		if (ret == FlashOperationSuccess) {
+
+			GPIO_PinOutToggle(ACT_LED_PORT, ACT_LED_PIN);
+			array_idx += seg;
+			timeout = 0;
+		} else {
+			if(timeout > FLASH_PGM_RETRY_MAX) return 0;
+			timeout++;
+		}
+	}
+	ret = MX25_PP(FLASH_DATA_VALID_REGION_START, FLASH_DATA_VALID_MARKER, FLASH_DATA_VALID_REGION_LEN);
 	GPIO_PinOutClear(ACT_LED_PORT, ACT_LED_PIN);
+	MX25_DP();
+	sl_udelay_wait(30); // tDPDD
+	return !(ret&0x1);
 }
 
 void app_init_bme(uint8_t sense_pin)
@@ -287,16 +346,15 @@ void app_init_bme(uint8_t sense_pin)
 		GPIO_PinOutClear(ACT_LED_PORT, ACT_LED_PIN);
 		GPIO_PinOutClear(IP_LED_PORT, IP_LED_PIN);
 	}
-
+	if(!_app_mx25_write_data()) GPIO_PinOutSet(ERR_LED_PORT, ERR_LED_PIN);
 	if(is_exist_wbuf) _app_mx25_get_data();
 
-	//MX25_DP();
-	//sl_udelay_wait(30); // tDPDD
+	MX25_DP();
 
 	bsec_set_state(bsec_state, sizeof(bsec_state), work_buffer, sizeof(work_buffer));
 
 	GPIO_PinOutSet(ACT_LED_PORT, ACT_LED_PIN);
-	//_app_mx25_write_data();
+
 	//otCliOutputFormat("%d / ", ret);
 	GPIO_PinOutClear(ACT_LED_PORT, ACT_LED_PIN);
 

@@ -38,7 +38,7 @@
 
 // <o SL_SPIDRV_EUSART_MX25_BITRATE> SPI bitrate
 // <i> Default: 1000000
-#define SL_SPIDRV_EUSART_MX25_BITRATE           1000000
+#define SL_SPIDRV_EUSART_MX25_BITRATE           16000000
 
 // <o SL_SPIDRV_EUSART_MX25_FRAME_LENGTH> SPI frame length <7-16>
 // <i> Default: 8
