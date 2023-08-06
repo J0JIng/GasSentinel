@@ -1391,22 +1391,6 @@
         </folder>
       </folder>
     </folder>
-    <folder name="hardware">
-      <folder name="driver">
-        <folder name="mx25_flash_shutdown">
-          <folder name="src">
-            <folder name="sl_mx25_flash_shutdown_eusart">
-              <file name="sl_mx25_flash_shutdown.c" linked="false" uri="studio:/sdk/hardware/driver/mx25_flash_shutdown/src/sl_mx25_flash_shutdown_eusart/sl_mx25_flash_shutdown.c"/>
-            </folder>
-          </folder>
-          <folder name="inc">
-            <folder name="sl_mx25_flash_shutdown_eusart">
-              <file name="sl_mx25_flash_shutdown.h" linked="false" uri="studio:/sdk/hardware/driver/mx25_flash_shutdown/inc/sl_mx25_flash_shutdown_eusart/sl_mx25_flash_shutdown.h"/>
-            </folder>
-          </folder>
-        </folder>
-      </folder>
-    </folder>
     <folder name="protocol">
       <folder name="openthread">
         <folder name="libs">
@@ -1472,7 +1456,6 @@
   <includePath uri="studio:/project/gecko_sdk_4.3.0/util/third_party/mbedtls/include"/>
   <includePath uri="studio:/project/gecko_sdk_4.3.0/util/third_party/mbedtls/library"/>
   <includePath uri="studio:/project/gecko_sdk_4.3.0/platform/service/mpu/inc"/>
-  <includePath uri="studio:/project/gecko_sdk_4.3.0/hardware/driver/mx25_flash_shutdown/inc/sl_mx25_flash_shutdown_eusart"/>
   <includePath uri="studio:/project/gecko_sdk_4.3.0/platform/emdrv/nvm3/inc"/>
   <includePath uri="studio:/project/gecko_sdk_4.3.0/util/third_party/openthread/src"/>
   <includePath uri="studio:/project/gecko_sdk_4.3.0/util/third_party/openthread/src/cli"/>

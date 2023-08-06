@@ -47,7 +47,7 @@ void init(otIp6Address server_ip) {
 	otCoapStart(otGetInstance(), OT_DEFAULT_COAP_PORT);
 	updateAddr(server_ip);
 	snprintf(resource, 16, "%.8lx%.8lx", eui._32b.h, eui._32b.l);
-	otCliOutputFormat("[APP COAP][I] resource name: %s\n", resource);
+	//otCliOutputFormat("[APP COAP][I] resource name: %s\n", resource);
 }
 
 
@@ -64,13 +64,13 @@ bool service(void)
 		return false;
 	}
 	sensor::sig_if_t data = ux_queue.front();
-	otCliOutputFormat("[APP COAP][I] this <---ux_queue--- sensor  pop\n");
+	//otCliOutputFormat("[APP COAP][I] this <---ux_queue--- sensor  pop\n");
 	if(parseIntoBuffer(&data)) {
 		ux_queue.pop();
 		GPIO_PinOutSet(IP_LED_PORT, IP_LED_PIN);
 		coapTxMsg();
 		GPIO_PinOutClear(IP_LED_PORT, IP_LED_PIN);
-		otCliOutputFormat("[APP COAP][I] CoAP message sent\n");
+		//otCliOutputFormat("[APP COAP][I] CoAP message sent\n");
 		return true;
 	}
 	return false;
@@ -130,7 +130,7 @@ static void coapTxMsg(void) {
 
 	memset(&messageInfo, 0, sizeof(messageInfo));
 	messageInfo.mPeerAddr = coapDestinationIp;
-	messageInfo.mPeerPort = 5682; //todo revert
+	messageInfo.mPeerPort = 5682; //TODO revert
 	error = otCoapSendRequestWithParameters(otGetInstance(), message,
 			&messageInfo, NULL, NULL,
 			NULL);

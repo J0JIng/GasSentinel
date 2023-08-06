@@ -4,7 +4,6 @@
     <file name="SEGGER_RTT_Conf.h" generated="true" linked="false"/>
     <file name="nvm3_default_config.h" generated="true" linked="false"/>
     <file name="psa_crypto_config.h" generated="true" linked="false"/>
-    <file name="sl_mx25_flash_shutdown_eusart_config.h" generated="true" linked="false"/>
     <file name="sl_device_init_dcdc_config.h" generated="true" linked="false"/>
     <file name="sl_hfxo_manager_config.h" generated="true" linked="false"/>
     <file name="sl_openthread_features_config.h" generated="true" linked="false"/>
@@ -15,7 +14,7 @@
     <file name="sl_i2cspm_i2c0_config.h" generated="true" linked="false"/>
     <file name="sl_sleeptimer_config.h" generated="true" linked="false"/>
     <file name="sl_power_manager_config.h" generated="true" linked="false"/>
-    <file name="sl_spidrv_eusart_spi0_config.h" generated="true" linked="false"/>
+    <file name="sl_spidrv_eusart_mx25_config.h" generated="true" linked="false"/>
     <file name="sl_memory_config.h" generated="true" linked="false"/>
     <file name="dmadrv_config.h" generated="true" linked="false"/>
     <file name="sl_rail_util_pti_config.h" generated="true" linked="false"/>

@@ -24,21 +24,25 @@
 #include "sl_i2cspm.h"
 #include "sl_sleeptimer.h"
 #include "sl_udelay.h"
+#include "mx25_driver.h"
 
 #include <cstring>
+#include <cmath>
 
-
-
+// Forward declarations
 void sleepyInit(void);
 void setNetworkConfiguration(void);
 void initUdp(void);
 void app_init_bme(uint8_t sense_pin);
 
+// DNS related variables
 dns DNS(otGetInstance, 4, 4);
 static otIp6Address server;
 static bool found_server = false;
 static bool pend_resolve_server = false;
+constexpr static char *endpoint_dnssd_name = "_coap._udp.default.service.arpa.";
 
+// BME/BSEC related variables
 struct bme68x_dev bme;
 static uint8_t bme_addr = BME68X_I2C_ADDR_LOW;
 static volatile bool bsec_run = true;
@@ -48,10 +52,34 @@ uint8_t bsec_state[BSEC_MAX_STATE_BLOB_SIZE];
 sl_sleeptimer_timer_handle_t resolve_server_timer;
 constexpr static uint32_t RESOLVE_POST_EST_CONN_MS = 5000;
 
-eui_t eui;
+const static uint32_t FLASH_PAGE_SIZE_U = 0x100;
+static uint32_t FLASH_DATA_VALID_REGION_START = 0x000F1000; // BLOCK 15 SECTOR 241
+static uint32_t FLASH_DATA_VALID_REGION_LEN = 0x4;
+static uint8_t FLASH_DATA_VALID_MARKER[4] = { 0x2F, 0xC6, 0x9A, 0x44 };
+
+static uint32_t FLASH_DATA_WBUF_REGION_START = 0x00001000; // BLOCK 0 SECTOR 1
+
+static uint32_t FLASH_DATA_WBUF_REGION_LEN = BSEC_MAX_WORKBUFFER_SIZE;
+
+static uint32_t FLASH_DATA_BLOB_REGION_START = 0x00011000; // BLOCK 1 SECTOR 17
+
+static uint32_t FLASH_DATA_BLOB_REGION_LEN = BSEC_MAX_STATE_BLOB_SIZE;
+
+const static uint32_t FLASH_PGM_RETRY_MAX = 50;
+
+sl_sleeptimer_timer_handle_t flash_save_timer;
+constexpr static uint32_t FLASH_SAVE_INTERVAL_MS = 1 * 60 * 60 * 1000;  // 1 hour
+static bool pend_save_flash = false;
+
+uint8_t _app_mx25_write_data(void);
+uint8_t _app_mx25_get_data(void);
+uint8_t _app_mx25_get_state(void);
 
 
-static enum {
+eui_t eui; // Device unique identifier
+
+
+static enum { // Denotes power mode
 	BATT = 0,
 	USB = 1,
 } power_source;
@@ -59,7 +87,7 @@ static enum {
 extern "C" void otAppCliInit(otInstance *aInstance);
 
 static otInstance* sInstance = NULL;
-constexpr static char *endpoint_dnssd_name = "_coap._udp.default.service.arpa.";
+
 static BME68X_INTF_RET_TYPE app_i2c_plat_read(uint8_t reg_addr, uint8_t *reg_data,
 		uint32_t length, void *intf_ptr);
 static BME68X_INTF_RET_TYPE app_i2c_plat_write(uint8_t reg_addr, const uint8_t *reg_data,
@@ -69,6 +97,7 @@ static BME68X_INTF_RET_TYPE app_i2c_plat_write(uint8_t reg_addr, const uint8_t *
 void app_init_bme(void);
 void app_burtc_callback(uint32_t dur);
 
+/* Interrupt handler for BURTC */
 void BURTC_IRQHandler(void)
 {
     BURTC_IntClear(BURTC_IF_COMP); // compare match
@@ -78,8 +107,15 @@ void BURTC_IRQHandler(void)
 	BURTC_IntDisable(BURTC_IEN_COMP);
 }
 
+/* Callback function for resetting BURTC in sensor proc context */
+void app_burtc_callback(uint32_t dur)
+{
+	BURTC_CounterReset();
+	BURTC_CompareSet(0, dur);
+	BURTC_IntEnable(BURTC_IEN_COMP);
+}
 
-
+/* Interrupt handler for IADC */
 void IADC_IRQHandler(void){
   IADC_Result_t sample;
   sample = IADC_pullSingleFifoResult(IADC0);
@@ -87,12 +123,18 @@ void IADC_IRQHandler(void){
   IADC_clearInt(IADC0, IADC_IF_SINGLEDONE);
 }
 
-
+/* Callback function for DNS resolve */
 void resolveServerHandler(sl_sleeptimer_timer_handle_t *handle, void *data)
 {
 	pend_resolve_server = true;
 }
 
+void flashSaveHandler(sl_sleeptimer_timer_handle_t *handle, void *data)
+{
+	pend_save_flash = true;
+}
+
+/* Getter function for otinstance */
 otInstance *otGetInstance(void)
 {
     return sInstance;
@@ -102,24 +144,29 @@ otInstance *otGetInstance(void)
 void app_init(void) {
 
 	GPIO_PinOutSet(ERR_LED_PORT, ERR_LED_PIN);
-	uint8_t sense = 0x1 & GPIO_PinInGet(SW_PWR_SRC_PORT, SW_PWR_SRC_PIN);
+	uint8_t sense = 0x1 & GPIO_PinInGet(SW_PWR_SRC_PORT, SW_PWR_SRC_PIN); // Read input power source and mask first bit
 	app_init_bme(sense);
+	GPIO_PinModeSet(SW_PWR_SRC_PORT, SW_PWR_SRC_PIN, gpioModeDisabled, 0); // Disable after read to reduce static power
+	/* ot initialization procedure */
 	sleepyInit();
 	setNetworkConfiguration();
-	initUdp();
+
 	assert(otIp6SetEnabled(sInstance, true) == OT_ERROR_NONE);
 	assert(otThreadSetEnabled(sInstance, true) == OT_ERROR_NONE);
+
+	/* dns initialization procedure */
 	appSrpInit();
 	sl_sleeptimer_start_timer_ms(&resolve_server_timer, RESOLVE_POST_EST_CONN_MS, resolveServerHandler, NULL, 0, 0);
+	sl_sleeptimer_start_periodic_timer_ms(&flash_save_timer, FLASH_SAVE_INTERVAL_MS, flashSaveHandler, NULL, 0, 0);
+
 	found_server = false;
 	pend_resolve_server = false;
-	otCliOutputFormat("[APP MAIN][I] Initialization successful \n");
+
+	//otCliOutputFormat("[APP MAIN][I] Initialization successful \n");
 	eui._64b = SYSTEM_GetUnique();
+
 	GPIO_PinOutSet(IP_LED_PORT, IP_LED_PIN);
 	GPIO_PinOutClear(ERR_LED_PORT, ERR_LED_PIN);
-
-
-
 }
 
 
@@ -127,13 +174,15 @@ void app_init(void) {
 
 void app_process_action(void)
 {
+	/** System tasks **/
 	otTaskletsProcess(sInstance);
 	otSysProcessDrivers(sInstance);
-	applicationTick();
+
+	/** DNS resolution yield **/
 	if(pend_resolve_server) {
 		pend_resolve_server = false;
 		DNS.browse(endpoint_dnssd_name);
-		otCliOutputFormat("[APP MAIN][I] search started\n");
+		//otCliOutputFormat("[APP MAIN][I] search started\n");
 		GPIO_PinOutSet(IP_LED_PORT, IP_LED_PIN);
 	}
 	if(!found_server)
@@ -143,16 +192,16 @@ void app_process_action(void)
 		if(DNS.browseResultReady(&info, &sz))
 		{
 			if(sz == 0) {
-				otCliOutputFormat("[APP MAIN][W] Failed search \n");
+				//otCliOutputFormat("[APP MAIN][W] Failed search \n");
 				pend_resolve_server = true;
 				GPIO_PinOutSet(ERR_LED_PORT, ERR_LED_PIN);
 			}
 			else {
-				otCliOutputFormat("[APP MAIN][I] Server found \n");
+				//otCliOutputFormat("[APP MAIN][I] Server found \n");
 				server = (*info).mHostAddress;
 				char string[OT_IP6_ADDRESS_STRING_SIZE];
 				otIp6AddressToString(&server, string, sizeof(string));
-				otCliOutputFormat("[APP MAIN][I] Server IPv6 resolved as %s\n", string);
+				//otCliOutputFormat("[APP MAIN][I] Server IPv6 resolved as %s\n", string);
 				found_server = true;
 				coap::init(server);
 				GPIO_PinOutClear(ERR_LED_PORT, ERR_LED_PIN);
@@ -162,11 +211,20 @@ void app_process_action(void)
 
 	}
 	GPIO_PinOutSet(ACT_LED_PORT, ACT_LED_PIN);
+
+	/** sensor algo yield **/
 	if (bsec_run) {
 		bsec_run = false;
 		sensor::proc(app_burtc_callback);
 	}
-	bool ret = coap::service();
+
+	/** coap yield **/
+	coap::service();
+
+
+	if(pend_save_flash) {_app_mx25_write_data(); pend_save_flash = false; }
+
+
 	GPIO_PinOutClear(ACT_LED_PORT, ACT_LED_PIN);
 
 }
@@ -179,11 +237,78 @@ void app_delay_us(uint32_t period, void *intf_ptr)
 }
 
 
+uint8_t _app_mx25_get_state(void)
+{
+	uint8_t ret = 0;
+	uint8_t buf[4];
+	ret = MX25_READ(FLASH_DATA_VALID_REGION_START, buf, FLASH_DATA_VALID_REGION_LEN);
+	for(uint8_t i=0; i<sizeof(buf); i++)
+	{
+		if(buf[i] != FLASH_DATA_VALID_MARKER[i]) return 0;
+	}
+	return 1;
+}
 
+uint8_t _app_mx25_get_data(void)
+{
+	GPIO_PinOutSet(ACT_LED_PORT, ACT_LED_PIN);
+	uint8_t ret = 0;
+	ret = MX25_READ(FLASH_DATA_WBUF_REGION_START, work_buffer, FLASH_DATA_WBUF_REGION_LEN);
+	if(ret != 0) return 0;
+	ret = MX25_READ(FLASH_DATA_BLOB_REGION_START, bsec_state, FLASH_DATA_BLOB_REGION_LEN);
+	GPIO_PinOutClear(ACT_LED_PORT, ACT_LED_PIN);
+	if(ret != 0) return 0;
+	else return 1;
+}
+
+uint8_t _app_mx25_write_data(void) {
+	GPIO_PinOutSet(ACT_LED_PORT, ACT_LED_PIN);
+	uint8_t ret = 0;
+	uint32_t array_idx = 0, seg, timeout = 0;
+	while (array_idx < FLASH_DATA_BLOB_REGION_LEN) {
+		seg = (FLASH_DATA_BLOB_REGION_LEN - array_idx) >= FLASH_PAGE_SIZE_U ?
+				FLASH_PAGE_SIZE_U : (FLASH_DATA_BLOB_REGION_LEN - array_idx);
+
+		ret = MX25_PP(FLASH_DATA_BLOB_REGION_START + array_idx,
+				&bsec_state[array_idx], seg);
+		if (ret == FlashOperationSuccess) {
+
+			GPIO_PinOutToggle(ACT_LED_PORT, ACT_LED_PIN);
+			array_idx += seg;
+			timeout = 0;
+		} else {
+			if(timeout > FLASH_PGM_RETRY_MAX) return 0;
+			timeout++;
+		}
+	}
+	array_idx = 0;
+	seg = 0;
+	timeout = 0;
+	while (array_idx < FLASH_DATA_WBUF_REGION_LEN) {
+		seg = (FLASH_DATA_WBUF_REGION_LEN - array_idx) >= FLASH_PAGE_SIZE_U ?
+				FLASH_PAGE_SIZE_U : (FLASH_DATA_WBUF_REGION_LEN - array_idx);
+
+		ret = MX25_PP(FLASH_DATA_WBUF_REGION_START + array_idx,
+				&bsec_state[array_idx], seg);
+		if (ret == FlashOperationSuccess) {
+
+			GPIO_PinOutToggle(ACT_LED_PORT, ACT_LED_PIN);
+			array_idx += seg;
+			timeout = 0;
+		} else {
+			if(timeout > FLASH_PGM_RETRY_MAX) return 0;
+			timeout++;
+		}
+	}
+	ret = MX25_PP(FLASH_DATA_VALID_REGION_START, FLASH_DATA_VALID_MARKER, FLASH_DATA_VALID_REGION_LEN);
+	GPIO_PinOutClear(ACT_LED_PORT, ACT_LED_PIN);
+	MX25_DP();
+	sl_udelay_wait(30); // tDPDD
+	return !(ret&0x1);
+}
 
 void app_init_bme(uint8_t sense_pin)
 {
-
 	memset(&bme, 0, sizeof(bme));
 	bme.intf = BME68X_I2C_INTF;
 	bme.read = app_i2c_plat_read;
@@ -194,14 +319,14 @@ void app_init_bme(uint8_t sense_pin)
 	assert(bme68x_init(&bme) == BME68X_OK);
 	volatile int8_t ret = 0;
 
-	 otCliOutputFormat("[APP MAIN][I] BSEC ret codes: %d / ", ret);
+	 //otCliOutputFormat("[APP MAIN][I] BSEC ret codes: %d / ", ret);
 
 	ret = bsec_init();
-	otCliOutputFormat("%d / ", ret);
+	//otCliOutputFormat("%d / ", ret);
 
 	/* Set configuration according to detected power source */
-
-
+	uint8_t is_exist_wbuf = _app_mx25_get_state();
+	// TODO: modify work buffer to save to spi flash
 	if (sense_pin == BATT) {
 		uint32_t bsec_config_len = sizeof(bsec_config_selectivity);
 		ret = bsec_set_configuration(bsec_config_selectivity, bsec_config_len,
@@ -215,16 +340,22 @@ void app_init_bme(uint8_t sense_pin)
 		GPIO_PinOutSet(ERR_LED_PORT, ERR_LED_PIN);
 		GPIO_PinOutSet(ACT_LED_PORT, ACT_LED_PIN);
 		GPIO_PinOutSet(IP_LED_PORT, IP_LED_PIN);
-		sl_sleeptimer_delay_millisecond(500);
+		sl_sleeptimer_delay_millisecond(1500);
 		GPIO_PinOutClear(ERR_LED_PORT, ERR_LED_PIN);
 		GPIO_PinOutClear(ACT_LED_PORT, ACT_LED_PIN);
 		GPIO_PinOutClear(IP_LED_PORT, IP_LED_PIN);
 	}
+	if(!_app_mx25_write_data()) GPIO_PinOutSet(ERR_LED_PORT, ERR_LED_PIN);
+	if(is_exist_wbuf) _app_mx25_get_data();
 
+	MX25_DP();
 
 	bsec_set_state(bsec_state, sizeof(bsec_state), work_buffer, sizeof(work_buffer));
 
-	otCliOutputFormat("%d / ", ret);
+	GPIO_PinOutSet(ACT_LED_PORT, ACT_LED_PIN);
+
+	//otCliOutputFormat("%d / ", ret);
+	GPIO_PinOutClear(ACT_LED_PORT, ACT_LED_PIN);
 
 	bsec_sensor_configuration_t requested_virtual_sensors[9];
 	uint8_t n_requested_virtual_sensors = 9;
@@ -232,7 +363,7 @@ void app_init_bme(uint8_t sense_pin)
 	bsec_sensor_configuration_t required_sensor_settings[BSEC_MAX_PHYSICAL_SENSOR];
 	uint8_t n_required_sensor_settings = BSEC_MAX_PHYSICAL_SENSOR;
 
-
+	// virtual sensor configuration
     requested_virtual_sensors[0].sensor_id = BSEC_OUTPUT_GAS_ESTIMATE_1;
     requested_virtual_sensors[0].sample_rate = BSEC_SAMPLE_RATE_SCAN;
     requested_virtual_sensors[1].sensor_id = BSEC_OUTPUT_GAS_ESTIMATE_2;
@@ -256,19 +387,14 @@ void app_init_bme(uint8_t sense_pin)
 	ret = bsec_update_subscription(requested_virtual_sensors,
 					n_requested_virtual_sensors, required_sensor_settings,
 					&n_required_sensor_settings);
-	 otCliOutputFormat("%d\n", ret);
+	 //otCliOutputFormat("%d\n", ret);
 	 bsec_version_t ver;
 	 bsec_get_version(&ver);
-	 otCliOutputFormat("[APP MAIN][I] BSEC Version: v%d.%d.%d.%d\n", ver.major,ver.minor,ver.major_bugfix,ver.minor_bugfix);
+	 //otCliOutputFormat("[APP MAIN][I] BSEC Version: v%d.%d.%d.%d\n", ver.major,ver.minor,ver.major_bugfix,ver.minor_bugfix);
 }
 
 
-void app_burtc_callback(uint32_t dur)
-{
-	BURTC_CounterReset();
-	BURTC_CompareSet(0, dur);
-	BURTC_IntEnable(BURTC_IEN_COMP);
-}
+
 
 
 
@@ -278,47 +404,16 @@ void app_exit(void)
 }
 
 
-/*
- * Provide, if required an "otPlatLog()" function
- */
-#if OPENTHREAD_CONFIG_LOG_OUTPUT == OPENTHREAD_CONFIG_LOG_OUTPUT_APP
-void otPlatLog(otLogLevel aLogLevel, otLogRegion aLogRegion, const char *aFormat, ...)
-{
-    OT_UNUSED_VARIABLE(aLogLevel);
-    OT_UNUSED_VARIABLE(aLogRegion);
-    OT_UNUSED_VARIABLE(aFormat);
-
-    va_list ap;
-    va_start(ap, aFormat);
-    otCliPlatLogv(aLogLevel, aLogRegion, aFormat, ap);
-    va_end(ap);
-}
-#endif
-
 void sl_ot_create_instance(void)
 {
-#if OPENTHREAD_CONFIG_MULTIPLE_INSTANCE_ENABLE
-    size_t   otInstanceBufferLength = 0;
-    uint8_t *otInstanceBuffer       = NULL;
 
-    // Call to query the buffer size
-    (void)otInstanceInit(NULL, &otInstanceBufferLength);
-
-    // Call to allocate the buffer
-    otInstanceBuffer = (uint8_t *)malloc(otInstanceBufferLength);
-    assert(otInstanceBuffer);
-
-    // Initialize OpenThread with the buffer
-    sInstance = otInstanceInit(otInstanceBuffer, &otInstanceBufferLength);
-#else
     sInstance = otInstanceInitSingle();
-#endif
     assert(sInstance);
 }
 
 void sl_ot_cli_init(void)
 {
-    otAppCliInit(sInstance);
+    //otAppCliInit(sInstance);
 }
 
 static BME68X_INTF_RET_TYPE app_i2c_plat_read(uint8_t reg_addr, uint8_t *reg_data,
