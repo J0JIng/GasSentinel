@@ -33,7 +33,7 @@ extern MailboxQueue<sensor::sig_if_t, COAP_MAILBOX_QUEUE_DEPTH> ux_queue;
 
 extern volatile uint32_t vsense_batt;
 
-void init(otIp6Address server_ip);
+void init(void);
 void updateAddr(otIp6Address server_ip);
 bool service(void);
 

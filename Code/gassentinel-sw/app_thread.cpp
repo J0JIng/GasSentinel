@@ -90,7 +90,7 @@ void setNetworkConfiguration(void)
     aDataset.mComponents.mIsExtendedPanIdPresent = true;
 
     /* Set network key to 1234C0DE1AB51234C0DE1AB51234C0DE */
-    uint8_t key[OT_NETWORK_KEY_SIZE] = {};
+    uint8_t key[OT_NETWORK_KEY_SIZE] = { };
     memcpy(aDataset.mNetworkKey.m8, key, sizeof(aDataset.mNetworkKey));
     aDataset.mComponents.mIsNetworkKeyPresent = true;
 
@@ -111,17 +111,18 @@ void setNetworkConfiguration(void)
 
 
 
-
 void appSrpInit(void)
 {
-    otError error = OT_ERROR_NONE;
-
-    char *hostName;
-    const char *HOST_NAME = "OT-test-0";
-    uint16_t size;
-    hostName = otSrpClientBuffersGetHostNameString(otGetInstance(), &size);
-    error = otSrpClientSetHostName(otGetInstance(), HOST_NAME);
-    memcpy(hostName, HOST_NAME, sizeof(HOST_NAME) + 1);
+	otError error = OT_ERROR_NONE;
+	char *hostName;
+	const otNetifAddress *self = otIp6GetUnicastAddresses(otGetInstance());
+	uint8_t addr_prf = self->mAddress.mFields.m8[15];
+	uint16_t size;
+	hostName = otSrpClientBuffersGetHostNameString(otGetInstance(), &size);
+	char *HOST_NAME = (char *)malloc(sizeof(char) * size);
+	snprintf(HOST_NAME, size, "GASSENTINEL-%d", addr_prf);
+	otSrpClientSetHostName(otGetInstance(), HOST_NAME);
+	memcpy(hostName, HOST_NAME, sizeof(HOST_NAME) + 1);
 
 
     otSrpClientEnableAutoHostAddress(otGetInstance());
@@ -134,8 +135,8 @@ void appSrpInit(void)
 
     entry->mService.mPort = 33434;
     char INST_NAME[32];
-    snprintf(INST_NAME, 32, "ipv6bc%d", (uint8_t)(1));
-    const char *SERV_NAME = "_scan._udp";
+    snprintf(INST_NAME, 32, "ipv6bc%d", addr_prf);
+    const char *SERV_NAME = "_ot._udp";
     string = otSrpClientBuffersGetServiceEntryInstanceNameString(entry, &size);
     memcpy(string, INST_NAME, size);
 

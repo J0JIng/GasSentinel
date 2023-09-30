@@ -1,0 +1,4 @@
+[submodule "coap-server"]
+    path = Coap-Server
+    url = https://github.com/edward62740/ot-coap-server
+    branch = derived-gassentinel

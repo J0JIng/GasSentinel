@@ -164,7 +164,7 @@ void app_init(void) {
 
 	//otCliOutputFormat("[APP MAIN][I] Initialization successful \n");
 	eui._64b = SYSTEM_GetUnique();
-
+	coap::init();
 	GPIO_PinOutSet(IP_LED_PORT, IP_LED_PIN);
 	GPIO_PinOutClear(ERR_LED_PORT, ERR_LED_PIN);
 }
@@ -179,6 +179,7 @@ void app_process_action(void)
 	otSysProcessDrivers(sInstance);
 
 	/** DNS resolution yield **/
+	/*
 	if(pend_resolve_server) {
 		pend_resolve_server = false;
 		DNS.browse(endpoint_dnssd_name);
@@ -210,6 +211,7 @@ void app_process_action(void)
 		} else GPIO_PinOutToggle(IP_LED_PORT, IP_LED_PIN);
 
 	}
+	*/
 	GPIO_PinOutSet(ACT_LED_PORT, ACT_LED_PIN);
 
 	/** sensor algo yield **/
