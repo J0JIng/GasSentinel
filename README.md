@@ -9,7 +9,8 @@ Interpreting gas sensor resistances is complex and may require specialized knowl
 
 This project utilizes the BSEC software (which runs on the microcontroller) to run the associated signal processing/fusion and ML model. Refer to Figure 1 below for the confusion matrix and F1 scores:<br>
 
-![Confusion Matrix and F1](https://github.com/J0JIng/OdorGuard/blob/main/Doc/f1_lp.png)<br>
+![Confusion Matrix and F1](https://github.com/J0JIng/GasSentinel/blob/main/Doc/new_f1.png)<br>
+
 Figure 1: Confusion matrix and F1 scores (LP)<br>
 
 The model was trained with low concentrations of butane, propane, etc.[^1] at room temperature/pressure at (or above) their respective Lower Explosive Limit (LEL). The model runs every 73.36s with a duty cycle of 25%.<br>
